@@ -2,62 +2,216 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attendance Master - Manpower Management</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Attendance Master</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f4f6f8;color:#17202a;font-family:Arial,sans-serif;padding-bottom:40px}
-button,input,select{font:inherit}
-.header{background:#111827;color:#fff;padding:28px 18px 30px;border-radius:0 0 34px 34px}
-.header h1{margin:0;font-family:Georgia,serif;font-size:36px}
-.header p{margin:8px 0 0;color:#d1d5db;font-family:Georgia,serif;font-size:19px}
-.container{max-width:1100px;margin:auto;padding:18px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
-.card{background:#fff;border-radius:22px;padding:20px;box-shadow:0 8px 25px #00000010}
-.stat{min-height:125px;border-left:7px solid #2563eb}
+body{
+margin:0;
+background:#f4f6f8;
+color:#17202a;
+font-family:Arial,sans-serif;
+padding-bottom:40px
+}
+.header{
+background:#111827;
+color:white;
+padding:28px 18px;
+border-radius:0 0 30px 30px;
+text-align:center
+}
+.header h1{
+margin:0;
+font-family:Georgia,serif;
+font-size:34px
+}
+.header p{
+margin:8px 0 0;
+color:#d1d5db;
+font-size:17px
+}
+.container{
+max-width:1100px;
+margin:auto;
+padding:18px
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px
+}
+.card{
+background:white;
+border-radius:22px;
+padding:20px;
+box-shadow:0 5px 18px #00000010
+}
+.stat{
+min-height:115px;
+border-left:7px solid #2563eb
+}
 .stat.green{border-color:#16a34a}
 .stat.red{border-color:#dc2626}
 .stat.yellow{border-color:#eab308}
-.stat .num{font:bold 42px Georgia,serif}
-.stat .label{font:19px Georgia,serif;color:#777;margin-top:6px}
-.section-title{font:32px Georgia,serif;margin:28px 0 14px}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.action{border:0;background:#fff;border-radius:20px;padding:22px 10px;font:bold 19px Georgia,serif;box-shadow:0 6px 18px #0000000d;cursor:pointer}
-.action .ico{font-size:36px;display:block;margin-bottom:10px}
-.panel{display:none;background:#fff;border-radius:24px;padding:20px;margin-top:18px;box-shadow:0 8px 25px #00000010}
-.panel.show{display:block}
-.panel h2{font:30px Georgia,serif;margin:0 0 16px}
-.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-input,select{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:14px;background:#fafafa;outline:none}
-input:focus,select:focus{border-color:#2563eb}
-.btn{border:0;border-radius:14px;padding:14px 18px;background:#111827;color:#fff;cursor:pointer}
-.btn.secondary{background:#e5e7eb;color:#111}
-.btn.green{background:#15803d}
-.btn.red{background:#dc2626}
-.btn.blue{background:#2563eb}
-.table-wrap{overflow:auto;margin-top:15px}
-table{width:100%;border-collapse:collapse;min-width:760px}
-th,td{text-align:left;padding:12px;border-bottom:1px solid #eee}
-th{background:#f3f4f6}
-.small{color:#777;font-size:14px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.toolbar>*{flex:1;min-width:140px}
-.worker-card{background:#f5f6f8;border-radius:18px;padding:15px;margin-top:10px}
-.worker-card strong{font-size:18px}
-.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#e5e7eb;font-size:13px}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:13px 20px;border-radius:14px;display:none;z-index:20}
-@media(max-width:800px){
-.grid{grid-template-columns:repeat(2,1fr)}
-.actions{grid-template-columns:repeat(2,1fr)}
-.formgrid{grid-template-columns:1fr}
-.header h1{font-size:32px}
+.stat b{
+display:block;
+font-size:35px;
+margin-bottom:7px
 }
-@media(max-width:480px){
-.container{padding:12px}
-.grid{gap:10px}
-.card{padding:15px}
-.stat .num{font-size:34px}
-.stat .label{font-size:16px}
+.stat span{
+color:#777;
+font-size:16px
+}
+h2{
+font-family:Georgia,serif;
+font-size:28px;
+margin:28px 0 15px
+}
+.actions{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px
+}
+.action{
+border:0;
+background:white;
+color:#111827;
+border-radius:22px;
+padding:24px 10px;
+min-height:130px;
+font-family:Georgia,serif;
+font-size:19px;
+font-weight:bold;
+box-shadow:0 5px 18px #00000010;
+cursor:pointer
+}
+.action:active{
+transform:scale(.98)
+}
+.ico{
+display:block;
+font-size:42px;
+margin-bottom:10px
+}
+.panel{
+background:white;
+border-radius:22px;
+padding:20px;
+margin-top:20px;
+box-shadow:0 5px 18px #00000010
+}
+.hidden{
+display:none
+}
+.formgrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px
+}
+input,select{
+width:100%;
+padding:13px;
+border:1px solid #d1d5db;
+border-radius:12px;
+background:white;
+font-size:16px
+}
+button{
+border:0;
+border-radius:12px;
+padding:13px 16px;
+background:#111827;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:10px
+}
+button.green{background:#16a34a}
+button.blue{background:#2563eb}
+button.red{background:#dc2626}
+button.gray{
+background:#e5e7eb;
+color:#111
+}
+button.small{
+padding:7px 10px;
+font-size:13px;
+margin:2px
+}
+.item{
+background:#f3f4f6;
+border-radius:15px;
+padding:14px;
+margin-top:10px
+}
+.item b{
+font-size:18px
+}
+.row{
+display:flex;
+justify-content:space-between;
+gap:10px;
+align-items:center
+}
+.muted{
+color:#777
+}
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+font-size:13px
+}
+.present{
+background:#dcfce7;
+color:#166534
+}
+.absent{
+background:#fee2e2;
+color:#991b1b
+}
+.leave{
+background:#fef3c7;
+color:#92400e
+}
+.tablewrap{
+overflow:auto;
+margin-top:15px
+}
+table{
+width:100%;
+border-collapse:collapse;
+min-width:750px
+}
+th,td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+text-align:left
+}
+th{
+background:#f3f4f6
+}
+.notice{
+background:#eff6ff;
+color:#1e40af;
+padding:12px;
+border-radius:12px;
+margin-bottom:12px
+}
+
+@media(max-width:650px){
+.grid,
+.actions,
+.formgrid{
+grid-template-columns:1fr
+}
+.container{
+padding:12px
+}
+.header h1{
+font-size:30px
+}
 }
 </style>
 </head>
@@ -71,55 +225,58 @@ th{background:#f3f4f6}
 
 <main class="container">
 
-<div class="grid">
+<!-- DASHBOARD -->
+
+<section class="grid">
+
 <div class="card stat">
-<div class="num" id="totalWorkers">0</div>
-<div class="label">Total Manpower</div>
+<b id="totalWorkers">0</b>
+<span>Total Manpower</span>
 </div>
 
 <div class="card stat green">
-<div class="num" id="presentToday">0</div>
-<div class="label">Present Today</div>
+<b id="presentToday">0</b>
+<span>Present Today</span>
 </div>
 
 <div class="card stat red">
-<div class="num" id="absentToday">0</div>
-<div class="label">Absent Today</div>
+<b id="absentToday">0</b>
+<span>Absent Today</span>
 </div>
 
 <div class="card stat yellow">
-<div class="num" id="leaveToday">0</div>
-<div class="label">On Leave Today</div>
-</div>
-</div>
-
-<div class="grid">
-<div class="card">
-<div class="num" id="totalAdvance">₹0</div>
-<div class="label">Total Advance</div>
+<b id="leaveToday">0</b>
+<span>On Leave Today</span>
 </div>
 
 <div class="card">
-<div class="num" id="monthAdvance">₹0</div>
-<div class="label">This Month Advance</div>
+<b id="totalAdvance">₹0</b>
+<span>Total Advance</span>
 </div>
 
 <div class="card">
-<div class="num" id="sundayPayment">₹0</div>
-<div class="label">This Month Sunday Payment</div>
+<b id="monthAdvance">₹0</b>
+<span>This Month Advance</span>
 </div>
 
 <div class="card">
-<div class="num" id="totalLeave">0</div>
-<div class="label">This Month Leave</div>
+<b id="monthSunday">₹0</b>
+<span>This Month Sunday Payment</span>
 </div>
+
+<div class="card">
+<b id="monthLeave">0</b>
+<span>This Month Leave</span>
 </div>
 
-<h2 class="section-title">Quick Actions</h2>
+</section>
 
-<div class="actions">
 
-<button class="action" onclick="showPanel('workers')">
+<h2>Quick Actions</h2>
+
+<section class="actions">
+
+<button class="action" onclick="showPanel('manpower')">
 <span class="ico">👷</span>
 Manpower
 </button>
@@ -149,9 +306,9 @@ Leave
 Salary
 </button>
 
-<button class="action" onclick="showPanel('report')">
+<button class="action" onclick="showPanel('reports')">
 <span class="ico">📊</span>
-Reports
+Master Reports
 </button>
 
 <button class="action" onclick="showPanel('backup')">
@@ -159,200 +316,232 @@ Reports
 Backup / Export
 </button>
 
-</div>
+</section>
 
 
-<section id="workers" class="panel">
+<!-- MANPOWER -->
+
+<section id="manpower" class="panel hidden">
 
 <h2>👷 Manpower Management</h2>
 
 <div class="formgrid">
 
-<input id="wName" placeholder="Worker name">
+<input id="workerName"
+placeholder="Worker Name">
 
-<input id="wId" placeholder="Employee ID">
+<input id="workerId"
+placeholder="Employee ID">
 
-<input id="wRole" placeholder="Role / Designation">
+<input id="workerRole"
+placeholder="Role / Designation">
+
+<input id="workerSite"
+placeholder="Site / Location">
 
 </div>
 
-<br>
-
-<button class="btn" onclick="addWorker()">
+<button onclick="addWorker()">
 + Add Worker
 </button>
 
-<div class="toolbar" style="margin-top:15px">
-
-<input id="workerSearch"
+<input
+id="workerSearch"
 placeholder="Search worker..."
-oninput="renderWorkers()">
-
-</div>
+oninput="renderWorkers()"
+style="margin-top:12px">
 
 <div id="workerList"></div>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="attendance" class="panel">
+<!-- ATTENDANCE -->
+
+<section id="attendance" class="panel hidden">
 
 <h2>🟢 Daily Attendance</h2>
 
 <div class="formgrid">
 
-<select id="attWorker"></select>
+<select id="attendanceWorker"></select>
 
-<input id="attDate" type="date">
+<input
+id="attendanceDate"
+type="date">
 
-<select id="attStatus">
-<option>Present</option>
-<option>Absent</option>
-<option>Leave</option>
+<select id="attendanceStatus">
+
+<option value="Present">
+Present
+</option>
+
+<option value="Absent">
+Absent
+</option>
+
+<option value="Leave">
+Leave
+</option>
+
 </select>
 
 </div>
 
-<br>
-
-<button class="btn green" onclick="saveAttendance()">
+<button class="green" onclick="saveAttendance()">
 Save Attendance
 </button>
 
-<div class="toolbar" style="margin-top:15px">
+<div class="formgrid" style="margin-top:12px">
 
-<input id="attSearch"
+<input
+id="attendanceFilterDate"
 type="date"
 onchange="renderAttendance()">
 
-<select id="attFilter"
+<select
+id="attendanceFilterStatus"
 onchange="renderAttendance()">
 
 <option value="all">All Status</option>
-<option>Present</option>
-<option>Absent</option>
-<option>Leave</option>
+<option value="Present">Present</option>
+<option value="Absent">Absent</option>
+<option value="Leave">Leave</option>
 
 </select>
 
 </div>
 
-<div id="attendanceList" class="table-wrap"></div>
+<div id="attendanceList"></div>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="advance" class="panel">
+<!-- ADVANCE -->
+
+<section id="advance" class="panel hidden">
 
 <h2>💰 Advance Management</h2>
 
+<div class="notice">
+Har baar advance doge to naya transaction add hoga.
+Purana amount overwrite nahi hoga.
+</div>
+
 <div class="formgrid">
 
-<select id="advWorker"></select>
+<select id="advanceWorker"></select>
 
-<input id="advAmount"
+<input
+id="advanceAmount"
 type="number"
-min="0"
 placeholder="Advance Amount ₹">
 
-<input id="advDate"
+<input
+id="advanceDate"
 type="date">
 
-<input id="advRemark"
-placeholder="Remark e.g. family, medical, personal">
+<input
+id="advanceRemark"
+placeholder="Remark / Purpose">
 
 </div>
 
-<br>
-
-<button class="btn blue" onclick="saveAdvance()">
+<button class="blue" onclick="saveAdvance()">
 Save Advance
 </button>
 
-<div class="toolbar" style="margin-top:15px">
+<div class="formgrid" style="margin-top:12px">
 
-<input id="advMonth"
+<input
+id="advanceMonth"
 type="month"
 onchange="renderAdvance()">
 
-<select id="advWorkerFilter"
-onchange="renderAdvance()"></select>
+<select
+id="advanceWorkerFilter"
+onchange="renderAdvance()">
+</select>
 
 </div>
 
-<div id="advanceList" class="table-wrap"></div>
+<div id="advanceList"></div>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="sunday" class="panel">
+<!-- SUNDAY -->
+
+<section id="sunday" class="panel hidden">
 
 <h2>📅 Sunday Payment</h2>
 
+<div class="notice">
+Har Sunday ka payment separately save hoga.
+Jitni baar doge, sab records add hote rahenge.
+</div>
+
 <div class="formgrid">
 
-<select id="sunWorker"></select>
+<select id="sundayWorker"></select>
 
-<input id="sunAmount"
+<input
+id="sundayAmount"
 type="number"
-min="0"
 placeholder="Sunday Payment ₹">
 
-<input id="sunDate"
+<input
+id="sundayDate"
 type="date">
 
-<input id="sunRemark"
+<input
+id="sundayRemark"
 placeholder="Remark">
 
 </div>
 
-<br>
-
-<button class="btn blue" onclick="saveSunday()">
+<button class="blue" onclick="saveSunday()">
 Save Sunday Payment
 </button>
 
-<div class="toolbar" style="margin-top:15px">
+<div class="formgrid" style="margin-top:12px">
 
-<input id="sunMonth"
+<input
+id="sundayMonth"
 type="month"
 onchange="renderSunday()">
 
-<select id="sunWorkerFilter"
-onchange="renderSunday()"></select>
+<select
+id="sundayWorkerFilter"
+onchange="renderSunday()">
+</select>
 
 </div>
 
-<div id="sundayList" class="table-wrap"></div>
+<div id="sundayList"></div>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="leave" class="panel">
+<!-- LEAVE -->
+
+<section id="leave" class="panel hidden">
 
 <h2>🏖️ Leave Management</h2>
 
@@ -360,136 +549,139 @@ Close
 
 <select id="leaveWorker"></select>
 
-<input id="leaveDate" type="date">
+<input
+id="leaveDate"
+type="date">
 
-<input id="leaveRemark"
-placeholder="Leave remark / reason">
+<input
+id="leaveRemark"
+placeholder="Leave Reason / Remark">
 
 </div>
 
-<br>
-
-<button class="btn" onclick="saveLeave()">
+<button onclick="saveLeave()">
 Save Leave
 </button>
 
-<div class="toolbar" style="margin-top:15px">
+<div class="formgrid" style="margin-top:12px">
 
-<input id="leaveMonth"
+<input
+id="leaveMonth"
 type="month"
 onchange="renderLeave()">
 
-<select id="leaveWorkerFilter"
-onchange="renderLeave()"></select>
+<select
+id="leaveWorkerFilter"
+onchange="renderLeave()">
+</select>
 
 </div>
 
-<div id="leaveList" class="table-wrap"></div>
+<div id="leaveList"></div>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="salary" class="panel">
+<!-- SALARY -->
+
+<section id="salary" class="panel hidden">
 
 <h2>💵 Salary Management</h2>
 
 <div class="formgrid">
 
-<select id="salWorker"></select>
+<select id="salaryWorker"></select>
 
-<input id="salMonth" type="month">
+<input
+id="salaryMonth"
+type="month">
 
-<input id="salAmount"
+<input
+id="salaryAmount"
 type="number"
-min="0"
 placeholder="Salary ₹">
 
-<input id="salRemark"
-placeholder="Remark">
+<input
+id="salaryRemark"
+placeholder="Salary Remark">
 
 </div>
 
-<br>
-
-<button class="btn green" onclick="saveSalary()">
+<button class="green" onclick="saveSalary()">
 Save Salary
 </button>
 
-<div id="salaryList" class="table-wrap"></div>
+<div id="salaryList"></div>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="report" class="panel">
+<!-- REPORT -->
+
+<section id="reports" class="panel hidden">
 
 <h2>📊 Master Reports</h2>
 
-<div class="toolbar">
+<div class="formgrid">
 
-<select id="reportMonth"
-onchange="renderReport()"></select>
+<input
+id="reportMonth"
+type="month">
 
-<input id="reportSearch"
-placeholder="Search worker..."
-oninput="renderReport()">
+<input
+id="reportSearch"
+placeholder="Search worker...">
 
 </div>
 
-<div id="reportTable" class="table-wrap"></div>
+<button onclick="renderReport()">
+Refresh Report
+</button>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<div id="reportBox" class="tablewrap"></div>
+
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
 </section>
 
 
-<section id="backup" class="panel">
+<!-- BACKUP -->
+
+<section id="backup" class="panel hidden">
 
 <h2>💾 Backup & Data</h2>
 
-<p class="small">
-Data is stored in this browser using local storage.
-Export a backup regularly so you don't lose records if browser data is cleared.
+<p class="muted">
+Backup me manpower, attendance, advance, leave,
+Sunday payment aur salary sab save hoga.
 </p>
 
-<button class="btn blue" onclick="exportData()">
-⬇ Export Backup
+<button class="blue" onclick="exportBackup()">
+⬇ Download Backup
 </button>
 
-<button class="btn" onclick="document.getElementById('importFile').click()">
-⬆ Import Backup
-</button>
-
-<input id="importFile"
+<input
+id="importFile"
 type="file"
 accept=".json"
-style="display:none"
-onchange="importData(event)">
+onchange="importBackup(event)"
+style="margin-top:12px">
 
-<br><br>
-
-<button class="btn red" onclick="clearAllData()">
-Delete ALL Data
+<button class="red" onclick="deleteAllData()">
+⚠️ Delete ALL Data
 </button>
 
-<button class="btn secondary"
-onclick="closePanels()"
-style="margin-top:15px">
+<button class="gray" onclick="closePanels()">
 Close
 </button>
 
@@ -498,48 +690,28 @@ Close
 </main>
 
 
-<div id="toast" class="toast"></div>
-
-
 <script>
 
-const KEY='attendance_master_v1';
+const DB_KEY="attendance_master_v2";
 
 let db=JSON.parse(
-localStorage.getItem(KEY)||'null'
+localStorage.getItem(DB_KEY)||"null"
 )||{
+
 workers:[],
 attendance:[],
 advances:[],
 sundays:[],
 leaves:[],
 salaries:[]
+
 };
-
-
-const today=()=>new Date()
-.toISOString()
-.slice(0,10);
-
-
-const monthNow=()=>today()
-.slice(0,7);
-
-
-const uid=()=>Date.now()
-.toString(36)+Math.random()
-.toString(36)
-.slice(2,7);
-
-
-const money=n=>'₹'+Number(n||0)
-.toLocaleString('en-IN');
 
 
 function saveDB(){
 
 localStorage.setItem(
-KEY,
+DB_KEY,
 JSON.stringify(db)
 );
 
@@ -548,163 +720,243 @@ updateDashboard();
 }
 
 
-function toast(msg){
+function uid(){
 
-const t=document.getElementById('toast');
+return Date.now().toString(36)+
+Math.random().toString(36).substring(2,8);
 
-t.textContent=msg;
+}
 
-t.style.display='block';
 
-setTimeout(()=>{
-t.style.display='none';
-},1800);
+function today(){
+
+return new Date()
+.toISOString()
+.substring(0,10);
+
+}
+
+
+function currentMonth(){
+
+return today().substring(0,7);
+
+}
+
+
+function money(value){
+
+return "₹"+
+Number(value||0)
+.toLocaleString("en-IN");
+
+}
+
+
+function escapeHTML(value){
+
+return String(value||"")
+.replace(/[&<>"']/g,function(char){
+
+return {
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[char];
+
+});
+
+}
+
+
+function workerById(id){
+
+return db.workers.find(
+worker=>worker.id===id
+);
 
 }
 
 
 function showPanel(id){
 
-document.querySelectorAll('.panel')
-.forEach(p=>p.classList.remove('show'));
+closePanels();
 
-document.getElementById(id)
-.classList.add('show');
+document
+.getElementById(id)
+.classList.remove("hidden");
 
-refreshSelects();
+refreshWorkerSelects();
 
-if(id==='workers')renderWorkers();
+renderAllLists();
 
-if(id==='attendance')renderAttendance();
-
-if(id==='advance')renderAdvance();
-
-if(id==='sunday')renderSunday();
-
-if(id==='leave')renderLeave();
-
-if(id==='salary')renderSalary();
-
-if(id==='report')renderReport();
+document
+.getElementById(id)
+.scrollIntoView({
+behavior:"smooth"
+});
 
 }
 
 
 function closePanels(){
 
-document.querySelectorAll('.panel')
-.forEach(p=>p.classList.remove('show'));
-
-}
-
-
-function refreshSelects(){
-
-const selects=[
-'attWorker',
-'advWorker',
-'sunWorker',
-'leaveWorker',
-'salWorker'
-];
-
-const filters=[
-'advWorkerFilter',
-'sunWorkerFilter',
-'leaveWorkerFilter'
-];
-
-
-const base=
-'<option value="">Select Worker</option>'+
-db.workers.map(w=>
-`<option value="${w.id}">
-${esc(w.name)} (${esc(w.empId)})
-</option>`
-).join('');
-
-
-selects.forEach(id=>{
-
-const e=document.getElementById(id);
-
-if(e)e.innerHTML=base;
-
-});
-
-
-filters.forEach(id=>{
-
-const e=document.getElementById(id);
-
-if(e){
-
-e.innerHTML=
-'<option value="">All Workers</option>'+
-db.workers.map(w=>
-`<option value="${w.id}">
-${esc(w.name)}
-</option>`
-).join('');
-
-}
-
-});
-
-
-const rm=document.getElementById(
-'reportMonth'
+document
+.querySelectorAll(".panel")
+.forEach(panel=>
+panel.classList.add("hidden")
 );
 
-if(rm&&!rm.value)
-rm.value=monthNow();
-
 }
 
 
-function esc(s){
+function refreshWorkerSelects(){
 
-return String(s??'')
-.replace(/[&<>"']/g,c=>({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#39;'
-}[c]));
+let selectIds=[
+
+"attendanceWorker",
+"advanceWorker",
+"sundayWorker",
+"leaveWorker",
+"salaryWorker"
+
+];
+
+
+let filterIds=[
+
+"advanceWorkerFilter",
+"sundayWorkerFilter",
+"leaveWorkerFilter"
+
+];
+
+
+let options=
+'<option value="">Select Worker</option>';
+
+db.workers.forEach(worker=>{
+
+options+=`
+
+<option value="${worker.id}">
+${escapeHTML(worker.name)}
+${worker.workerId?
+" — "+escapeHTML(worker.workerId):""}
+</option>
+
+`;
+
+});
+
+
+selectIds.forEach(id=>{
+
+let select=document.getElementById(id);
+
+if(select){
+
+let old=select.value;
+
+select.innerHTML=options;
+
+if(
+db.workers.some(w=>w.id===old)
+){
+
+select.value=old;
+
+}
+
+}
+
+});
+
+
+filterIds.forEach(id=>{
+
+let select=document.getElementById(id);
+
+if(select){
+
+let old=select.value;
+
+select.innerHTML=
+'<option value="">All Workers</option>';
+
+db.workers.forEach(worker=>{
+
+select.innerHTML+=`
+
+<option value="${worker.id}">
+${escapeHTML(worker.name)}
+</option>
+
+`;
+
+});
+
+if(
+db.workers.some(w=>w.id===old)
+){
+
+select.value=old;
+
+}
+
+}
+
+});
 
 }
 
 
 function addWorker(){
 
-const name=document
-.getElementById('wName')
-.value.trim();
+let name=
+document.getElementById(
+"workerName"
+).value.trim();
 
-const empId=document
-.getElementById('wId')
-.value.trim();
+let workerId=
+document.getElementById(
+"workerId"
+).value.trim();
 
-const role=document
-.getElementById('wRole')
-.value.trim();
+let role=
+document.getElementById(
+"workerRole"
+).value.trim();
+
+let site=
+document.getElementById(
+"workerSite"
+).value.trim();
 
 
-if(!name||!empId){
+if(!name){
 
-toast('Name and Employee ID required');
+alert("Worker name enter karo.");
 
 return;
 
 }
 
 
-if(db.workers.some(
-w=>w.empId.toLowerCase()===empId.toLowerCase()
-)){
+if(
+workerId &&
+db.workers.some(
+worker=>
+worker.workerId.toLowerCase()===
+workerId.toLowerCase()
+)
+){
 
-toast('Employee ID already exists');
+alert("Employee ID already exists.");
 
 return;
 
@@ -712,27 +964,45 @@ return;
 
 
 db.workers.push({
+
 id:uid(),
-name,
-empId,
-role
+
+name:name,
+
+workerId:workerId,
+
+role:role,
+
+site:site,
+
+created:today()
+
 });
 
 
 saveDB();
 
 
-['wName','wId','wRole']
-.forEach(id=>
-document.getElementById(id).value=''
-);
+document.getElementById(
+"workerName"
+).value="";
+
+document.getElementById(
+"workerId"
+).value="";
+
+document.getElementById(
+"workerRole"
+).value="";
+
+document.getElementById(
+"workerSite"
+).value="";
 
 
-refreshSelects();
+refreshWorkerSelects();
 
 renderWorkers();
-
-toast('Worker added');
 
 }
 
@@ -740,61 +1010,115 @@ toast('Worker added');
 function deleteWorker(id){
 
 if(!confirm(
-'Delete this worker? Existing records will remain.'
+"Worker delete karna hai?"
 ))return;
 
 
-db.workers=db.workers
-.filter(w=>w.id!==id);
+db.workers=
+db.workers.filter(
+worker=>worker.id!==id
+);
+
+
+db.attendance=
+db.attendance.filter(
+record=>record.workerId!==id
+);
+
+
+db.advances=
+db.advances.filter(
+record=>record.workerId!==id
+);
+
+
+db.sundays=
+db.sundays.filter(
+record=>record.workerId!==id
+);
+
+
+db.leaves=
+db.leaves.filter(
+record=>record.workerId!==id
+);
+
+
+db.salaries=
+db.salaries.filter(
+record=>record.workerId!==id
+);
+
 
 saveDB();
 
-refreshSelects();
+refreshWorkerSelects();
 
-renderWorkers();
-
-toast('Worker deleted');
+renderAllLists();
 
 }
 
 
 function renderWorkers(){
 
-const q=(
-document.getElementById('workerSearch')
-?.value||''
-).toLowerCase();
+let search=
+document.getElementById(
+"workerSearch"
+).value.toLowerCase();
 
 
-const list=db.workers.filter(
-w=>
-(w.name+' '+w.empId+' '+w.role)
+let workers=
+db.workers.filter(worker=>
+
+(
+worker.name+" "+
+worker.workerId+" "+
+worker.role+" "+
+worker.site
+)
 .toLowerCase()
-.includes(q)
+.includes(search)
+
 );
 
 
-document.getElementById('workerList')
-.innerHTML=list.length?
+let html="";
 
-list.map(w=>`
 
-<div class="worker-card">
+workers.forEach(worker=>{
 
-<strong>${esc(w.name)}</strong>
+html+=`
+
+<div class="item">
+
+<div class="row">
+
+<div>
+
+<b>
+${escapeHTML(worker.name)}
+</b>
 
 <br>
 
-<span class="small">
-ID: ${esc(w.empId)}
-•
-${esc(w.role||'Worker')}
-</span>
+ID:
+${escapeHTML(worker.workerId||"-")}
+
+<br>
+
+Role:
+${escapeHTML(worker.role||"-")}
+
+<br>
+
+Site:
+${escapeHTML(worker.site||"-")}
+
+</div>
 
 <button
-class="btn red"
-style="float:right;padding:8px 12px"
-onclick="deleteWorker('${w.id}')">
+class="small red"
+onclick="deleteWorker('${worker.id}')">
 
 Delete
 
@@ -802,174 +1126,209 @@ Delete
 
 </div>
 
-`).join('')
+</div>
 
-:
+`;
 
-'<p class="small">No workers added yet.</p>';
+});
+
+
+document.getElementById(
+"workerList"
+).innerHTML=
+html||
+'<p class="muted">No workers found.</p>';
 
 }
 
 
 function saveAttendance(){
 
-const worker=
-document.getElementById('attWorker').value;
+let workerId=
+document.getElementById(
+"attendanceWorker"
+).value;
 
-const date=
-document.getElementById('attDate').value;
+let date=
+document.getElementById(
+"attendanceDate"
+).value;
 
-const status=
-document.getElementById('attStatus').value;
+let status=
+document.getElementById(
+"attendanceStatus"
+).value;
 
 
-if(!worker||!date){
+if(!workerId||!date){
 
-toast('Select worker and date');
+alert(
+"Worker aur date select karo."
+);
 
 return;
 
 }
 
 
-const existing=db.attendance
-.find(a=>
-a.worker===worker &&
-a.date===date
+let old=
+db.attendance.find(
+record=>
+record.workerId===workerId &&
+record.date===date
 );
 
 
-if(existing)
-existing.status=status;
+if(old){
 
-else
+old.status=status;
+
+}else{
+
 db.attendance.push({
+
 id:uid(),
-worker,
-date,
-status
+
+workerId:workerId,
+
+date:date,
+
+status:status
+
 });
+
+}
 
 
 saveDB();
 
 renderAttendance();
 
-toast('Attendance saved');
-
 }
 
 
 function renderAttendance(){
 
-const date=
-document.getElementById('attSearch')
-?.value||today();
+let filterDate=
+document.getElementById(
+"attendanceFilterDate"
+).value||today();
 
-const filter=
-document.getElementById('attFilter')
-?.value||'all';
+let filterStatus=
+document.getElementById(
+"attendanceFilterStatus"
+).value;
 
 
-let rows=db.attendance.filter(
-a=>
-a.date===date &&
-(filter==='all'||a.status===filter)
+let records=
+db.attendance.filter(record=>
+
+record.date===filterDate &&
+
+(
+filterStatus==="all" ||
+record.status===filterStatus
+)
+
 );
 
 
-rows.sort(
-(a,b)=>a.status.localeCompare(b.status)
-);
+let html="";
 
 
-document.getElementById('attendanceList')
-.innerHTML=rows.length?
+records.forEach(record=>{
 
-`<table>
+let worker=
+workerById(record.workerId);
 
-<tr>
-<th>Worker</th>
-<th>Date</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
+if(!worker)return;
 
-${rows.map(a=>{
 
-const w=db.workers.find(
-x=>x.id===a.worker
-);
+let className=
+record.status.toLowerCase();
 
-return `
 
-<tr>
+html+=`
 
-<td>
-${esc(w?.name||'Deleted')}
-</td>
+<div class="item">
 
-<td>${a.date}</td>
+<div class="row">
 
-<td>
-<span class="badge">
-${a.status}
+<div>
+
+<b>
+${escapeHTML(worker.name)}
+</b>
+
+<br>
+
+${record.date}
+
+<br>
+
+<span class="badge ${className}">
+${record.status}
 </span>
-</td>
 
-<td>
+</div>
 
 <button
-class="btn red"
-style="padding:7px"
-onclick="del(
+class="small red"
+onclick="deleteRecord(
 'attendance',
-'${a.id}',
-renderAttendance
+'${record.id}'
 )">
 
 Delete
 
 </button>
 
-</td>
+</div>
 
-</tr>
+</div>
 
 `;
 
-}).join('')}
+});
 
-</table>`
 
-:
-
-'<p class="small">No attendance recorded for this date.</p>';
+document.getElementById(
+"attendanceList"
+).innerHTML=
+html||
+'<p class="muted">No attendance for selected date.</p>';
 
 }
 
 
 function saveAdvance(){
 
-const worker=
-document.getElementById('advWorker').value;
+let workerId=
+document.getElementById(
+"advanceWorker"
+).value;
 
-const amount=Number(
-document.getElementById('advAmount').value
+let amount=Number(
+document.getElementById(
+"advanceAmount"
+).value
 );
 
-const date=
-document.getElementById('advDate').value;
+let date=
+document.getElementById(
+"advanceDate"
+).value;
 
-const remark=
-document.getElementById('advRemark')
-.value.trim();
+let remark=
+document.getElementById(
+"advanceRemark"
+).value.trim();
 
 
-if(!worker||!amount||!date){
+if(!workerId||!amount||!date){
 
-toast(
-'Worker, amount and date required'
+alert(
+"Worker, amount aur date required."
 );
 
 return;
@@ -978,11 +1337,17 @@ return;
 
 
 db.advances.push({
+
 id:uid(),
-worker,
-amount,
-date,
-remark
+
+workerId:workerId,
+
+amount:amount,
+
+date:date,
+
+remark:remark
+
 });
 
 
@@ -990,140 +1355,160 @@ saveDB();
 
 
 document.getElementById(
-'advAmount'
-).value='';
+"advanceAmount"
+).value="";
 
 document.getElementById(
-'advRemark'
-).value='';
+"advanceRemark"
+).value="";
 
 
 renderAdvance();
-
-toast('Advance added');
 
 }
 
 
 function renderAdvance(){
 
-const m=
-document.getElementById('advMonth')
-?.value||monthNow();
+let month=
+document.getElementById(
+"advanceMonth"
+).value||currentMonth();
 
-const wf=
-document.getElementById('advWorkerFilter')
-?.value||'';
+let filterWorker=
+document.getElementById(
+"advanceWorkerFilter"
+).value;
 
 
-const rows=db.advances.filter(
-a=>
-a.date.startsWith(m)&&
-(!wf||a.worker===wf)
+let records=
+db.advances.filter(record=>
+
+record.date.startsWith(month) &&
+
+(
+!filterWorker ||
+record.workerId===filterWorker
+)
+
 );
 
 
-const total=rows.reduce(
-(s,a)=>s+a.amount,
+let total=records.reduce(
+(sum,record)=>
+sum+Number(record.amount),
 0
 );
 
 
-document.getElementById(
-'advanceList'
-).innerHTML=
+let html=`
 
-`<p>
-<b>Filtered Total: ${money(total)}</b>
-</p>`
+<div class="item">
 
-+
+<b>
+Filtered Total Advance:
+${money(total)}
+</b>
 
-(rows.length?
+</div>
 
-`<table>
+`;
 
-<tr>
-<th>Worker</th>
-<th>Date</th>
-<th>Amount</th>
-<th>Remark</th>
-<th></th>
-</tr>
 
-${rows.map(a=>{
+records.forEach(record=>{
 
-const w=db.workers.find(
-x=>x.id===a.worker
-);
+let worker=
+workerById(record.workerId);
 
-return `
+if(!worker)return;
 
-<tr>
 
-<td>
-${esc(w?.name||'Deleted')}
-</td>
+html+=`
 
-<td>${a.date}</td>
+<div class="item">
 
-<td>${money(a.amount)}</td>
+<div class="row">
 
-<td>${esc(a.remark||'-')}</td>
+<div>
 
-<td>
+<b>
+${escapeHTML(worker.name)}
+</b>
+
+<br>
+
+Amount:
+${money(record.amount)}
+
+<br>
+
+Date:
+${record.date}
+
+<br>
+
+Remark:
+${escapeHTML(
+record.remark||"-"
+)}
+
+</div>
 
 <button
-class="btn red"
-style="padding:7px"
-onclick="del(
+class="small red"
+onclick="deleteRecord(
 'advances',
-'${a.id}',
-renderAdvance
+'${record.id}'
 )">
 
 Delete
 
 </button>
 
-</td>
+</div>
 
-</tr>
+</div>
 
 `;
 
-}).join('')}
+});
 
-</table>`
 
-:
-
-'<p class="small">No advance records.</p>';
+document.getElementById(
+"advanceList"
+).innerHTML=html;
 
 }
 
 
 function saveSunday(){
 
-const worker=
-document.getElementById('sunWorker').value;
+let workerId=
+document.getElementById(
+"sundayWorker"
+).value;
 
-const amount=Number(
-document.getElementById('sunAmount').value
+let amount=Number(
+document.getElementById(
+"sundayAmount"
+).value
 );
 
-const date=
-document.getElementById('sunDate').value;
+let date=
+document.getElementById(
+"sundayDate"
+).value;
 
-const remark=
-document.getElementById('sunRemark')
-.value.trim();
+let remark=
+document.getElementById(
+"sundayRemark"
+).value.trim();
 
 
-if(!worker||!amount||!date){
+if(!workerId||!amount||!date){
 
-toast(
-'Worker, amount and date required'
+alert(
+"Worker, amount aur date required."
 );
 
 return;
@@ -1132,11 +1517,17 @@ return;
 
 
 db.sundays.push({
+
 id:uid(),
-worker,
-amount,
-date,
-remark
+
+workerId:workerId,
+
+amount:amount,
+
+date:date,
+
+remark:remark
+
 });
 
 
@@ -1144,136 +1535,154 @@ saveDB();
 
 
 document.getElementById(
-'sunAmount'
-).value='';
+"sundayAmount"
+).value="";
 
 document.getElementById(
-'sunRemark'
-).value='';
+"sundayRemark"
+).value="";
 
 
 renderSunday();
-
-toast('Sunday payment added');
 
 }
 
 
 function renderSunday(){
 
-const m=
-document.getElementById('sunMonth')
-?.value||monthNow();
+let month=
+document.getElementById(
+"sundayMonth"
+).value||currentMonth();
 
-const wf=
-document.getElementById('sunWorkerFilter')
-?.value||'';
+let filterWorker=
+document.getElementById(
+"sundayWorkerFilter"
+).value;
 
 
-const rows=db.sundays.filter(
-a=>
-a.date.startsWith(m)&&
-(!wf||a.worker===wf)
+let records=
+db.sundays.filter(record=>
+
+record.date.startsWith(month)&&
+
+(
+!filterWorker ||
+record.workerId===filterWorker
+)
+
 );
 
 
-const total=rows.reduce(
-(s,a)=>s+a.amount,
+let total=records.reduce(
+(sum,record)=>
+sum+Number(record.amount),
 0
 );
 
 
-document.getElementById(
-'sundayList'
-).innerHTML=
+let html=`
 
-`<p>
-<b>Filtered Total: ${money(total)}</b>
-</p>`
+<div class="item">
 
-+
+<b>
+This Month Sunday Payment:
+${money(total)}
+</b>
 
-(rows.length?
+</div>
 
-`<table>
+`;
 
-<tr>
-<th>Worker</th>
-<th>Date</th>
-<th>Amount</th>
-<th>Remark</th>
-<th></th>
-</tr>
 
-${rows.map(a=>{
+records.forEach(record=>{
 
-const w=db.workers.find(
-x=>x.id===a.worker
-);
+let worker=
+workerById(record.workerId);
 
-return `
+if(!worker)return;
 
-<tr>
 
-<td>
-${esc(w?.name||'Deleted')}
-</td>
+html+=`
 
-<td>${a.date}</td>
+<div class="item">
 
-<td>${money(a.amount)}</td>
+<div class="row">
 
-<td>${esc(a.remark||'-')}</td>
+<div>
 
-<td>
+<b>
+${escapeHTML(worker.name)}
+</b>
+
+<br>
+
+Payment:
+${money(record.amount)}
+
+<br>
+
+Date:
+${record.date}
+
+<br>
+
+Remark:
+${escapeHTML(
+record.remark||"-"
+)}
+
+</div>
 
 <button
-class="btn red"
-style="padding:7px"
-onclick="del(
+class="small red"
+onclick="deleteRecord(
 'sundays',
-'${a.id}',
-renderSunday
+'${record.id}'
 )">
 
 Delete
 
 </button>
 
-</td>
+</div>
 
-</tr>
+</div>
 
 `;
 
-}).join('')}
+});
 
-</table>`
 
-:
-
-'<p class="small">No Sunday payments.</p>';
+document.getElementById(
+"sundayList"
+).innerHTML=html;
 
 }
 
 
 function saveLeave(){
 
-const worker=
-document.getElementById('leaveWorker').value;
+let workerId=
+document.getElementById(
+"leaveWorker"
+).value;
 
-const date=
-document.getElementById('leaveDate').value;
+let date=
+document.getElementById(
+"leaveDate"
+).value;
 
-const remark=
-document.getElementById('leaveRemark')
-.value.trim();
+let remark=
+document.getElementById(
+"leaveRemark"
+).value.trim();
 
 
-if(!worker||!date){
+if(!workerId||!date){
 
-toast(
-'Worker and date required'
+alert(
+"Worker aur date required."
 );
 
 return;
@@ -1282,129 +1691,180 @@ return;
 
 
 db.leaves.push({
+
 id:uid(),
-worker,
-date,
-remark
+
+workerId:workerId,
+
+date:date,
+
+remark:remark
+
 });
+
+
+let attendance=
+db.attendance.find(
+record=>
+record.workerId===workerId &&
+record.date===date
+);
+
+
+if(attendance){
+
+attendance.status="Leave";
+
+}else{
+
+db.attendance.push({
+
+id:uid(),
+
+workerId:workerId,
+
+date:date,
+
+status:"Leave"
+
+});
+
+}
 
 
 saveDB();
 
+
 document.getElementById(
-'leaveRemark'
-).value='';
+"leaveRemark"
+).value="";
 
 
 renderLeave();
-
-toast('Leave saved');
 
 }
 
 
 function renderLeave(){
 
-const m=
-document.getElementById('leaveMonth')
-?.value||monthNow();
-
-const wf=
-document.getElementById('leaveWorkerFilter')
-?.value||'';
-
-
-const rows=db.leaves.filter(
-a=>
-a.date.startsWith(m)&&
-(!wf||a.worker===wf)
-);
-
-
+let month=
 document.getElementById(
-'leaveList'
-).innerHTML=rows.length?
+"leaveMonth"
+).value||currentMonth();
 
-`<table>
+let filterWorker=
+document.getElementById(
+"leaveWorkerFilter"
+).value;
 
-<tr>
-<th>Worker</th>
-<th>Date</th>
-<th>Remark</th>
-<th></th>
-</tr>
 
-${rows.map(a=>{
+let records=
+db.leaves.filter(record=>
 
-const w=db.workers.find(
-x=>x.id===a.worker
+record.date.startsWith(month)&&
+
+(
+!filterWorker ||
+record.workerId===filterWorker
+)
+
 );
 
-return `
 
-<tr>
+let html="";
 
-<td>
-${esc(w?.name||'Deleted')}
-</td>
 
-<td>${a.date}</td>
+records.forEach(record=>{
 
-<td>${esc(a.remark||'-')}</td>
+let worker=
+workerById(record.workerId);
 
-<td>
+if(!worker)return;
+
+
+html+=`
+
+<div class="item">
+
+<div class="row">
+
+<div>
+
+<b>
+${escapeHTML(worker.name)}
+</b>
+
+<br>
+
+Date:
+${record.date}
+
+<br>
+
+Reason:
+${escapeHTML(
+record.remark||"-"
+)}
+
+</div>
 
 <button
-class="btn red"
-style="padding:7px"
-onclick="del(
+class="small red"
+onclick="deleteRecord(
 'leaves',
-'${a.id}',
-renderLeave
+'${record.id}'
 )">
 
 Delete
 
 </button>
 
-</td>
+</div>
 
-</tr>
+</div>
 
 `;
 
-}).join('')}
+});
 
-</table>`
 
-:
-
-'<p class="small">No leave records.</p>';
+document.getElementById(
+"leaveList"
+).innerHTML=
+html||
+'<p class="muted">No leave records.</p>';
 
 }
 
 
 function saveSalary(){
 
-const worker=
-document.getElementById('salWorker').value;
+let workerId=
+document.getElementById(
+"salaryWorker"
+).value;
 
-const month=
-document.getElementById('salMonth').value;
+let month=
+document.getElementById(
+"salaryMonth"
+).value;
 
-const amount=Number(
-document.getElementById('salAmount').value
+let amount=Number(
+document.getElementById(
+"salaryAmount"
+).value
 );
 
-const remark=
-document.getElementById('salRemark')
-.value.trim();
+let remark=
+document.getElementById(
+"salaryRemark"
+).value.trim();
 
 
-if(!worker||!month||!amount){
+if(!workerId||!month||!amount){
 
-toast(
-'Worker, month and salary required'
+alert(
+"Worker, month aur salary required."
 );
 
 return;
@@ -1412,4 +1872,650 @@ return;
 }
 
 
-const old=db.salar
+let old=
+db.salaries.find(
+record=>
+record.workerId===workerId &&
+record.month===month
+);
+
+
+if(old){
+
+old.amount=amount;
+
+old.remark=remark;
+
+}else{
+
+db.salaries.push({
+
+id:uid(),
+
+workerId:workerId,
+
+month:month,
+
+amount:amount,
+
+remark:remark
+
+});
+
+}
+
+
+saveDB();
+
+
+document.getElementById(
+"salaryAmount"
+).value="";
+
+document.getElementById(
+"salaryRemark"
+).value="";
+
+
+renderSalary();
+
+}
+
+
+function renderSalary(){
+
+let html="";
+
+
+db.salaries
+.slice()
+.sort(
+(a,b)=>
+b.month.localeCompare(a.month)
+)
+.forEach(record=>{
+
+let worker=
+workerById(record.workerId);
+
+if(!worker)return;
+
+
+html+=`
+
+<div class="item">
+
+<div class="row">
+
+<div>
+
+<b>
+${escapeHTML(worker.name)}
+</b>
+
+<br>
+
+Month:
+${record.month}
+
+<br>
+
+Salary:
+${money(record.amount)}
+
+<br>
+
+Remark:
+${escapeHTML(
+record.remark||"-"
+)}
+
+</div>
+
+<button
+class="small red"
+onclick="deleteRecord(
+'salaries',
+'${record.id}'
+)">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById(
+"salaryList"
+).innerHTML=
+html||
+'<p class="muted">No salary records.</p>';
+
+}
+
+
+function renderReport(){
+
+let month=
+document.getElementById(
+"reportMonth"
+).value||currentMonth();
+
+let search=
+document.getElementById(
+"reportSearch"
+).value.toLowerCase();
+
+
+let workers=
+db.workers.filter(worker=>
+
+(
+worker.name+" "+
+worker.workerId+" "+
+worker.role+" "+
+worker.site
+)
+.toLowerCase()
+.includes(search)
+
+);
+
+
+let html=`
+
+<table>
+
+<tr>
+
+<th>Worker</th>
+
+<th>Present</th>
+
+<th>Absent</th>
+
+<th>Leave</th>
+
+<th>Total Advance</th>
+
+<th>Month Advance</th>
+
+<th>Sunday ₹</th>
+
+<th>Salary</th>
+
+</tr>
+
+`;
+
+
+workers.forEach(worker=>{
+
+let attendance=
+db.attendance.filter(
+record=>
+record.workerId===worker.id
+);
+
+
+let present=
+attendance.filter(
+record=>
+record.status==="Present"
+).length;
+
+
+let absent=
+attendance.filter(
+record=>
+record.status==="Absent"
+).length;
+
+
+let leave=
+db.leaves.filter(
+record=>
+record.workerId===worker.id &&
+record.date.startsWith(month)
+).length;
+
+
+let totalAdvance=
+db.advances
+.filter(
+record=>
+record.workerId===worker.id
+)
+.reduce(
+(sum,record)=>
+sum+Number(record.amount),
+0
+);
+
+
+let monthAdvance=
+db.advances
+.filter(
+record=>
+record.workerId===worker.id &&
+record.date.startsWith(month)
+)
+.reduce(
+(sum,record)=>
+sum+Number(record.amount),
+0
+);
+
+
+let sunday=
+db.sundays
+.filter(
+record=>
+record.workerId===worker.id &&
+record.date.startsWith(month)
+)
+.reduce(
+(sum,record)=>
+sum+Number(record.amount),
+0
+);
+
+
+let salaryRecord=
+db.salaries.find(
+record=>
+record.workerId===worker.id &&
+record.month===month
+);
+
+
+let salary=
+salaryRecord?
+salaryRecord.amount:
+0;
+
+
+html+=`
+
+<tr>
+
+<td>
+
+<b>
+${escapeHTML(worker.name)}
+</b>
+
+<br>
+
+${escapeHTML(
+worker.workerId||"-"
+)}
+
+</td>
+
+<td>${present}</td>
+
+<td>${absent}</td>
+
+<td>${leave}</td>
+
+<td>${money(totalAdvance)}</td>
+
+<td>${money(monthAdvance)}</td>
+
+<td>${money(sunday)}</td>
+
+<td>${money(salary)}</td>
+
+</tr>
+
+`;
+
+});
+
+
+html+=`</table>`;
+
+
+document.getElementById(
+"reportBox"
+).innerHTML=html;
+
+}
+
+
+function deleteRecord(type,id){
+
+if(!confirm(
+"Is record ko delete karna hai?"
+))return;
+
+
+db[type]=db[type].filter(
+record=>record.id!==id
+);
+
+
+saveDB();
+
+renderAllLists();
+
+}
+
+
+function updateDashboard(){
+
+let todayDate=today();
+
+let month=currentMonth();
+
+
+let todayRecords=
+db.attendance.filter(
+record=>
+record.date===todayDate
+);
+
+
+document.getElementById(
+"totalWorkers"
+).textContent=
+db.workers.length;
+
+
+document.getElementById(
+"presentToday"
+).textContent=
+todayRecords.filter(
+record=>
+record.status==="Present"
+).length;
+
+
+document.getElementById(
+"absentToday"
+).textContent=
+todayRecords.filter(
+record=>
+record.status==="Absent"
+).length;
+
+
+document.getElementById(
+"leaveToday"
+).textContent=
+todayRecords.filter(
+record=>
+record.status==="Leave"
+).length;
+
+
+document.getElementById(
+"totalAdvance"
+).textContent=
+money(
+db.advances.reduce(
+(sum,record)=>
+sum+Number(record.amount),
+0
+)
+);
+
+
+document.getElementById(
+"monthAdvance"
+).textContent=
+money(
+db.advances
+.filter(
+record=>
+record.date.startsWith(month)
+)
+.reduce(
+(sum,record)=>
+sum+Number(record.amount),
+0
+)
+);
+
+
+document.getElementById(
+"monthSunday"
+).textContent=
+money(
+db.sundays
+.filter(
+record=>
+record.date.startsWith(month)
+)
+.reduce(
+(sum,record)=>
+sum+Number(record.amount),
+0
+)
+);
+
+
+document.getElementById(
+"monthLeave"
+).textContent=
+db.leaves.filter(
+record=>
+record.date.startsWith(month)
+).length;
+
+}
+
+
+function exportBackup(){
+
+let data=JSON.stringify(
+db,
+null,
+2
+);
+
+
+let blob=new Blob(
+[data],
+{
+type:"application/json"
+}
+);
+
+
+let url=
+URL.createObjectURL(blob);
+
+
+let link=
+document.createElement("a");
+
+
+link.href=url;
+
+link.download=
+"attendance-master-backup-"+today()+".json";
+
+
+link.click();
+
+URL.revokeObjectURL(url);
+
+}
+
+
+function importBackup(event){
+
+let file=
+event.target.files[0];
+
+if(!file)return;
+
+
+let reader=
+new FileReader();
+
+
+reader.onload=function(){
+
+try{
+
+let data=
+JSON.parse(
+reader.result
+);
+
+
+if(
+!data.workers||
+!data.attendance||
+!data.advances||
+!data.sundays||
+!data.leaves||
+!data.salaries
+){
+
+throw new Error();
+
+}
+
+
+db=data;
+
+saveDB();
+
+renderAllLists();
+
+alert(
+"Backup successfully restored."
+);
+
+}catch(error){
+
+alert(
+"Invalid backup file."
+);
+
+}
+
+};
+
+
+reader.readAsText(file);
+
+}
+
+
+function deleteAllData(){
+
+if(!confirm(
+"WARNING: Saara data delete ho jayega. Continue?"
+))return;
+
+
+if(!confirm(
+"Final confirmation — DELETE ALL DATA?"
+))return;
+
+
+db={
+
+workers:[],
+attendance:[],
+advances:[],
+sundays:[],
+leaves:[],
+salaries:[]
+
+};
+
+
+saveDB();
+
+renderAllLists();
+
+}
+
+
+function renderAllLists(){
+
+refreshWorkerSelects();
+
+renderWorkers();
+
+renderAttendance();
+
+renderAdvance();
+
+renderSunday();
+
+renderLeave();
+
+renderSalary();
+
+updateDashboard();
+
+}
+
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+document.getElementById(
+"attendanceDate"
+).value=today();
+
+document.getElementById(
+"attendanceFilterDate"
+).value=today();
+
+document.getElementById(
+"advanceDate"
+).value=today();
+
+document.getElementById(
+"advanceMonth"
+).value=currentMonth();
+
+document.getElementById(
+"sundayDate"
+).value=today();
+
+document.getElementById(
+"sundayMonth"
+).value=currentMonth();
+
+document.getElementById(
+"leaveDate"
+).value=today();
+
+document.getElementById(
+"leaveMonth"
+).value=currentMonth();
+
+document.getElementById(
+"salaryMonth"
+).value=currentMonth();
+
+document.getElementById(
+"reportMonth"
+).value=currentMonth();
+
+renderAllLists();
+
+});
+
+
+</script>
+
+</body>
+</html>
