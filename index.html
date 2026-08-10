@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Site Manager</title>
 
 <style>
@@ -11,79 +11,138 @@ body{
 font-family:Arial,sans-serif;
 background:#f4f6f8;
 color:#17202a;
+padding-bottom:30px
 }
 .header{
 background:#111827;
 color:white;
-padding:22px 18px;
-border-radius:0 0 22px 22px;
+padding:24px 18px;
+border-radius:0 0 25px 25px
 }
-.header h1{font-size:28px}
+.header h1{font-size:30px}
 .header p{margin-top:8px;color:#cbd5e1}
 
-.container{padding:20px}
-
-.stats{
+.container{padding:18px}
+.dashboard{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:14px;
-margin-bottom:28px;
+margin-bottom:25px
 }
-.stat{
+.card{
 background:white;
-padding:20px;
-border-radius:20px;
-box-shadow:0 4px 12px #00000012;
+padding:22px 15px;
+border-radius:22px;
+box-shadow:0 6px 18px #00000012;
+text-align:center
 }
-.stat b{font-size:30px}
-.stat p{margin-top:8px;color:#777}
+.card b{font-size:38px;display:block}
+.card span{font-size:16px;color:#777}
+.blue{border-left:6px solid #2563eb}
+.green{border-left:6px solid #16a34a}
+.red{border-left:6px solid #dc2626}
+.yellow{border-left:6px solid #eab308}
 
-h2{margin:20px 0 15px}
+h2{margin:25px 0 15px}
 
 .actions{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:14px;
+gap:14px
 }
-button{
-border:0;
+.action{
 background:white;
-padding:25px 10px;
+border:0;
 border-radius:20px;
+padding:24px 10px;
 font-size:17px;
 font-weight:bold;
-box-shadow:0 4px 12px #00000012;
-cursor:pointer;
+box-shadow:0 5px 15px #00000012;
+cursor:pointer
 }
-button:active{transform:scale(.97)}
+.action:active{transform:scale(.97)}
+.action div{font-size:40px;margin-bottom:8px}
 
-.icon{font-size:32px;display:block;margin-bottom:10px}
-
-.current{
-margin-top:25px;
+.site{
 background:white;
-padding:22px;
-border-radius:20px;
-box-shadow:0 4px 12px #00000012;
+padding:18px;
+border-radius:18px;
+margin-top:12px
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+z-index:10;
+padding:20px;
+overflow:auto
+}
+.modalbox{
+background:white;
+border-radius:22px;
+padding:20px;
+max-width:600px;
+margin:30px auto
+}
+.modalhead{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px
+}
+.close{
+font-size:28px;
+border:0;
+background:none
+}
+
+input,select{
+width:100%;
+padding:13px;
+margin:7px 0 12px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:16px
+}
+button.primary{
+background:#111827;
+color:white;
+border:0;
+padding:13px 18px;
+border-radius:10px;
+font-size:16px;
+width:100%
+}
+.item{
+padding:14px;
+border-bottom:1px solid #eee
+}
+.item:last-child{border:0}
+.smallbtn{
+padding:7px 10px;
+border:0;
+border-radius:8px;
+margin-top:7px
+}
+.danger{background:#fee2e2;color:#b91c1c}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px
+}
+td,th{
+padding:9px;
+border-bottom:1px solid #eee;
+text-align:left
 }
 
 .footer{
 text-align:center;
-margin:45px 0 15px;
-color:#999;
-}
-
-#message{
-position:fixed;
-bottom:20px;
-left:20px;
-right:20px;
-background:#111827;
-color:white;
-padding:15px;
-border-radius:12px;
-display:none;
-text-align:center;
+color:#888;
+margin-top:30px
 }
 </style>
 </head>
@@ -97,81 +156,71 @@ text-align:center;
 
 <div class="container">
 
-<div class="stats">
-
-<div class="stat">
+<div class="dashboard">
+<div class="card blue">
 <b id="total">0</b>
-<p>Total Manpower</p>
+<span>Total Manpower</span>
 </div>
 
-<div class="stat">
+<div class="card green">
 <b id="present">0</b>
-<p>Present Today</p>
+<span>Present Today</span>
 </div>
 
-<div class="stat">
+<div class="card red">
 <b id="absent">0</b>
-<p>Absent Today</p>
+<span>Absent Today</span>
 </div>
 
-<div class="stat">
+<div class="card yellow">
 <b id="leave">0</b>
-<p>On Leave</p>
+<span>On Leave</span>
 </div>
-
 </div>
 
 <h2>Quick Actions</h2>
 
 <div class="actions">
 
-<button onclick="openPage('Manpower')">
-<span class="icon">👷</span>
-Manpower
+<button class="action" onclick="openModal('manpower')">
+<div>👷</div>Manpower
 </button>
 
-<button onclick="openPage('Attendance')">
-<span class="icon">🟢</span>
-Attendance
+<button class="action" onclick="openModal('attendance')">
+<div>🟢</div>Attendance
 </button>
 
-<button onclick="openPage('Overtime')">
-<span class="icon">⏱️</span>
-OT
+<button class="action" onclick="openModal('ot')">
+<div>⏱️</div>OT
 </button>
 
-<button onclick="openPage('Advance')">
-<span class="icon">💰</span>
-Advance
+<button class="action" onclick="openModal('advance')">
+<div>💰</div>Advance
 </button>
 
-<button onclick="openPage('Leave')">
-<span class="icon">🏖️</span>
-Leave
+<button class="action" onclick="openModal('leave')">
+<div>🏖️</div>Leave
 </button>
 
-<button onclick="openPage('Salary')">
-<span class="icon">💵</span>
-Salary
+<button class="action" onclick="openModal('salary')">
+<div>💵</div>Salary
 </button>
 
-<button onclick="openPage('Sites')">
-<span class="icon">🏢</span>
-Sites
+<button class="action" onclick="openModal('sites')">
+<div>🏢</div>Sites
 </button>
 
-<button onclick="openPage('Reports')">
-<span class="icon">📊</span>
-Reports
+<button class="action" onclick="openModal('reports')">
+<div>📊</div>Reports
 </button>
 
 </div>
 
 <h2>Current Site</h2>
 
-<div class="current">
-<h3>🏢 No Site Selected</h3>
-<p style="margin-top:10px;color:#777">
+<div class="site">
+<b id="currentSite">🏢 No Site Selected</b>
+<p id="siteText" style="margin-top:8px;color:#777">
 Add your first site to start managing manpower.
 </p>
 </div>
@@ -182,21 +231,164 @@ SITE MANAGER • Manpower Management
 
 </div>
 
-<div id="message"></div>
+
+<!-- MANPOWER -->
+
+<div class="modal" id="manpower">
+<div class="modalbox">
+<div class="modalhead">
+<h2>👷 Manpower</h2>
+<button class="close" onclick="closeModal('manpower')">×</button>
+</div>
+
+<input id="empName" placeholder="Employee name">
+<input id="empMobile" placeholder="Mobile number">
+<input id="empRole" placeholder="Designation / Role">
+
+<button class="primary" onclick="addEmployee()">Add Employee</button>
+
+<div id="employeeList"></div>
+</div>
+</div>
+
+
+<!-- ATTENDANCE -->
+
+<div class="modal" id="attendance">
+<div class="modalbox">
+<div class="modalhead">
+<h2>🟢 Attendance</h2>
+<button class="close" onclick="closeModal('attendance')">×</button>
+</div>
+
+<div id="attendanceList"></div>
+</div>
+</div>
+
+
+<!-- OT -->
+
+<div class="modal" id="ot">
+<div class="modalbox">
+<div class="modalhead">
+<h2>⏱️ Overtime</h2>
+<button class="close" onclick="closeModal('ot')">×</button>
+</div>
+
+<select id="otEmployee"></select>
+<input id="otHours" type="number" placeholder="OT hours">
+
+<button class="primary" onclick="addOT()">Save OT</button>
+
+<div id="otList"></div>
+</div>
+</div>
+
+
+<!-- ADVANCE -->
+
+<div class="modal" id="advance">
+<div class="modalbox">
+<div class="modalhead">
+<h2>💰 Advance</h2>
+<button class="close" onclick="closeModal('advance')">×</button>
+</div>
+
+<select id="advanceEmployee"></select>
+<input id="advanceAmount" type="number" placeholder="Advance amount">
+
+<button class="primary" onclick="addAdvance()">Save Advance</button>
+
+<div id="advanceList"></div>
+</div>
+</div>
+
+
+<!-- LEAVE -->
+
+<div class="modal" id="leave">
+<div class="modalbox">
+<div class="modalhead">
+<h2>🏖️ Leave</h2>
+<button class="close" onclick="closeModal('leave')">×</button>
+</div>
+
+<select id="leaveEmployee"></select>
+<input id="leaveDate" type="date">
+
+<button class="primary" onclick="addLeave()">Mark Leave</button>
+
+<div id="leaveList"></div>
+</div>
+</div>
+
+
+<!-- SALARY -->
+
+<div class="modal" id="salary">
+<div class="modalbox">
+<div class="modalhead">
+<h2>💵 Salary</h2>
+<button class="close" onclick="closeModal('salary')">×</button>
+</div>
+
+<select id="salaryEmployee"></select>
+<input id="salaryAmount" type="number" placeholder="Salary amount">
+
+<button class="primary" onclick="addSalary()">Save Salary</button>
+
+<div id="salaryList"></div>
+</div>
+</div>
+
+
+<!-- SITES -->
+
+<div class="modal" id="sites">
+<div class="modalbox">
+<div class="modalhead">
+<h2>🏢 Sites</h2>
+<button class="close" onclick="closeModal('sites')">×</button>
+</div>
+
+<input id="siteName" placeholder="Site name">
+<input id="siteLocation" placeholder="Location">
+
+<button class="primary" onclick="addSite()">Add Site</button>
+
+<div id="siteList"></div>
+</div>
+</div>
+
+
+<!-- REPORTS -->
+
+<div class="modal" id="reports">
+<div class="modalbox">
+<div class="modalhead">
+<h2>📊 Reports</h2>
+<button class="close" onclick="closeModal('reports')">×</button>
+</div>
+
+<div id="reportData"></div>
+</div>
+</div>
+
 
 <script>
 
-function openPage(name){
-const msg=document.getElementById("message");
-msg.innerText=name+" section opened";
-msg.style.display="block";
+let employees=JSON.parse(localStorage.getItem("employees")||"[]");
+let attendance=JSON.parse(localStorage.getItem("attendance")||"{}");
+let ots=JSON.parse(localStorage.getItem("ots")||"[]");
+let advances=JSON.parse(localStorage.getItem("advances")||"[]");
+let leaves=JSON.parse(localStorage.getItem("leaves")||"[]");
+let salaries=JSON.parse(localStorage.getItem("salaries")||"[]");
+let sites=JSON.parse(localStorage.getItem("sites")||"[]");
 
-setTimeout(()=>{
-msg.style.display="none";
-},2000);
-}
-
-</script>
-
-</body>
-</html>
+function save(){
+localStorage.setItem("employees",JSON.stringify(employees));
+localStorage.setItem("attendance",JSON.stringify(attendance));
+localStorage.setItem("ots",JSON.stringify(ots));
+localStorage.setItem("advances",JSON.stringify(advances));
+localStorage.setItem("leaves",JSON.stringify(leaves));
+localStorage.setItem("salaries",JSON
