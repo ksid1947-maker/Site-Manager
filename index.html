@@ -2,224 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Site Manager</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f8;
+color:#17202a;
+}
+.header{
+background:#111827;
+color:white;
+padding:22px 18px;
+border-radius:0 0 22px 22px;
+}
+.header h1{font-size:28px}
+.header p{margin-top:8px;color:#cbd5e1}
+
+.container{padding:20px}
+
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+margin-bottom:28px;
+}
+.stat{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 4px 12px #00000012;
+}
+.stat b{font-size:30px}
+.stat p{margin-top:8px;color:#777}
+
+h2{margin:20px 0 15px}
+
+.actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
+button{
+border:0;
+background:white;
+padding:25px 10px;
+border-radius:20px;
+font-size:17px;
+font-weight:bold;
+box-shadow:0 4px 12px #00000012;
+cursor:pointer;
+}
+button:active{transform:scale(.97)}
+
+.icon{font-size:32px;display:block;margin-bottom:10px}
+
+.current{
+margin-top:25px;
+background:white;
+padding:22px;
+border-radius:20px;
+box-shadow:0 4px 12px #00000012;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  color: #17202a;
+.footer{
+text-align:center;
+margin:45px 0 15px;
+color:#999;
 }
 
-.header {
-  background: #111827;
-  color: white;
-  padding: 20px;
-  border-radius: 0 0 22px 22px;
-}
-
-.header h1 {
-  font-size: 25px;
-}
-
-.header p {
-  margin-top: 5px;
-  color: #aeb8c5;
-  font-size: 14px;
-}
-
-.container {
-  padding: 18px;
-  max-width: 600px;
-  margin: auto;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: -5px;
-}
-
-.stat {
-  background: white;
-  padding: 18px;
-  border-radius: 16px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
-
-.stat .number {
-  font-size: 27px;
-  font-weight: bold;
-}
-
-.stat .label {
-  margin-top: 5px;
-  color: #68717d;
-  font-size: 13px;
-}
-
-.green { border-left: 5px solid #16a34a; }
-.red { border-left: 5px solid #dc2626; }
-.yellow { border-left: 5px solid #eab308; }
-.blue { border-left: 5px solid #2563eb; }
-
-.section-title {
-  margin: 25px 0 12px;
-  font-size: 19px;
-}
-
-.menu {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.menu button {
-  border: none;
-  background: white;
-  padding: 20px 10px;
-  border-radius: 16px;
-  font-size: 15px;
-  font-weight: bold;
-  color: #17202a;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
-
-.menu button:active {
-  transform: scale(0.97);
-}
-
-.icon {
-  display: block;
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
-.site-box {
-  margin-top: 22px;
-  background: white;
-  padding: 18px;
-  border-radius: 16px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
-
-.site-box h3 {
-  margin-bottom: 8px;
-}
-
-.site-box p {
-  color: #68717d;
-  font-size: 14px;
-}
-
-.footer {
-  text-align: center;
-  padding: 30px 10px;
-  color: #8a929c;
-  font-size: 12px;
+#message{
+position:fixed;
+bottom:20px;
+left:20px;
+right:20px;
+background:#111827;
+color:white;
+padding:15px;
+border-radius:12px;
+display:none;
+text-align:center;
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-  <h1>👷 SITE MANAGER</h1>
-  <p>Manpower Management System</p>
-</header>
+<div class="header">
+<h1>👷 SITE MANAGER</h1>
+<p>Manpower Management System</p>
+</div>
 
-<main class="container">
+<div class="container">
 
-  <div class="stats">
+<div class="stats">
 
-    <div class="stat blue">
-      <div class="number">0</div>
-      <div class="label">Total Manpower</div>
-    </div>
+<div class="stat">
+<b id="total">0</b>
+<p>Total Manpower</p>
+</div>
 
-    <div class="stat green">
-      <div class="number">0</div>
-      <div class="label">Present Today</div>
-    </div>
+<div class="stat">
+<b id="present">0</b>
+<p>Present Today</p>
+</div>
 
-    <div class="stat red">
-      <div class="number">0</div>
-      <div class="label">Absent Today</div>
-    </div>
+<div class="stat">
+<b id="absent">0</b>
+<p>Absent Today</p>
+</div>
 
-    <div class="stat yellow">
-      <div class="number">0</div>
-      <div class="label">On Leave</div>
-    </div>
+<div class="stat">
+<b id="leave">0</b>
+<p>On Leave</p>
+</div>
 
-  </div>
+</div>
 
-  <h2 class="section-title">Quick Actions</h2>
+<h2>Quick Actions</h2>
 
-  <div class="menu">
+<div class="actions">
 
-    <button>
-      <span class="icon">👷</span>
-      Manpower
-    </button>
+<button onclick="openPage('Manpower')">
+<span class="icon">👷</span>
+Manpower
+</button>
 
-    <button>
-      <span class="icon">🟢</span>
-      Attendance
-    </button>
+<button onclick="openPage('Attendance')">
+<span class="icon">🟢</span>
+Attendance
+</button>
 
-    <button>
-      <span class="icon">⏱️</span>
-      OT
-    </button>
+<button onclick="openPage('Overtime')">
+<span class="icon">⏱️</span>
+OT
+</button>
 
-    <button>
-      <span class="icon">💰</span>
-      Advance
-    </button>
+<button onclick="openPage('Advance')">
+<span class="icon">💰</span>
+Advance
+</button>
 
-    <button>
-      <span class="icon">🏖️</span>
-      Leave
-    </button>
+<button onclick="openPage('Leave')">
+<span class="icon">🏖️</span>
+Leave
+</button>
 
-    <button>
-      <span class="icon">💵</span>
-      Salary
-    </button>
+<button onclick="openPage('Salary')">
+<span class="icon">💵</span>
+Salary
+</button>
 
-    <button>
-      <span class="icon">🏢</span>
-      Sites
-    </button>
+<button onclick="openPage('Sites')">
+<span class="icon">🏢</span>
+Sites
+</button>
 
-    <button>
-      <span class="icon">📊</span>
-      Reports
-    </button>
+<button onclick="openPage('Reports')">
+<span class="icon">📊</span>
+Reports
+</button>
 
-  </div>
+</div>
 
-  <h2 class="section-title">Current Site</h2>
+<h2>Current Site</h2>
 
-  <div class="site-box">
-    <h3>🏢 No Site Selected</h3>
-    <p>Add your first site to start managing manpower.</p>
-  </div>
+<div class="current">
+<h3>🏢 No Site Selected</h3>
+<p style="margin-top:10px;color:#777">
+Add your first site to start managing manpower.
+</p>
+</div>
 
-</main>
+<div class="footer">
+SITE MANAGER • Manpower Management
+</div>
 
-<footer class="footer">
-  SITE MANAGER • Manpower Management
-</footer>
+</div>
+
+<div id="message"></div>
+
+<script>
+
+function openPage(name){
+const msg=document.getElementById("message");
+msg.innerText=name+" section opened";
+msg.style.display="block";
+
+setTimeout(()=>{
+msg.style.display="none";
+},2000);
+}
+
+</script>
 
 </body>
-    </html>
+</html>
