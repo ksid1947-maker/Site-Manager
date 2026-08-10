@@ -2,147 +2,161 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Site Manager</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
 font-family:Arial,sans-serif;
 background:#f4f6f8;
 color:#17202a;
-padding-bottom:30px
+padding-bottom:40px
 }
+
 .header{
 background:#111827;
 color:white;
-padding:24px 18px;
-border-radius:0 0 25px 25px
+padding:28px 20px 35px;
+border-radius:0 0 28px 28px
 }
-.header h1{font-size:30px}
-.header p{margin-top:8px;color:#cbd5e1}
 
-.container{padding:18px}
+.header h1{font-size:34px}
+.header p{font-size:20px;margin-top:10px;color:#d1d5db}
+
+.container{padding:20px}
+
 .dashboard{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:14px;
+gap:16px;
 margin-bottom:25px
 }
-.card{
-background:white;
-padding:22px 15px;
-border-radius:22px;
-box-shadow:0 6px 18px #00000012;
-text-align:center
-}
-.card b{font-size:38px;display:block}
-.card span{font-size:16px;color:#777}
-.blue{border-left:6px solid #2563eb}
-.green{border-left:6px solid #16a34a}
-.red{border-left:6px solid #dc2626}
-.yellow{border-left:6px solid #eab308}
 
-h2{margin:25px 0 15px}
+.stat{
+background:white;
+border-radius:24px;
+padding:25px 15px;
+text-align:center;
+box-shadow:0 5px 20px #00000012;
+border-left:8px solid #2563eb
+}
+
+.stat:nth-child(2){border-color:#16a34a}
+.stat:nth-child(3){border-color:#dc2626}
+.stat:nth-child(4){border-color:#eab308}
+
+.stat b{
+display:block;
+font-size:48px;
+margin-bottom:8px
+}
+
+.stat span{
+font-size:18px;
+color:#777
+}
+
+h2{
+font-size:28px;
+margin:25px 0 15px
+}
 
 .actions{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:14px
+gap:16px
 }
+
 .action{
 background:white;
 border:0;
-border-radius:20px;
-padding:24px 10px;
-font-size:17px;
+border-radius:24px;
+padding:28px 10px;
+min-height:150px;
+font-size:19px;
 font-weight:bold;
-box-shadow:0 5px 15px #00000012;
+box-shadow:0 5px 20px #00000012;
 cursor:pointer
 }
+
 .action:active{transform:scale(.97)}
-.action div{font-size:40px;margin-bottom:8px}
 
-.site{
-background:white;
-padding:18px;
-border-radius:18px;
-margin-top:12px
+.icon{
+display:block;
+font-size:48px;
+margin-bottom:15px
 }
 
-.modal{
+.panel{
 display:none;
-position:fixed;
-inset:0;
-background:#0008;
-z-index:10;
-padding:20px;
-overflow:auto
-}
-.modalbox{
 background:white;
-border-radius:22px;
+margin-top:25px;
 padding:20px;
-max-width:600px;
-margin:30px auto
+border-radius:22px;
+box-shadow:0 5px 20px #00000012
 }
-.modalhead{
-display:flex;
-justify-content:space-between;
-align-items:center;
+
+.panel.active{display:block}
+
+.panel h3{
+font-size:25px;
 margin-bottom:18px
-}
-.close{
-font-size:28px;
-border:0;
-background:none
 }
 
 input,select{
 width:100%;
-padding:13px;
-margin:7px 0 12px;
+padding:14px;
+margin:7px 0;
 border:1px solid #ddd;
-border-radius:10px;
+border-radius:12px;
 font-size:16px
 }
+
 button.primary{
+width:100%;
+padding:14px;
+border:0;
+border-radius:12px;
 background:#111827;
 color:white;
-border:0;
-padding:13px 18px;
-border-radius:10px;
-font-size:16px;
-width:100%
+font-size:17px;
+margin-top:8px
 }
-.item{
-padding:14px;
-border-bottom:1px solid #eee
-}
-.item:last-child{border:0}
-.smallbtn{
-padding:7px 10px;
-border:0;
-border-radius:8px;
-margin-top:7px
-}
-.danger{background:#fee2e2;color:#b91c1c}
 
-table{
-width:100%;
-border-collapse:collapse;
+.item{
+background:#f4f6f8;
+padding:14px;
+border-radius:14px;
 margin-top:10px
 }
-td,th{
-padding:9px;
-border-bottom:1px solid #eee;
-text-align:left
+
+.item button{
+float:right;
+border:0;
+background:#dc2626;
+color:white;
+padding:7px 10px;
+border-radius:8px
 }
 
-.footer{
+.close{
+background:#e5e7eb!important;
+color:#111!important;
+margin-top:12px
+}
+
+.empty{
 text-align:center;
-color:#888;
-margin-top:30px
+color:#777;
+padding:15px
+}
+
+@media(max-width:500px){
+.header h1{font-size:32px}
+.header p{font-size:18px}
+.stat b{font-size:42px}
 }
 </style>
 </head>
@@ -157,23 +171,23 @@ margin-top:30px
 <div class="container">
 
 <div class="dashboard">
-<div class="card blue">
+<div class="stat">
 <b id="total">0</b>
 <span>Total Manpower</span>
 </div>
 
-<div class="card green">
+<div class="stat">
 <b id="present">0</b>
 <span>Present Today</span>
 </div>
 
-<div class="card red">
+<div class="stat">
 <b id="absent">0</b>
 <span>Absent Today</span>
 </div>
 
-<div class="card yellow">
-<b id="leave">0</b>
+<div class="stat">
+<b id="leaveCount">0</b>
 <span>On Leave</span>
 </div>
 </div>
@@ -182,213 +196,653 @@ margin-top:30px
 
 <div class="actions">
 
-<button class="action" onclick="openModal('manpower')">
-<div>👷</div>Manpower
+<button class="action" onclick="openPanel('manpower')">
+<span class="icon">👷</span>
+Manpower
 </button>
 
-<button class="action" onclick="openModal('attendance')">
-<div>🟢</div>Attendance
+<button class="action" onclick="openPanel('attendance')">
+<span class="icon">🟢</span>
+Attendance
 </button>
 
-<button class="action" onclick="openModal('ot')">
-<div>⏱️</div>OT
+<button class="action" onclick="openPanel('ot')">
+<span class="icon">⏱️</span>
+OT
 </button>
 
-<button class="action" onclick="openModal('advance')">
-<div>💰</div>Advance
+<button class="action" onclick="openPanel('advance')">
+<span class="icon">💰</span>
+Advance
 </button>
 
-<button class="action" onclick="openModal('leave')">
-<div>🏖️</div>Leave
+<button class="action" onclick="openPanel('leave')">
+<span class="icon">🏖️</span>
+Leave
 </button>
 
-<button class="action" onclick="openModal('salary')">
-<div>💵</div>Salary
-</button>
-
-<button class="action" onclick="openModal('sites')">
-<div>🏢</div>Sites
-</button>
-
-<button class="action" onclick="openModal('reports')">
-<div>📊</div>Reports
+<button class="action" onclick="openPanel('salary')">
+<span class="icon">💵</span>
+Salary
 </button>
 
 </div>
-
-<h2>Current Site</h2>
-
-<div class="site">
-<b id="currentSite">🏢 No Site Selected</b>
-<p id="siteText" style="margin-top:8px;color:#777">
-Add your first site to start managing manpower.
-</p>
-</div>
-
-<div class="footer">
-SITE MANAGER • Manpower Management
-</div>
-
-</div>
-
 
 <!-- MANPOWER -->
 
-<div class="modal" id="manpower">
-<div class="modalbox">
-<div class="modalhead">
-<h2>👷 Manpower</h2>
-<button class="close" onclick="closeModal('manpower')">×</button>
-</div>
+<div id="manpower" class="panel">
 
-<input id="empName" placeholder="Employee name">
-<input id="empMobile" placeholder="Mobile number">
-<input id="empRole" placeholder="Designation / Role">
+<h3>👷 Manpower Management</h3>
 
-<button class="primary" onclick="addEmployee()">Add Employee</button>
+<input id="empName" placeholder="Worker name">
+
+<input id="empId" placeholder="Employee ID">
+
+<input id="empRole" placeholder="Role / Designation">
+
+<button class="primary" onclick="addEmployee()">
++ Add Worker
+</button>
 
 <div id="employeeList"></div>
-</div>
-</div>
 
+<button class="primary close" onclick="closePanels()">
+Close
+</button>
+
+</div>
 
 <!-- ATTENDANCE -->
 
-<div class="modal" id="attendance">
-<div class="modalbox">
-<div class="modalhead">
-<h2>🟢 Attendance</h2>
-<button class="close" onclick="closeModal('attendance')">×</button>
-</div>
+<div id="attendance" class="panel">
+
+<h3>🟢 Daily Attendance</h3>
+
+<select id="attendanceEmployee"></select>
+
+<select id="attendanceStatus">
+<option value="Present">Present</option>
+<option value="Absent">Absent</option>
+</select>
+
+<button class="primary" onclick="markAttendance()">
+Save Attendance
+</button>
 
 <div id="attendanceList"></div>
-</div>
-</div>
 
+<button class="primary close" onclick="closePanels()">
+Close
+</button>
+
+</div>
 
 <!-- OT -->
 
-<div class="modal" id="ot">
-<div class="modalbox">
-<div class="modalhead">
-<h2>⏱️ Overtime</h2>
-<button class="close" onclick="closeModal('ot')">×</button>
-</div>
+<div id="ot" class="panel">
+
+<h3>⏱️ Overtime</h3>
 
 <select id="otEmployee"></select>
-<input id="otHours" type="number" placeholder="OT hours">
 
-<button class="primary" onclick="addOT()">Save OT</button>
+<input id="otHours" type="number" placeholder="OT Hours">
+
+<button class="primary" onclick="addOT()">
+Save OT
+</button>
 
 <div id="otList"></div>
-</div>
-</div>
 
+<button class="primary close" onclick="closePanels()">
+Close
+</button>
+
+</div>
 
 <!-- ADVANCE -->
 
-<div class="modal" id="advance">
-<div class="modalbox">
-<div class="modalhead">
-<h2>💰 Advance</h2>
-<button class="close" onclick="closeModal('advance')">×</button>
-</div>
+<div id="advance" class="panel">
+
+<h3>💰 Advance</h3>
 
 <select id="advanceEmployee"></select>
-<input id="advanceAmount" type="number" placeholder="Advance amount">
 
-<button class="primary" onclick="addAdvance()">Save Advance</button>
+<input id="advanceAmount" type="number" placeholder="Advance Amount ₹">
+
+<button class="primary" onclick="addAdvance()">
+Save Advance
+</button>
 
 <div id="advanceList"></div>
-</div>
-</div>
 
+<button class="primary close" onclick="closePanels()">
+Close
+</button>
+
+</div>
 
 <!-- LEAVE -->
 
-<div class="modal" id="leave">
-<div class="modalbox">
-<div class="modalhead">
-<h2>🏖️ Leave</h2>
-<button class="close" onclick="closeModal('leave')">×</button>
-</div>
+<div id="leave" class="panel">
+
+<h3>🏖️ Leave Management</h3>
 
 <select id="leaveEmployee"></select>
+
 <input id="leaveDate" type="date">
 
-<button class="primary" onclick="addLeave()">Mark Leave</button>
+<input id="leaveReason" placeholder="Leave reason">
+
+<button class="primary" onclick="addLeave()">
+Save Leave
+</button>
 
 <div id="leaveList"></div>
-</div>
-</div>
 
+<button class="primary close" onclick="closePanels()">
+Close
+</button>
+
+</div>
 
 <!-- SALARY -->
 
-<div class="modal" id="salary">
-<div class="modalbox">
-<div class="modalhead">
-<h2>💵 Salary</h2>
-<button class="close" onclick="closeModal('salary')">×</button>
-</div>
+<div id="salary" class="panel">
+
+<h3>💵 Salary</h3>
 
 <select id="salaryEmployee"></select>
-<input id="salaryAmount" type="number" placeholder="Salary amount">
 
-<button class="primary" onclick="addSalary()">Save Salary</button>
+<input id="salaryAmount" type="number" placeholder="Monthly Salary ₹">
+
+<button class="primary" onclick="addSalary()">
+Save Salary
+</button>
 
 <div id="salaryList"></div>
-</div>
-</div>
 
+<button class="primary close" onclick="closePanels()">
+Close
+</button>
 
-<!-- SITES -->
-
-<div class="modal" id="sites">
-<div class="modalbox">
-<div class="modalhead">
-<h2>🏢 Sites</h2>
-<button class="close" onclick="closeModal('sites')">×</button>
 </div>
 
-<input id="siteName" placeholder="Site name">
-<input id="siteLocation" placeholder="Location">
-
-<button class="primary" onclick="addSite()">Add Site</button>
-
-<div id="siteList"></div>
 </div>
-</div>
-
-
-<!-- REPORTS -->
-
-<div class="modal" id="reports">
-<div class="modalbox">
-<div class="modalhead">
-<h2>📊 Reports</h2>
-<button class="close" onclick="closeModal('reports')">×</button>
-</div>
-
-<div id="reportData"></div>
-</div>
-</div>
-
 
 <script>
 
-let employees=JSON.parse(localStorage.getItem("employees")||"[]");
-let attendance=JSON.parse(localStorage.getItem("attendance")||"{}");
-let ots=JSON.parse(localStorage.getItem("ots")||"[]");
-let advances=JSON.parse(localStorage.getItem("advances")||"[]");
-let leaves=JSON.parse(localStorage.getItem("leaves")||"[]");
-let salaries=JSON.parse(localStorage.getItem("salaries")||"[]");
-let sites=JSON.parse(localStorage.getItem("sites")||"[]");
+let employees =
+JSON.parse(localStorage.getItem("employees") || "[]");
+
+let attendance =
+JSON.parse(localStorage.getItem("attendance") || "{}");
+
+let ots =
+JSON.parse(localStorage.getItem("ots") || "[]");
+
+let advances =
+JSON.parse(localStorage.getItem("advances") || "[]");
+
+let leaves =
+JSON.parse(localStorage.getItem("leaves") || "[]");
+
+let salaries =
+JSON.parse(localStorage.getItem("salaries") || "[]");
+
 
 function save(){
-localStorage.setItem("employees",JSON.stringify(employees));
-localStorage.setItem("attendance",JSON.stringify(attendance));
-localStorage.setItem("ots",JSON.stringify(ots));
-localStorage.setItem("advances",JSON.stringify(advances));
-localStorage.setItem("leaves",JSON.stringify(leaves));
-localStorage.setItem("salaries",JSON
+
+localStorage.setItem(
+"employees",
+JSON.stringify(employees)
+);
+
+localStorage.setItem(
+"attendance",
+JSON.stringify(attendance)
+);
+
+localStorage.setItem(
+"ots",
+JSON.stringify(ots)
+);
+
+localStorage.setItem(
+"advances",
+JSON.stringify(advances)
+);
+
+localStorage.setItem(
+"leaves",
+JSON.stringify(leaves)
+);
+
+localStorage.setItem(
+"salaries",
+JSON.stringify(salaries)
+);
+
+}
+
+
+function openPanel(id){
+
+closePanels();
+
+document.getElementById(id)
+.classList.add("active");
+
+updateLists();
+
+document.getElementById(id)
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+
+function closePanels(){
+
+document.querySelectorAll(".panel")
+.forEach(p=>p.classList.remove("active"));
+
+}
+
+
+function addEmployee(){
+
+let name=document.getElementById("empName").value.trim();
+let id=document.getElementById("empId").value.trim();
+let role=document.getElementById("empRole").value.trim();
+
+if(!name){
+alert("Worker name enter karo");
+return;
+}
+
+employees.push({
+id:id || Date.now(),
+name:name,
+role:role || "Worker"
+});
+
+save();
+
+document.getElementById("empName").value="";
+document.getElementById("empId").value="";
+document.getElementById("empRole").value="";
+
+updateLists();
+
+alert("Worker added successfully");
+
+}
+
+
+function deleteEmployee(index){
+
+if(confirm("Worker delete karna hai?")){
+
+employees.splice(index,1);
+
+save();
+
+updateLists();
+
+}
+
+}
+
+
+function markAttendance(){
+
+let employee=document.getElementById(
+"attendanceEmployee"
+).value;
+
+let status=document.getElementById(
+"attendanceStatus"
+).value;
+
+if(!employee){
+
+alert("Pehle worker select karo");
+return;
+
+}
+
+let today=new Date().toISOString().slice(0,10);
+
+attendance[employee]={
+status:status,
+date:today
+};
+
+save();
+
+updateLists();
+
+alert("Attendance saved");
+
+}
+
+
+function addOT(){
+
+let employee=document.getElementById("otEmployee").value;
+
+let hours=Number(
+document.getElementById("otHours").value
+);
+
+if(!employee || !hours){
+
+alert("Worker aur OT hours enter karo");
+return;
+
+}
+
+ots.push({
+employee:employee,
+hours:hours,
+date:new Date().toISOString().slice(0,10)
+});
+
+save();
+
+document.getElementById("otHours").value="";
+
+updateLists();
+
+alert("OT saved");
+
+}
+
+
+function addAdvance(){
+
+let employee=document.getElementById(
+"advanceEmployee"
+).value;
+
+let amount=Number(
+document.getElementById("advanceAmount").value
+);
+
+if(!employee || !amount){
+
+alert("Worker aur amount enter karo");
+return;
+
+}
+
+advances.push({
+employee:employee,
+amount:amount,
+date:new Date().toISOString().slice(0,10)
+});
+
+save();
+
+document.getElementById("advanceAmount").value="";
+
+updateLists();
+
+alert("Advance saved");
+
+}
+
+
+function addLeave(){
+
+let employee=document.getElementById(
+"leaveEmployee"
+).value;
+
+let date=document.getElementById(
+"leaveDate"
+).value;
+
+let reason=document.getElementById(
+"leaveReason"
+).value;
+
+if(!employee || !date){
+
+alert("Worker aur leave date select karo");
+return;
+
+}
+
+leaves.push({
+employee:employee,
+date:date,
+reason:reason || "Personal"
+});
+
+save();
+
+document.getElementById("leaveDate").value="";
+document.getElementById("leaveReason").value="";
+
+updateLists();
+
+alert("Leave saved");
+
+}
+
+
+function addSalary(){
+
+let employee=document.getElementById(
+"salaryEmployee"
+).value;
+
+let amount=Number(
+document.getElementById("salaryAmount").value
+);
+
+if(!employee || !amount){
+
+alert("Worker aur salary enter karo");
+return;
+
+}
+
+salaries.push({
+employee:employee,
+amount:amount
+});
+
+save();
+
+document.getElementById("salaryAmount").value="";
+
+updateLists();
+
+alert("Salary saved");
+
+}
+
+
+function updateLists(){
+
+document.getElementById("total").innerText=
+employees.length;
+
+
+let today=new Date().toISOString().slice(0,10);
+
+let presentCount=0;
+let absentCount=0;
+
+employees.forEach(e=>{
+
+let a=attendance[e.name];
+
+if(a && a.date===today){
+
+if(a.status==="Present")
+presentCount++;
+
+if(a.status==="Absent")
+absentCount++;
+
+}
+
+});
+
+
+document.getElementById("present")
+.innerText=presentCount;
+
+document.getElementById("absent")
+.innerText=absentCount;
+
+
+let currentLeaves=leaves.filter(
+l=>l.date===today
+).length;
+
+document.getElementById("leaveCount")
+.innerText=currentLeaves;
+
+
+let selects=[
+"attendanceEmployee",
+"otEmployee",
+"advanceEmployee",
+"leaveEmployee",
+"salaryEmployee"
+];
+
+selects.forEach(id=>{
+
+let select=document.getElementById(id);
+
+select.innerHTML=
+'<option value="">Select Worker</option>';
+
+employees.forEach(e=>{
+
+let option=document.createElement("option");
+
+option.value=e.name;
+
+option.textContent=
+e.name+" - "+e.role;
+
+select.appendChild(option);
+
+});
+
+});
+
+
+document.getElementById("employeeList")
+.innerHTML=employees.length ?
+
+employees.map((e,i)=>`
+
+<div class="item">
+<b>${e.name}</b><br>
+ID: ${e.id}<br>
+Role: ${e.role}
+<button onclick="deleteEmployee(${i})">
+Delete
+</button>
+</div>
+
+`).join("") :
+
+'<div class="empty">No workers added yet.</div>';
+
+
+document.getElementById("attendanceList")
+.innerHTML=Object.keys(attendance).length ?
+
+Object.entries(attendance).map(([name,a])=>`
+
+<div class="item">
+<b>${name}</b><br>
+${a.date} — ${a.status}
+</div>
+
+`).join("") :
+
+'<div class="empty">No attendance recorded.</div>';
+
+
+document.getElementById("otList")
+.innerHTML=ots.length ?
+
+ots.map(o=>`
+
+<div class="item">
+<b>${o.employee}</b><br>
+OT: ${o.hours} hours<br>
+${o.date}
+</div>
+
+`).join("") :
+
+'<div class="empty">No OT recorded.</div>';
+
+
+document.getElementById("advanceList")
+.innerHTML=advances.length ?
+
+advances.map(a=>`
+
+<div class="item">
+<b>${a.employee}</b><br>
+Advance: ₹${a.amount}<br>
+${a.date}
+</div>
+
+`).join("") :
+
+'<div class="empty">No advance recorded.</div>';
+
+
+document.getElementById("leaveList")
+.innerHTML=leaves.length ?
+
+leaves.map(l=>`
+
+<div class="item">
+<b>${l.employee}</b><br>
+Date: ${l.date}<br>
+Reason: ${l.reason}
+</div>
+
+`).join("") :
+
+'<div class="empty">No leave recorded.</div>';
+
+
+document.getElementById("salaryList")
+.innerHTML=salaries.length ?
+
+salaries.map(s=>`
+
+<div class="item">
+<b>${s.employee}</b><br>
+Salary: ₹${s.amount}
+</div>
+
+`).join("") :
+
+'<div class="empty">No salary recorded.</div>';
+
+}
+
+
+updateLists();
+
+</script>
+
+</body>
+</html>
