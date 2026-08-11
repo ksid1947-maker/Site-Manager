@@ -1,11 +1,17 @@
 {
   "name": "Attendance Master",
   "short_name": "Attendance Master",
-  "description": "Manpower, attendance, advance, leave, Sunday payment and salary management system.",
+  "description": "Manpower, attendance, advance, leave, Sunday payment and salary management system",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f6f8",
   "theme_color": "#111827",
   "orientation": "portrait",
-  "icons": []
+  "icons": [
+    {
+      "src": "./attendance_master_icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
