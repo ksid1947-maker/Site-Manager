@@ -1,2337 +1,2092 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#111827">
-
-<meta name="description"
-      content="Attendance Master - Manpower, Attendance, Advance, Leave, Sunday Payment and Salary Management">
-
+<meta name="description" content="Attendance Master - Manpower Management">
 <title>Attendance Master</title>
 
 <link rel="manifest" href="./manifest.json">
-
-<link rel="icon"
-      type="image/png"
-      href="./attendance_master_icon.png">
+<link rel="icon" type="image/png" href="./attendance_master_icon.png">
 
 <style>
-
-*{
-  box-sizing:border-box;
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;color:#17202a;font-family:Arial,sans-serif}
+button,input,select{font-family:inherit}
+.header{background:#111827;color:#fff;text-align:center;padding:32px 15px 38px;border-radius:0 0 45px 45px}
+.header h1{margin:0 0 18px;font:40px Georgia,serif}
+.header p{margin:0;color:#d1d5db;font:18px Georgia,serif;line-height:1.5}
+.container{padding:22px 18px 50px;max-width:700px;margin:auto}
+.card{background:#fff;border-radius:28px;padding:25px;margin-bottom:20px;box-shadow:0 4px 18px #00000012}
+.stat-card{min-height:145px;display:flex;flex-direction:column;justify-content:center}
+.stat{font:bold 50px Georgia,serif;margin-bottom:7px}
+.label{color:#777;font:20px Georgia,serif}
+.blue{border-left:9px solid #2563eb}
+.green{border-left:9px solid #16a34a}
+.red{border-left:9px solid #dc2626}
+.yellow{border-left:9px solid #eab308}
+.info{font:19px Georgia,serif}
+.info strong{font-size:25px}
+.section-title{font:36px Georgia,serif;margin:30px 0 18px}
+.action{width:100%;background:#fff;border:0;border-radius:28px;padding:23px 15px;margin-bottom:17px;box-shadow:0 4px 18px #00000012;font:bold 23px Georgia,serif;color:#17202a}
+.action:active{transform:scale(.98)}
+.action span{display:block;font-size:42px;margin-bottom:8px}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:999;padding:15px;overflow:auto}
+.modal-box{background:#fff;max-width:560px;margin:30px auto;border-radius:25px;padding:25px}
+.modal-box h2{font:29px Georgia,serif;margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input,select{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:12px;font-size:17px;margin-bottom:10px;background:#fff}
+.primary,.secondary,.danger,.close{width:100%;border:0;padding:15px;border-radius:13px;font-size:17px;font-weight:bold;margin-top:8px}
+.primary{background:#111827;color:#fff}
+.secondary{background:#2563eb;color:#fff}
+.danger{background:#dc2626;color:#fff}
+.close{background:#e5e7eb;color:#17202a}
+.worker{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:15px;margin-bottom:10px}
+.small{border:0;padding:8px 11px;border-radius:9px;background:#111827;color:#fff;margin:3px}
+.edit{background:#2563eb}
+.del{background:#dc2626}
+.green-btn{background:#16a34a}
+.summary{background:#f3f4f6;border-radius:15px;padding:15px;line-height:1.8;margin:12px 0}
+.notice{padding:12px;background:#eff6ff;border-left:5px solid #2563eb;border-radius:10px;margin-bottom:15px}
+.empty{text-align:center;color:#777;padding:20px}
+.footer{text-align:center;color:#888;font-size:14px;padding:10px 0 30px}
+hr{border:0;border-top:1px solid #ddd;margin:18px 0}
+.search{margin-bottom:15px}
+.report-box{line-height:1.8}
+.report-worker{border:1px solid #ddd;border-radius:12px;padding:12px;margin:10px 0}
+@media print{
+ body{background:#fff}
+ .header,.action,.footer,.no-print{display:none!important}
+ .modal{display:none!important}
+ #reportModal{display:block!important;position:static;background:#fff;padding:0}
+ #reportModal .modal-box{margin:0;max-width:none;box-shadow:none}
 }
-
-body{
-  margin:0;
-  background:#f4f6f8;
-  color:#17202a;
-  font-family:Arial,sans-serif;
-}
-
-button,
-input,
-select{
-  font-family:inherit;
-}
-
-.header{
-  background:#111827;
-  color:white;
-  text-align:center;
-  padding:32px 15px 38px;
-  border-radius:0 0 45px 45px;
-}
-
-.header h1{
-  margin:0 0 18px;
-  font-family:Georgia,serif;
-  font-size:40px;
-  line-height:1.1;
-}
-
-.header p{
-  margin:0;
-  color:#d1d5db;
-  font-family:Georgia,serif;
-  font-size:18px;
-  line-height:1.5;
-}
-
-.container{
-  padding:22px 18px 50px;
-  max-width:700px;
-  margin:auto;
-}
-
-.card{
-  background:white;
-  border-radius:28px;
-  padding:25px;
-  margin-bottom:20px;
-  box-shadow:0 4px 18px rgba(0,0,0,.07);
-}
-
-.stat-card{
-  min-height:150px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-.stat{
-  font-family:Georgia,serif;
-  font-size:50px;
-  font-weight:bold;
-  margin-bottom:7px;
-}
-
-.label{
-  color:#777;
-  font-family:Georgia,serif;
-  font-size:20px;
-}
-
-.blue{
-  border-left:9px solid #2563eb;
-}
-
-.green{
-  border-left:9px solid #16a34a;
-}
-
-.red{
-  border-left:9px solid #dc2626;
-}
-
-.yellow{
-  border-left:9px solid #eab308;
-}
-
-.info-card{
-  font-family:Georgia,serif;
-  font-size:19px;
-}
-
-.info-card strong{
-  font-size:25px;
-  margin-right:4px;
-}
-
-.section-title{
-  font-family:Georgia,serif;
-  font-size:36px;
-  margin:30px 0 18px;
-}
-
-.action{
-  width:100%;
-  background:white;
-  border:0;
-  border-radius:28px;
-  padding:25px 15px;
-  margin-bottom:17px;
-  box-shadow:0 4px 18px rgba(0,0,0,.07);
-  font-size:23px;
-  font-family:Georgia,serif;
-  font-weight:bold;
-  color:#17202a;
-  cursor:pointer;
-}
-
-.action:active{
-  transform:scale(.98);
-}
-
-.action span{
-  display:block;
-  font-size:42px;
-  margin-bottom:8px;
-}
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:999;
-  padding:15px;
-  overflow:auto;
-}
-
-.modal-box{
-  background:white;
-  max-width:520px;
-  margin:35px auto;
-  border-radius:25px;
-  padding:25px;
-}
-
-.modal-box h2{
-  font-family:Georgia,serif;
-  margin-top:0;
-  font-size:29px;
-}
-
-label{
-  display:block;
-  margin-top:12px;
-  margin-bottom:5px;
-  font-weight:bold;
-}
-
-input,
-select{
-  width:100%;
-  padding:14px;
-  border:1px solid #d1d5db;
-  border-radius:12px;
-  font-size:17px;
-  margin-bottom:10px;
-  outline:none;
-  background:white;
-}
-
-input:focus,
-select:focus{
-  border-color:#2563eb;
-}
-
-.primary{
-  width:100%;
-  border:0;
-  background:#111827;
-  color:white;
-  padding:15px;
-  border-radius:13px;
-  font-size:17px;
-  font-weight:bold;
-  margin-top:8px;
-}
-
-.secondary{
-  width:100%;
-  border:0;
-  background:#2563eb;
-  color:white;
-  padding:15px;
-  border-radius:13px;
-  font-size:17px;
-  font-weight:bold;
-  margin-top:8px;
-}
-
-.danger{
-  width:100%;
-  border:0;
-  background:#dc2626;
-  color:white;
-  padding:15px;
-  border-radius:13px;
-  font-size:17px;
-  font-weight:bold;
-  margin-top:8px;
-}
-
-.close{
-  width:100%;
-  border:0;
-  background:#e5e7eb;
-  color:#17202a;
-  padding:15px;
-  border-radius:13px;
-  font-size:17px;
-  margin-top:10px;
-}
-
-.small-btn{
-  border:0;
-  padding:9px 12px;
-  border-radius:10px;
-  background:#111827;
-  color:white;
-  margin:3px;
-  cursor:pointer;
-}
-
-.red-btn{
-  background:#dc2626;
-}
-
-.blue-btn{
-  background:#2563eb;
-}
-
-.green-btn{
-  background:#16a34a;
-}
-
-.worker{
-  background:#f8fafc;
-  border:1px solid #e5e7eb;
-  border-radius:16px;
-  padding:15px;
-  margin-bottom:10px;
-}
-
-.worker-name{
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:8px;
-}
-
-.worker-info{
-  color:#666;
-  font-size:14px;
-  margin-bottom:8px;
-}
-
-.row{
-  display:flex;
-  gap:10px;
-}
-
-.row>*{
-  flex:1;
-}
-
-.summary{
-  background:#f3f4f6;
-  border-radius:15px;
-  padding:15px;
-  margin:12px 0;
-  line-height:1.8;
-}
-
-.message{
-  margin-top:12px;
-  padding:13px;
-  background:#f3f4f6;
-  border-radius:12px;
-  font-size:15px;
-  display:none;
-}
-
-.notice{
-  padding:13px;
-  background:#eff6ff;
-  border-left:5px solid #2563eb;
-  border-radius:10px;
-  margin-bottom:15px;
-  font-size:14px;
-}
-
-.empty{
-  text-align:center;
-  color:#777;
-  padding:20px;
-}
-
-.footer{
-  text-align:center;
-  color:#888;
-  font-size:14px;
-  padding:10px 0 30px;
-}
-
-hr{
-  border:0;
-  border-top:1px solid #e5e7eb;
-  margin:18px 0;
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="header">
-
-  <h1>👷 ATTENDANCE<br>MASTER</h1>
-
-  <p>
-    Manpower • Attendance • Advance • Leave •<br>
-    Sunday Payment • Salary
-  </p>
-
+<h1>👷 ATTENDANCE<br>MASTER</h1>
+<p>Manpower • Attendance • Advance • Leave •<br>Sunday Payment • Salary</p>
 </div>
-
 
 <div class="container">
 
-  <!-- DASHBOARD -->
+<div class="card stat-card blue">
+<div class="stat" id="totalManpower">0</div>
+<div class="label">Total Manpower</div>
+</div>
 
-  <div class="card stat-card blue">
-    <div class="stat" id="totalManpower">0</div>
-    <div class="label">Total Manpower</div>
-  </div>
+<div class="card stat-card green">
+<div class="stat" id="presentToday">0</div>
+<div class="label">Present Today</div>
+</div>
 
-  <div class="card stat-card green">
-    <div class="stat" id="presentToday">0</div>
-    <div class="label">Present Today</div>
-  </div>
+<div class="card stat-card red">
+<div class="stat" id="absentToday">0</div>
+<div class="label">Absent Today</div>
+</div>
 
-  <div class="card stat-card red">
-    <div class="stat" id="absentToday">0</div>
-    <div class="label">Absent Today</div>
-  </div>
+<div class="card stat-card yellow">
+<div class="stat" id="leaveToday">0</div>
+<div class="label">On Leave Today</div>
+</div>
 
-  <div class="card stat-card yellow">
-    <div class="stat" id="leaveToday">0</div>
-    <div class="label">On Leave Today</div>
-  </div>
+<div class="card info">
+<strong id="monthlyAdvance">₹0</strong> This Month Advance
+</div>
 
+<div class="card info">
+<strong id="monthlySunday">₹0</strong> This Month Sunday Payment
+</div>
 
-  <div class="card info-card">
-    <strong id="monthlyAdvance">₹0</strong>
-    This Month Advance
-  </div>
+<div class="card info">
+<strong id="monthlyLeave">0</strong> This Month Leave
+</div>
 
-  <div class="card info-card">
-    <strong id="monthlySunday">₹0</strong>
-    This Month Sunday Payment
-  </div>
+<h2 class="section-title">Quick Actions</h2>
 
-  <div class="card info-card">
-    <strong id="monthlyLeave">0</strong>
-    This Month Leave
-  </div>
+<button class="action" onclick="openManpower()">
+<span>👷</span>Manpower
+</button>
 
+<button class="action" onclick="openAttendance()">
+<span>🟢</span>Daily Attendance
+</button>
 
-  <!-- ACTIONS -->
+<button class="action" onclick="openAdvance()">
+<span>💰</span>Advance
+</button>
 
-  <h2 class="section-title">Quick Actions</h2>
+<button class="action" onclick="openLeave()">
+<span>🏖️</span>Leave
+</button>
 
+<button class="action" onclick="openSunday()">
+<span>💵</span>Sunday Payment
+</button>
 
-  <button class="action" onclick="openManpower()">
-    <span>👷</span>
-    Manpower
-  </button>
+<button class="action" onclick="openSalary()">
+<span>💳</span>Salary
+</button>
 
+<button class="action" onclick="openReport()">
+<span>📊</span>Master Report
+</button>
 
-  <button class="action" onclick="openAttendance()">
-    <span>🟢</span>
-    Daily Attendance
-  </button>
+<button class="action" onclick="openBackup()">
+<span>💾</span>Backup / Export
+</button>
 
-
-  <button class="action" onclick="openAdvance()">
-    <span>💰</span>
-    Advance
-  </button>
-
-
-  <button class="action" onclick="openLeave()">
-    <span>🏖️</span>
-    Leave
-  </button>
-
-
-  <button class="action" onclick="openSunday()">
-    <span>💵</span>
-    Sunday Payment
-  </button>
-
-
-  <button class="action" onclick="openSalary()">
-    <span>💳</span>
-    Salary
-  </button>
-
-
-  <div class="footer">
-    Attendance Master • Data saved on this device
-  </div>
+<div class="footer">
+Attendance Master • Data saved on this device
+</div>
 
 </div>
 
 
-
-<!-- ================= MANPOWER ================= -->
+<!-- MANPOWER -->
 
 <div class="modal" id="manpowerModal">
+<div class="modal-box">
 
-  <div class="modal-box">
+<h2>👷 Manpower Management</h2>
 
-    <h2>👷 Manpower Management</h2>
+<div class="notice">
+Worker ka Name, Site, Role aur Salary save karo.
+</div>
 
-    <div class="notice">
-      Yahan employee/worker add karo. Har worker ka attendance,
-      advance, leave aur salary alag save hogi.
-    </div>
+<input id="workerSearch"
+class="search"
+placeholder="🔎 Search worker..."
+oninput="renderWorkers()">
 
-    <label>Worker Name</label>
+<label>Worker Name</label>
+<input id="workerName" placeholder="Worker name">
 
-    <input
-      type="text"
-      id="workerNameInput"
-      placeholder="Enter worker name"
-    >
+<label>Site</label>
+<input id="workerSite" placeholder="Example: Data Center">
 
-    <label>Monthly Salary ₹</label>
+<label>Role</label>
+<input id="workerRole" placeholder="Example: Housekeeping">
 
-    <input
-      type="number"
-      id="workerSalaryInput"
-      min="0"
-      placeholder="Example: 18000"
-    >
+<label>Monthly Salary ₹</label>
+<input id="workerSalary" type="number" min="0" placeholder="Monthly salary">
 
-    <button
-      class="primary"
-      onclick="addWorker()"
-    >
-      + Add Worker
-    </button>
+<button class="primary" onclick="addWorker()">
++ Add Worker
+</button>
 
-    <hr>
+<hr>
 
-    <div id="workerList"></div>
+<div id="workerList"></div>
 
-    <button
-      class="close"
-      onclick="closeModal('manpowerModal')"
-    >
-      Close
-    </button>
+<button class="close" onclick="closeAll()">Close</button>
 
-  </div>
-
+</div>
 </div>
 
 
-
-<!-- ================= ATTENDANCE ================= -->
+<!-- ATTENDANCE -->
 
 <div class="modal" id="attendanceModal">
+<div class="modal-box">
 
-  <div class="modal-box">
+<h2>🟢 Daily Attendance</h2>
 
-    <h2>🟢 Daily Attendance</h2>
+<label>Date</label>
+<input id="attendanceDate" type="date">
 
-    <label>Date</label>
+<div id="attendanceList"></div>
 
-    <input
-      type="date"
-      id="attendanceDate"
-    >
+<button class="primary" onclick="saveAttendance()">
+Save Attendance
+</button>
 
-    <div id="attendanceWorkers"></div>
+<button class="close" onclick="closeAll()">Close</button>
 
-    <button
-      class="primary"
-      onclick="saveAttendance()"
-    >
-      Save Attendance
-    </button>
-
-    <button
-      class="close"
-      onclick="closeModal('attendanceModal')"
-    >
-      Close
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
-
-<!-- ================= ADVANCE ================= -->
+<!-- ADVANCE -->
 
 <div class="modal" id="advanceModal">
+<div class="modal-box">
 
-  <div class="modal-box">
+<h2>💰 Advance</h2>
 
-    <h2>💰 Advance</h2>
+<label>Worker</label>
+<select id="advanceWorker"></select>
 
-    <label>Worker</label>
+<label>Amount ₹</label>
+<input id="advanceAmount" type="number" min="1">
 
-    <select id="advanceWorker"></select>
+<label>Note</label>
+<input id="advanceNote" placeholder="Optional">
 
-    <label>Advance Amount ₹</label>
+<button class="primary" onclick="saveAdvance()">
+Save Advance
+</button>
 
-    <input
-      type="number"
-      id="advanceInput"
-      min="1"
-      placeholder="Enter amount"
-    >
+<hr>
 
-    <label>Note</label>
+<div id="advanceHistory"></div>
 
-    <input
-      type="text"
-      id="advanceNote"
-      placeholder="Optional note"
-    >
+<button class="close" onclick="closeAll()">Close</button>
 
-    <button
-      class="primary"
-      onclick="saveAdvance()"
-    >
-      Save Advance
-    </button>
-
-    <hr>
-
-    <div id="advanceHistory"></div>
-
-    <button
-      class="close"
-      onclick="closeModal('advanceModal')"
-    >
-      Close
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
-
-<!-- ================= LEAVE ================= -->
+<!-- LEAVE -->
 
 <div class="modal" id="leaveModal">
+<div class="modal-box">
 
-  <div class="modal-box">
+<h2>🏖️ Leave</h2>
 
-    <h2>🏖️ Leave</h2>
+<label>Worker</label>
+<select id="leaveWorker"></select>
 
-    <label>Worker</label>
+<label>Date</label>
+<input id="leaveDate" type="date">
 
-    <select id="leaveWorker"></select>
+<label>Leave Type</label>
+<select id="leaveType">
+<option>Full Day</option>
+<option>Half Day</option>
+</select>
 
-    <label>Date</label>
+<label>Reason</label>
+<input id="leaveReason" placeholder="Optional">
 
-    <input
-      type="date"
-      id="leaveDate"
-    >
+<button class="primary" onclick="saveLeave()">
+Save Leave
+</button>
 
-    <label>Leave Type</label>
+<hr>
 
-    <select id="leaveType">
+<div id="leaveHistory"></div>
 
-      <option value="Full Day">
-        Full Day
-      </option>
+<button class="close" onclick="closeAll()">Close</button>
 
-      <option value="Half Day">
-        Half Day
-      </option>
-
-    </select>
-
-    <label>Reason</label>
-
-    <input
-      type="text"
-      id="leaveReason"
-      placeholder="Optional"
-    >
-
-    <button
-      class="primary"
-      onclick="saveLeave()"
-    >
-      Save Leave
-    </button>
-
-    <hr>
-
-    <div id="leaveHistory"></div>
-
-    <button
-      class="close"
-      onclick="closeModal('leaveModal')"
-    >
-      Close
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
-
-<!-- ================= SUNDAY ================= -->
+<!-- SUNDAY -->
 
 <div class="modal" id="sundayModal">
+<div class="modal-box">
 
-  <div class="modal-box">
+<h2>💵 Sunday Payment</h2>
 
-    <h2>💵 Sunday Payment</h2>
+<label>Worker</label>
+<select id="sundayWorker"></select>
 
-    <label>Worker</label>
+<label>Date</label>
+<input id="sundayDate" type="date">
 
-    <select id="sundayWorker"></select>
+<label>Payment ₹</label>
+<input id="sundayAmount" type="number" min="1">
 
-    <label>Date</label>
+<button class="primary" onclick="saveSunday()">
+Save Sunday Payment
+</button>
 
-    <input
-      type="date"
-      id="sundayDate"
-    >
+<hr>
 
-    <label>Payment Amount ₹</label>
+<div id="sundayHistory"></div>
 
-    <input
-      type="number"
-      id="sundayInput"
-      min="1"
-      placeholder="Enter payment"
-    >
+<button class="close" onclick="closeAll()">Close</button>
 
-    <button
-      class="primary"
-      onclick="saveSunday()"
-    >
-      Save Sunday Payment
-    </button>
-
-    <hr>
-
-    <div id="sundayHistory"></div>
-
-    <button
-      class="close"
-      onclick="closeModal('sundayModal')"
-    >
-      Close
-    </button>
-
-  </div>
-
+</div>
 </div>
 
 
-
-<!-- ================= SALARY ================= -->
+<!-- SALARY -->
 
 <div class="modal" id="salaryModal">
+<div class="modal-box">
 
-  <div class="modal-box">
+<h2>💳 Salary</h2>
 
-    <h2>💳 Salary</h2>
+<label>Worker</label>
+<select id="salaryWorker" onchange="showSalary()"></select>
 
-    <label>Worker</label>
-
-    <select
-      id="salaryWorker"
-      onchange="showSalaryDetails()"
-    ></select>
-
-    <div
-      class="summary"
-      id="salarySummary"
-    ></div>
-
-    <button
-      class="secondary"
-      onclick="showSalaryDetails()"
-    >
-      Calculate Salary
-    </button>
-
-    <button
-      class="close"
-      onclick="closeModal('salaryModal')"
-    >
-      Close
-    </button>
-
-  </div>
-
+<div class="summary" id="salaryDetails">
+Select worker.
 </div>
 
+<button class="close" onclick="closeAll()">Close</button>
+
+</div>
+</div>
+
+
+<!-- REPORT -->
+
+<div class="modal" id="reportModal">
+<div class="modal-box">
+
+<h2>📊 Master Report</h2>
+
+<div id="reportContent" class="report-box"></div>
+
+<button class="secondary no-print" onclick="window.print()">
+🖨️ Print / Save PDF
+</button>
+
+<button class="close no-print" onclick="closeAll()">
+Close
+</button>
+
+</div>
+</div>
+
+
+<!-- BACKUP -->
+
+<div class="modal" id="backupModal">
+<div class="modal-box">
+
+<h2>💾 Backup / Export</h2>
+
+<div class="notice">
+Backup file ko safe jagah rakho. Phone change/reset hone par Import se data restore kar sakte ho.
+</div>
+
+<button class="primary" onclick="exportBackup()">
+⬇️ Export Backup
+</button>
+
+<label>Restore Backup</label>
+<input id="backupFile" type="file" accept=".json">
+
+<button class="secondary" onclick="importBackup()">
+📥 Import / Restore
+</button>
+
+<hr>
+
+<button class="danger" onclick="deleteAllData()">
+⚠️ Delete All Data
+</button>
+
+<button class="close" onclick="closeAll()">Close</button>
+
+</div>
+</div>
 
 
 <script>
 
-/* =====================================================
-   ATTENDANCE MASTER
-   DATA + STORAGE
-===================================================== */
+const STORAGE_KEY="attendanceMasterFinal_v1";
 
-
-const STORAGE_KEY =
-  "attendanceMasterComplete_v1";
-
-
-const today =
-  new Date().toISOString().split("T")[0];
-
-
-let data;
-
-
-const DEFAULT_DATA = {
-
-  workers: [],
-
-  attendance: {},
-
-  advances: [],
-
-  leaves: [],
-
-  sundays: []
-
+let data={
+workers:[],
+attendance:{},
+advances:[],
+leaves:[],
+sundays:[]
 };
 
 
-
-/* LOAD DATA */
+/* LOAD */
 
 function loadData(){
 
-  try{
+try{
 
-    const saved =
-      localStorage.getItem(STORAGE_KEY);
+let saved=
+localStorage.getItem(STORAGE_KEY);
 
-    if(saved){
+if(saved){
 
-      data = JSON.parse(saved);
+data=JSON.parse(saved);
 
-    }else{
+}else{
 
-      data = {...DEFAULT_DATA};
+const oldKeys=[
+"attendanceMaster_v2",
+"attendanceMasterComplete_v1",
+"attendanceMasterData"
+];
 
-    }
+for(const key of oldKeys){
 
-  }catch(error){
+let old=
+localStorage.getItem(key);
 
-    console.log(error);
+if(old){
 
-    data = {...DEFAULT_DATA};
+try{
 
-  }
+data=JSON.parse(old);
+break;
 
+}catch(e){}
 
-  if(!Array.isArray(data.workers))
-    data.workers=[];
+}
 
-  if(!data.attendance)
-    data.attendance={};
+}
 
-  if(!Array.isArray(data.advances))
-    data.advances=[];
+}
 
-  if(!Array.isArray(data.leaves))
-    data.leaves=[];
+}catch(e){
 
-  if(!Array.isArray(data.sundays))
-    data.sundays=[];
+data={
+workers:[],
+attendance:{},
+advances:[],
+leaves:[],
+sundays:[]
+};
+
+}
+
+if(!Array.isArray(data.workers))
+data.workers=[];
+
+if(!data.attendance)
+data.attendance={};
+
+if(!Array.isArray(data.advances))
+data.advances=[];
+
+if(!Array.isArray(data.leaves))
+data.leaves=[];
+
+if(!Array.isArray(data.sundays))
+data.sundays=[];
 
 }
 
 
-
-/* SAVE DATA */
+/* SAVE */
 
 function saveData(){
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(data)
-  );
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(data)
+);
+
+updateDashboard();
 
 }
 
 
+/* HELPERS */
 
-/* GENERATE ID */
+function today(){
+
+return new Date()
+.toISOString()
+.split("T")[0];
+
+}
+
+function month(){
+
+return today().slice(0,7);
+
+}
+
+function money(value){
+
+return "₹"+
+Number(value||0)
+.toLocaleString("en-IN");
+
+}
 
 function makeId(){
 
-  return Date.now().toString()
-    + Math.random()
-      .toString(36)
-      .substring(2,8);
+return Date.now().toString(36)+
+Math.random().toString(36).slice(2);
+
+}
+
+function escapeHtml(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
-
-/* MONTH CHECK */
-
-function currentMonth(){
-
-  return today.substring(0,7);
-
-}
-
-
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
-
-function updateDashboard(){
-
-  const total =
-    data.workers.length;
-
-
-  let present=0;
-  let leave=0;
-
-
-  const todayAttendance =
-    data.attendance[today] || {};
-
-
-  data.workers.forEach(worker=>{
-
-    const status =
-      todayAttendance[worker.id];
-
-    if(status==="Present")
-      present++;
-
-    if(status==="Leave")
-      leave++;
-
-  });
-
-
-  const absent =
-    Math.max(
-      0,
-      total-present-leave
-    );
-
-
-  const month =
-    currentMonth();
-
-
-  const advanceTotal =
-    data.advances
-      .filter(x=>x.date.startsWith(month))
-      .reduce(
-        (sum,x)=>sum+Number(x.amount),
-        0
-      );
-
-
-  const sundayTotal =
-    data.sundays
-      .filter(x=>x.date.startsWith(month))
-      .reduce(
-        (sum,x)=>sum+Number(x.amount),
-        0
-      );
-
-
-  const leaveTotal =
-    data.leaves
-      .filter(x=>x.date.startsWith(month))
-      .length;
-
-
-  document.getElementById(
-    "totalManpower"
-  ).innerText=total;
-
-
-  document.getElementById(
-    "presentToday"
-  ).innerText=present;
-
-
-  document.getElementById(
-    "absentToday"
-  ).innerText=absent;
-
-
-  document.getElementById(
-    "leaveToday"
-  ).innerText=leave;
-
-
-  document.getElementById(
-    "monthlyAdvance"
-  ).innerText=
-    "₹"+
-    advanceTotal.toLocaleString("en-IN");
-
-
-  document.getElementById(
-    "monthlySunday"
-  ).innerText=
-    "₹"+
-    sundayTotal.toLocaleString("en-IN");
-
-
-  document.getElementById(
-    "monthlyLeave"
-  ).innerText=
-    leaveTotal;
-
-}
-
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
+/* MODAL */
 
 function openModal(id){
 
-  document.getElementById(id)
-    .style.display="block";
+closeAll();
+
+document.getElementById(id)
+.style.display="block";
+
+}
+
+function closeAll(){
+
+document
+.querySelectorAll(".modal")
+.forEach(x=>{
+x.style.display="none";
+});
 
 }
 
 
-function closeModal(id){
+/* DASHBOARD */
 
-  document.getElementById(id)
-    .style.display="none";
+function updateDashboard(){
 
-}
+let total=
+data.workers.length;
 
+let records=
+data.attendance[today()]||{};
 
+let present=0;
+let leave=0;
 
-/* CLICK OUTSIDE MODAL */
+data.workers.forEach(worker=>{
 
-window.addEventListener(
-  "click",
-  function(event){
+if(records[worker.id]==="Present")
+present++;
 
-    document
-      .querySelectorAll(".modal")
-      .forEach(modal=>{
+if(records[worker.id]==="Leave")
+leave++;
 
-        if(event.target===modal){
+});
 
-          modal.style.display="none";
-
-        }
-
-      });
-
-  }
+let absent=
+Math.max(
+0,
+total-present-leave
 );
 
+let m=month();
+
+let advanceTotal=
+data.advances
+.filter(x=>x.date.startsWith(m))
+.reduce(
+(a,x)=>a+Number(x.amount),
+0
+);
+
+let sundayTotal=
+data.sundays
+.filter(x=>x.date.startsWith(m))
+.reduce(
+(a,x)=>a+Number(x.amount),
+0
+);
+
+let leaveTotal=
+data.leaves
+.filter(x=>x.date.startsWith(m))
+.length;
+
+document.getElementById(
+"totalManpower"
+).innerText=total;
+
+document.getElementById(
+"presentToday"
+).innerText=present;
+
+document.getElementById(
+"absentToday"
+).innerText=absent;
+
+document.getElementById(
+"leaveToday"
+).innerText=leave;
+
+document.getElementById(
+"monthlyAdvance"
+).innerText=
+money(advanceTotal);
+
+document.getElementById(
+"monthlySunday"
+).innerText=
+money(sundayTotal);
+
+document.getElementById(
+"monthlyLeave"
+).innerText=
+leaveTotal;
+
+}
 
 
-/* =====================================================
-   MANPOWER
-===================================================== */
-
+/* MANPOWER */
 
 function openManpower(){
 
-  renderWorkers();
+document.getElementById(
+"workerName"
+).value="";
 
-  document.getElementById(
-    "workerNameInput"
-  ).value="";
+document.getElementById(
+"workerSite"
+).value="";
 
-  document.getElementById(
-    "workerSalaryInput"
-  ).value="";
+document.getElementById(
+"workerRole"
+).value="";
 
-  openModal("manpowerModal");
+document.getElementById(
+"workerSalary"
+).value="";
+
+document.getElementById(
+"workerSearch"
+).value="";
+
+renderWorkers();
+
+openModal("manpowerModal");
 
 }
-
 
 
 function addWorker(){
 
-  const name =
-    document
-      .getElementById(
-        "workerNameInput"
-      )
-      .value
-      .trim();
+let name=
+document.getElementById(
+"workerName"
+).value.trim();
 
+let site=
+document.getElementById(
+"workerSite"
+).value.trim();
 
-  const salary =
-    Number(
-      document
-        .getElementById(
-          "workerSalaryInput"
-        )
-        .value
-    ) || 0;
+let role=
+document.getElementById(
+"workerRole"
+).value.trim();
 
+let salary=
+Number(
+document.getElementById(
+"workerSalary"
+).value
+)||0;
 
-  if(!name){
+if(!name){
 
-    alert("Worker name enter karo.");
+alert("Worker name enter karo.");
 
-    return;
-
-  }
-
-
-  const worker={
-
-    id:makeId(),
-
-    name:name,
-
-    salary:salary,
-
-    created:new Date().toISOString()
-
-  };
-
-
-  data.workers.push(worker);
-
-  saveData();
-
-  document.getElementById(
-    "workerNameInput"
-  ).value="";
-
-  document.getElementById(
-    "workerSalaryInput"
-  ).value="";
-
-  renderWorkers();
-
-  updateDashboard();
+return;
 
 }
 
+data.workers.push({
+
+id:makeId(),
+name:name,
+site:site,
+role:role,
+salary:salary
+
+});
+
+saveData();
+
+document.getElementById(
+"workerName"
+).value="";
+
+document.getElementById(
+"workerSite"
+).value="";
+
+document.getElementById(
+"workerRole"
+).value="";
+
+document.getElementById(
+"workerSalary"
+).value="";
+
+renderWorkers();
+
+}
 
 
 function renderWorkers(){
 
-  const box =
-    document.getElementById(
-      "workerList"
-    );
+let box=
+document.getElementById(
+"workerList"
+);
 
+let search=
+document.getElementById(
+"workerSearch"
+).value
+.trim()
+.toLowerCase();
 
-  if(data.workers.length===0){
+let workers=
+data.workers.filter(w=>
+w.name.toLowerCase()
+.includes(search)
+);
 
-    box.innerHTML=
-      '<div class="empty">No workers added yet.</div>';
+if(!workers.length){
 
-    return;
+box.innerHTML=
+'<div class="empty">No worker found.</div>';
 
-  }
-
-
-  box.innerHTML="";
-
-
-  data.workers.forEach(worker=>{
-
-    const div =
-      document.createElement("div");
-
-    div.className="worker";
-
-
-    div.innerHTML=`
-
-      <div class="worker-name">
-        👷 ${escapeHtml(worker.name)}
-      </div>
-
-      <div class="worker-info">
-        Salary: ₹${Number(worker.salary)
-          .toLocaleString("en-IN")}
-      </div>
-
-      <button
-        class="small-btn blue-btn"
-        onclick="editWorker('${worker.id}')"
-      >
-        Edit
-      </button>
-
-      <button
-        class="small-btn red-btn"
-        onclick="deleteWorker('${worker.id}')"
-      >
-        Delete
-      </button>
-
-    `;
-
-
-    box.appendChild(div);
-
-  });
+return;
 
 }
 
+box.innerHTML="";
+
+workers.forEach(worker=>{
+
+let div=
+document.createElement("div");
+
+div.className="worker";
+
+div.innerHTML=`
+
+<b>👷 ${escapeHtml(worker.name)}</b><br>
+
+Site:
+${escapeHtml(worker.site||"Not set")}<br>
+
+Role:
+${escapeHtml(worker.role||"Not set")}<br>
+
+Salary:
+${money(worker.salary)}
+
+<br>
+
+<button class="small edit"
+onclick="editWorker('${worker.id}')">
+Edit
+</button>
+
+<button class="small del"
+onclick="deleteWorker('${worker.id}')">
+Delete
+</button>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
 
 
 function editWorker(id){
 
-  const worker =
-    data.workers.find(
-      x=>x.id===id
-    );
+let worker=
+data.workers.find(
+x=>x.id===id
+);
 
+if(!worker)return;
 
-  if(!worker) return;
+let name=
+prompt(
+"Worker name:",
+worker.name
+);
 
+if(name===null)return;
 
-  const name =
-    prompt(
-      "Worker name:",
-      worker.name
-    );
+let site=
+prompt(
+"Site:",
+worker.site||""
+);
 
+if(site===null)return;
 
-  if(name===null) return;
+let role=
+prompt(
+"Role:",
+worker.role||""
+);
 
+if(role===null)return;
 
-  const salary =
-    prompt(
-      "Monthly salary:",
-      worker.salary
-    );
+let salary=
+prompt(
+"Monthly salary:",
+worker.salary
+);
 
+if(salary===null)return;
 
-  if(salary===null) return;
+worker.name=
+name.trim()||worker.name;
 
+worker.site=
+site.trim();
 
-  worker.name =
-    name.trim() || worker.name;
+worker.role=
+role.trim();
 
+worker.salary=
+Number(salary)||0;
 
-  worker.salary =
-    Number(salary) || 0;
+saveData();
 
-
-  saveData();
-
-  renderWorkers();
-
-  updateDashboard();
+renderWorkers();
 
 }
-
 
 
 function deleteWorker(id){
 
-  const worker =
-    data.workers.find(
-      x=>x.id===id
-    );
+let worker=
+data.workers.find(
+x=>x.id===id
+);
 
+if(!worker)return;
 
-  if(!worker) return;
+if(!confirm(
+"Delete "+worker.name+"?"
+))return;
 
+data.workers=
+data.workers.filter(
+x=>x.id!==id
+);
 
-  const ok =
-    confirm(
-      "Delete "+worker.name+"?"
-    );
+saveData();
 
-
-  if(!ok) return;
-
-
-  data.workers =
-    data.workers.filter(
-      x=>x.id!==id
-    );
-
-
-  saveData();
-
-  renderWorkers();
-
-  updateDashboard();
+renderWorkers();
 
 }
 
 
+/* SELECT */
 
-/* =====================================================
-   ATTENDANCE
-===================================================== */
+function fillWorkers(selectId){
 
+let select=
+document.getElementById(
+selectId
+);
+
+select.innerHTML="";
+
+if(!data.workers.length){
+
+let option=
+document.createElement("option");
+
+option.value="";
+
+option.textContent=
+"No workers available";
+
+select.appendChild(option);
+
+return;
+
+}
+
+data.workers.forEach(worker=>{
+
+let option=
+document.createElement("option");
+
+option.value=
+worker.id;
+
+option.textContent=
+worker.name;
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* ATTENDANCE */
 
 function openAttendance(){
 
-  document.getElementById(
-    "attendanceDate"
-  ).value=today;
+document.getElementById(
+"attendanceDate"
+).value=today();
 
+renderAttendance();
 
-  renderAttendanceWorkers();
-
-
-  openModal("attendanceModal");
-
-}
-
-
-
-document
-  .getElementById(
-    "attendanceDate"
-  )
-  .addEventListener(
-    "change",
-    renderAttendanceWorkers
-  );
-
-
-
-function renderAttendanceWorkers(){
-
-  const box =
-    document.getElementById(
-      "attendanceWorkers"
-    );
-
-
-  const date =
-    document.getElementById(
-      "attendanceDate"
-    ).value || today;
-
-
-  if(data.workers.length===0){
-
-    box.innerHTML=
-      '<div class="empty">Pehle Manpower mein workers add karo.</div>';
-
-    return;
-
-  }
-
-
-  const records =
-    data.attendance[date] || {};
-
-
-  box.innerHTML="";
-
-
-  data.workers.forEach(worker=>{
-
-    const current =
-      records[worker.id] || "Absent";
-
-
-    const div =
-      document.createElement("div");
-
-    div.className="worker";
-
-
-    div.innerHTML=`
-
-      <div class="worker-name">
-        ${escapeHtml(worker.name)}
-      </div>
-
-      <select
-        id="att_${worker.id}"
-      >
-
-        <option value="Present"
-          ${current==="Present"?"selected":""}>
-          Present
-        </option>
-
-        <option value="Absent"
-          ${current==="Absent"?"selected":""}>
-          Absent
-        </option>
-
-        <option value="Leave"
-          ${current==="Leave"?"selected":""}>
-          Leave
-        </option>
-
-      </select>
-
-    `;
-
-
-    box.appendChild(div);
-
-  });
+openModal(
+"attendanceModal"
+);
 
 }
 
+
+document.getElementById(
+"attendanceDate"
+).addEventListener(
+"change",
+renderAttendance
+);
+
+
+function renderAttendance(){
+
+let date=
+document.getElementById(
+"attendanceDate"
+).value||today();
+
+let old=
+data.attendance[date]||{};
+
+let box=
+document.getElementById(
+"attendanceList"
+);
+
+if(!data.workers.length){
+
+box.innerHTML=
+'<div class="empty">Pehle manpower add karo.</div>';
+
+return;
+
+}
+
+box.innerHTML="";
+
+data.workers.forEach(worker=>{
+
+let status=
+old[worker.id]||"Absent";
+
+let div=
+document.createElement("div");
+
+div.className="worker";
+
+div.innerHTML=`
+
+<b>${escapeHtml(worker.name)}</b>
+
+<select id="att_${worker.id}">
+
+<option value="Present"
+${status==="Present"?"selected":""}>
+Present
+</option>
+
+<option value="Absent"
+${status==="Absent"?"selected":""}>
+Absent
+</option>
+
+<option value="Leave"
+${status==="Leave"?"selected":""}>
+Leave
+</option>
+
+</select>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
 
 
 function saveAttendance(){
 
-  const date =
-    document.getElementById(
-      "attendanceDate"
-    ).value;
+let date=
+document.getElementById(
+"attendanceDate"
+).value;
 
+if(!date){
 
-  if(!date){
+alert("Date select karo.");
 
-    alert("Date select karo.");
+return;
 
-    return;
+}
 
-  }
+data.attendance[date]={};
 
+data.workers.forEach(worker=>{
 
-  if(!data.attendance[date])
-    data.attendance[date]={};
+let select=
+document.getElementById(
+"att_"+worker.id
+);
 
+if(select){
 
-  data.workers.forEach(worker=>{
+data.attendance[date]
+[worker.id]=
+select.value;
 
-    const select =
-      document.getElementById(
-        "att_"+worker.id
-      );
+}
 
+});
 
-    if(select){
+saveData();
 
-      data.attendance[date][worker.id]
-        =select.value;
+alert(
+"Attendance saved successfully."
+);
 
-    }
-
-  });
-
-
-  saveData();
-
-  updateDashboard();
-
-  alert("Attendance saved successfully.");
-
-  closeModal("attendanceModal");
+closeAll();
 
 }
 
 
-
-/* =====================================================
-   ADVANCE
-===================================================== */
-
+/* ADVANCE */
 
 function openAdvance(){
 
-  populateWorkerSelect(
-    "advanceWorker"
-  );
+fillWorkers("advanceWorker");
 
+document.getElementById(
+"advanceAmount"
+).value="";
 
-  document.getElementById(
-    "advanceInput"
-  ).value="";
+document.getElementById(
+"advanceNote"
+).value="";
 
+renderAdvanceHistory();
 
-  document.getElementById(
-    "advanceNote"
-  ).value="";
-
-
-  renderAdvanceHistory();
-
-
-  openModal("advanceModal");
+openModal("advanceModal");
 
 }
-
 
 
 function saveAdvance(){
 
-  const workerId =
-    document.getElementById(
-      "advanceWorker"
-    ).value;
+let worker=
+document.getElementById(
+"advanceWorker"
+).value;
 
+let amount=
+Number(
+document.getElementById(
+"advanceAmount"
+).value
+);
 
-  const amount =
-    Number(
-      document.getElementById(
-        "advanceInput"
-      ).value
-    );
+let note=
+document.getElementById(
+"advanceNote"
+).value.trim();
 
+if(!worker){
 
-  const note =
-    document.getElementById(
-      "advanceNote"
-    ).value.trim();
+alert("Worker select karo.");
 
-
-  if(!workerId){
-
-    alert("Worker select karo.");
-
-    return;
-
-  }
-
-
-  if(!amount || amount<=0){
-
-    alert("Valid amount enter karo.");
-
-    return;
-
-  }
-
-
-  data.advances.push({
-
-    id:makeId(),
-
-    workerId:workerId,
-
-    amount:amount,
-
-    note:note,
-
-    date:new Date().toISOString()
-      .split("T")[0],
-
-    created:new Date().toISOString()
-
-  });
-
-
-  saveData();
-
-  updateDashboard();
-
-  renderAdvanceHistory();
-
-
-  document.getElementById(
-    "advanceInput"
-  ).value="";
-
-
-  document.getElementById(
-    "advanceNote"
-  ).value="";
-
-
-  alert("Advance saved.");
+return;
 
 }
 
+if(amount<=0){
+
+alert("Valid amount enter karo.");
+
+return;
+
+}
+
+data.advances.push({
+
+id:makeId(),
+workerId:worker,
+amount:amount,
+note:note,
+date:today()
+
+});
+
+saveData();
+
+renderAdvanceHistory();
+
+document.getElementById(
+"advanceAmount"
+).value="";
+
+document.getElementById(
+"advanceNote"
+).value="";
+
+alert("Advance saved.");
+
+}
 
 
 function renderAdvanceHistory(){
 
-  const box =
-    document.getElementById(
-      "advanceHistory"
-    );
+let box=
+document.getElementById(
+"advanceHistory"
+);
 
+let records=
+data.advances
+.filter(x=>
+x.date.startsWith(month())
+)
+.slice()
+.reverse();
 
-  const month =
-    currentMonth();
+if(!records.length){
 
+box.innerHTML=
+'<div class="empty">No advance this month.</div>';
 
-  const records =
-    data.advances
-      .filter(
-        x=>x.date.startsWith(month)
-      )
-      .slice()
-      .reverse();
-
-
-  if(records.length===0){
-
-    box.innerHTML=
-      '<div class="empty">No advance this month.</div>';
-
-    return;
-
-  }
-
-
-  box.innerHTML="";
-
-
-  records.forEach(record=>{
-
-    const worker =
-      data.workers.find(
-        x=>x.id===record.workerId
-      );
-
-
-    const div =
-      document.createElement("div");
-
-
-    div.className="worker";
-
-
-    div.innerHTML=`
-
-      <b>${escapeHtml(
-        worker ? worker.name : "Deleted Worker"
-      )}</b>
-
-      <br>
-
-      ₹${Number(record.amount)
-        .toLocaleString("en-IN")}
-
-      • ${record.date}
-
-      ${record.note
-        ? "<br>Note: "+
-          escapeHtml(record.note)
-        : ""}
-
-      <br>
-
-      <button
-        class="small-btn red-btn"
-        onclick="deleteAdvance('${record.id}')"
-      >
-        Delete
-      </button>
-
-    `;
-
-
-    box.appendChild(div);
-
-  });
+return;
 
 }
 
+box.innerHTML="";
+
+records.forEach(record=>{
+
+let worker=
+data.workers.find(
+x=>x.id===record.workerId
+);
+
+let div=
+document.createElement("div");
+
+div.className="worker";
+
+div.innerHTML=`
+
+<b>${escapeHtml(
+worker?worker.name:"Deleted Worker"
+)}</b>
+
+<br>
+
+${money(record.amount)}
+• ${record.date}
+
+${record.note?
+"<br>Note: "+
+escapeHtml(record.note):""}
+
+<br>
+
+<button class="small del"
+onclick="deleteAdvance('${record.id}')">
+Delete
+</button>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
 
 
 function deleteAdvance(id){
 
-  if(!confirm("Delete this advance?"))
-    return;
+if(!confirm(
+"Delete this advance?"
+))return;
 
+data.advances=
+data.advances.filter(
+x=>x.id!==id
+);
 
-  data.advances =
-    data.advances.filter(
-      x=>x.id!==id
-    );
+saveData();
 
-
-  saveData();
-
-  updateDashboard();
-
-  renderAdvanceHistory();
+renderAdvanceHistory();
 
 }
 
 
-
-/* =====================================================
-   LEAVE
-===================================================== */
-
+/* LEAVE */
 
 function openLeave(){
 
-  populateWorkerSelect(
-    "leaveWorker"
-  );
+fillWorkers("leaveWorker");
 
+document.getElementById(
+"leaveDate"
+).value=today();
 
-  document.getElementById(
-    "leaveDate"
-  ).value=today;
+document.getElementById(
+"leaveReason"
+).value="";
 
+renderLeaveHistory();
 
-  document.getElementById(
-    "leaveReason"
-  ).value="";
-
-
-  renderLeaveHistory();
-
-
-  openModal("leaveModal");
+openModal("leaveModal");
 
 }
-
 
 
 function saveLeave(){
 
-  const workerId =
-    document.getElementById(
-      "leaveWorker"
-    ).value;
+let worker=
+document.getElementById(
+"leaveWorker"
+).value;
 
+let date=
+document.getElementById(
+"leaveDate"
+).value;
 
-  const date =
-    document.getElementById(
-      "leaveDate"
-    ).value;
+let type=
+document.getElementById(
+"leaveType"
+).value;
 
+let reason=
+document.getElementById(
+"leaveReason"
+).value.trim();
 
-  const type =
-    document.getElementById(
-      "leaveType"
-    ).value;
+if(!worker){
 
+alert("Worker select karo.");
 
-  const reason =
-    document.getElementById(
-      "leaveReason"
-    ).value.trim();
-
-
-  if(!workerId){
-
-    alert("Worker select karo.");
-
-    return;
-
-  }
-
-
-  if(!date){
-
-    alert("Date select karo.");
-
-    return;
-
-  }
-
-
-  data.leaves.push({
-
-    id:makeId(),
-
-    workerId:workerId,
-
-    date:date,
-
-    type:type,
-
-    reason:reason
-
-  });
-
-
-  saveData();
-
-  updateDashboard();
-
-  renderLeaveHistory();
-
-
-  document.getElementById(
-    "leaveReason"
-  ).value="";
-
-
-  alert("Leave saved.");
+return;
 
 }
 
+if(!date){
+
+alert("Date select karo.");
+
+return;
+
+}
+
+data.leaves.push({
+
+id:makeId(),
+workerId:worker,
+date:date,
+type:type,
+reason:reason
+
+});
+
+saveData();
+
+renderLeaveHistory();
+
+document.getElementById(
+"leaveReason"
+).value="";
+
+alert("Leave saved.");
+
+}
 
 
 function renderLeaveHistory(){
 
-  const box =
-    document.getElementById(
-      "leaveHistory"
-    );
+let box=
+document.getElementById(
+"leaveHistory"
+);
 
+let records=
+data.leaves
+.filter(x=>
+x.date.startsWith(month())
+)
+.slice()
+.reverse();
 
-  const month =
-    currentMonth();
+if(!records.length){
 
+box.innerHTML=
+'<div class="empty">No leave this month.</div>';
 
-  const records =
-    data.leaves
-      .filter(
-        x=>x.date.startsWith(month)
-      )
-      .slice()
-      .reverse();
-
-
-  if(records.length===0){
-
-    box.innerHTML=
-      '<div class="empty">No leave this month.</div>';
-
-    return;
-
-  }
-
-
-  box.innerHTML="";
-
-
-  records.forEach(record=>{
-
-    const worker =
-      data.workers.find(
-        x=>x.id===record.workerId
-      );
-
-
-    const div =
-      document.createElement("div");
-
-
-    div.className="worker";
-
-
-    div.innerHTML=`
-
-      <b>${escapeHtml(
-        worker ? worker.name : "Deleted Worker"
-      )}</b>
-
-      <br>
-
-      ${record.date}
-      • ${escapeHtml(record.type)}
-
-      ${record.reason
-        ? "<br>Reason: "+
-          escapeHtml(record.reason)
-        : ""}
-
-      <br>
-
-      <button
-        class="small-btn red-btn"
-        onclick="deleteLeave('${record.id}')"
-      >
-        Delete
-      </button>
-
-    `;
-
-
-    box.appendChild(div);
-
-  });
+return;
 
 }
 
+box.innerHTML="";
+
+records.forEach(record=>{
+
+let worker=
+data.workers.find(
+x=>x.id===record.workerId
+);
+
+let div=
+document.createElement("div");
+
+div.className="worker";
+
+div.innerHTML=`
+
+<b>${escapeHtml(
+worker?worker.name:"Deleted Worker"
+)}</b>
+
+<br>
+
+${record.date}
+• ${escapeHtml(record.type)}
+
+${record.reason?
+"<br>Reason: "+
+escapeHtml(record.reason):""}
+
+<br>
+
+<button class="small del"
+onclick="deleteLeave('${record.id}')">
+Delete
+</button>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
 
 
 function deleteLeave(id){
 
-  if(!confirm("Delete this leave?"))
-    return;
+if(!confirm(
+"Delete this leave?"
+))return;
 
+data.leaves=
+data.leaves.filter(
+x=>x.id!==id
+);
 
-  data.leaves =
-    data.leaves.filter(
-      x=>x.id!==id
-    );
+saveData();
 
-
-  saveData();
-
-  updateDashboard();
-
-  renderLeaveHistory();
+renderLeaveHistory();
 
 }
 
 
-
-/* =====================================================
-   SUNDAY PAYMENT
-===================================================== */
-
+/* SUNDAY */
 
 function openSunday(){
 
-  populateWorkerSelect(
-    "sundayWorker"
-  );
+fillWorkers("sundayWorker");
 
+document.getElementById(
+"sundayDate"
+).value=today();
 
-  document.getElementById(
-    "sundayDate"
-  ).value=today;
+document.getElementById(
+"sundayAmount"
+).value="";
 
+renderSundayHistory();
 
-  document.getElementById(
-    "sundayInput"
-  ).value="";
-
-
-  renderSundayHistory();
-
-
-  openModal("sundayModal");
+openModal("sundayModal");
 
 }
-
 
 
 function saveSunday(){
 
-  const workerId =
-    document.getElementById(
-      "sundayWorker"
-    ).value;
+let worker=
+document.getElementById(
+"sundayWorker"
+).value;
 
+let date=
+document.getElementById(
+"sundayDate"
+).value;
 
-  const date =
-    document.getElementById(
-      "sundayDate"
-    ).value;
+let amount=
+Number(
+document.getElementById(
+"sundayAmount"
+).value
+);
 
+if(!worker){
 
-  const amount =
-    Number(
-      document.getElementById(
-        "sundayInput"
-      ).value
-    );
+alert("Worker select karo.");
 
-
-  if(!workerId){
-
-    alert("Worker select karo.");
-
-    return;
-
-  }
-
-
-  if(!date){
-
-    alert("Date select karo.");
-
-    return;
-
-  }
-
-
-  if(!amount || amount<=0){
-
-    alert("Valid amount enter karo.");
-
-    return;
-
-  }
-
-
-  data.sundays.push({
-
-    id:makeId(),
-
-    workerId:workerId,
-
-    date:date,
-
-    amount:amount
-
-  });
-
-
-  saveData();
-
-  updateDashboard();
-
-  renderSundayHistory();
-
-
-  document.getElementById(
-    "sundayInput"
-  ).value="";
-
-
-  alert("Sunday payment saved.");
+return;
 
 }
 
+if(!date||amount<=0){
+
+alert("Valid details enter karo.");
+
+return;
+
+}
+
+data.sundays.push({
+
+id:makeId(),
+workerId:worker,
+date:date,
+amount:amount
+
+});
+
+saveData();
+
+renderSundayHistory();
+
+document.getElementById(
+"sundayAmount"
+).value="";
+
+alert("Sunday payment saved.");
+
+}
 
 
 function renderSundayHistory(){
 
-  const box =
-    document.getElementById(
-      "sundayHistory"
-    );
+let box=
+document.getElementById(
+"sundayHistory"
+);
 
+let records=
+data.sundays
+.filter(x=>
+x.date.startsWith(month())
+)
+.slice()
+.reverse();
 
-  const month =
-    currentMonth();
+if(!records.length){
 
+box.innerHTML=
+'<div class="empty">No Sunday payment this month.</div>';
 
-  const records =
-    data.sundays
-      .filter(
-        x=>x.date.startsWith(month)
-      )
-      .slice()
-      .reverse();
-
-
-  if(records.length===0){
-
-    box.innerHTML=
-      '<div class="empty">No Sunday payment this month.</div>';
-
-    return;
-
-  }
-
-
-  box.innerHTML="";
-
-
-  records.forEach(record=>{
-
-    const worker =
-      data.workers.find(
-        x=>x.id===record.workerId
-      );
-
-
-    const div =
-      document.createElement("div");
-
-
-    div.className="worker";
-
-
-    div.innerHTML=`
-
-      <b>${escapeHtml(
-        worker ? worker.name : "Deleted Worker"
-      )}</b>
-
-      <br>
-
-      ₹${Number(record.amount)
-        .toLocaleString("en-IN")}
-
-      • ${record.date}
-
-      <br>
-
-      <button
-        class="small-btn red-btn"
-        onclick="deleteSunday('${record.id}')"
-      >
-        Delete
-      </button>
-
-    `;
-
-
-    box.appendChild(div);
-
-  });
+return;
 
 }
 
+box.innerHTML="";
+
+records.forEach(record=>{
+
+let worker=
+data.workers.find(
+x=>x.id===record.workerId
+);
+
+let div=
+document.createElement("div");
+
+div.className="worker";
+
+div.innerHTML=`
+
+<b>${escapeHtml(
+worker?worker.name:"Deleted Worker"
+)}</b>
+
+<br>
+
+${money(record.amount)}
+• ${record.date}
+
+<br>
+
+<button class="small del"
+onclick="deleteSunday('${record.id}')">
+Delete
+</button>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
 
 
 function deleteSunday(id){
 
-  if(!confirm("Delete this Sunday payment?"))
-    return;
+if(!confirm(
+"Delete this Sunday payment?"
+))return;
 
+data.sundays=
+data.sundays.filter(
+x=>x.id!==id
+);
 
-  data.sundays =
-    data.sundays.filter(
-      x=>x.id!==id
-    );
+saveData();
 
-
-  saveData();
-
-  updateDashboard();
-
-  renderSundayHistory();
+renderSundayHistory();
 
 }
 
 
-
-/* =====================================================
-   SALARY
-===================================================== */
-
+/* SALARY */
 
 function openSalary(){
 
-  populateWorkerSelect(
-    "salaryWorker"
-  );
+fillWorkers("salaryWorker");
 
+showSalary();
 
-  showSalaryDetails();
-
-
-  openModal("salaryModal");
+openModal("salaryModal");
 
 }
 
 
+function showSalary(){
 
-function showSalaryDetails(){
+let id=
+document.getElementById(
+"salaryWorker"
+).value;
 
-  const workerId =
-    document.getElementById(
-      "salaryWorker"
-    ).value;
+let worker=
+data.workers.find(
+x=>x.id===id
+);
 
+let box=
+document.getElementById(
+"salaryDetails"
+);
 
-  const box =
-    document.getElementById(
-      "salarySummary"
-    );
+if(!worker){
 
+box.innerText=
+"No worker available.";
 
-  if(!workerId){
+return;
 
-    box.innerHTML=
-      "Pehle worker select karo.";
+}
 
-    return;
+let m=month();
 
-  }
+let advance=
+data.advances
+.filter(x=>
+x.workerId===id &&
+x.date.startsWith(m)
+)
+.reduce(
+(a,x)=>a+Number(x.amount),
+0
+);
 
+let sunday=
+data.sundays
+.filter(x=>
+x.workerId===id &&
+x.date.startsWith(m)
+)
+.reduce(
+(a,x)=>a+Number(x.amount),
+0
+);
 
-  const worker =
-    data.workers.find(
-      x=>x.id===workerId
-    );
+let leaves=
+data.leaves
+.filter(x=>
+x.workerId===id &&
+x.date.startsWith(m)
+)
+.length;
 
+let net=
+Number(worker.salary)
+-advance+sunday;
 
-  if(!worker){
+box.innerHTML=`
 
-    box.innerHTML=
-      "Worker nahi mila.";
+<b>${escapeHtml(worker.name)}</b>
 
-    return;
+<hr>
 
-  }
+Monthly Salary:
+<b>${money(worker.salary)}</b>
 
+<br>
 
-  const month =
-    currentMonth();
+Advance:
+<b>- ${money(advance)}</b>
 
+<br>
 
-  const advance =
-    data.advances
-      .filter(
-        x=>
-          x.workerId===workerId &&
-          x.date.startsWith(month)
-      )
-      .reduce(
-        (sum,x)=>sum+Number(x.amount),
-        0
-      );
+Sunday Payment:
+<b>+ ${money(sunday)}</b>
 
+<br>
 
-  const sunday =
-    data.sundays
-      .filter(
-        x=>
-          x.workerId===workerId &&
-          x.date.startsWith(month)
-      )
-      .reduce(
-        (sum,x)=>sum+Number(x.amount),
-        0
-      );
+Leave:
+<b>${leaves} day(s)</b>
 
+<hr>
 
-  const leaves =
-    data.leaves
-      .filter(
-        x=>
-          x.workerId===workerId &&
-          x.date.startsWith(month)
-      )
-      .length;
+<strong>
+Net Salary:
+${money(net)}
+</strong>
 
+<br><br>
 
-  const net =
-    Number(worker.salary)
-    - advance
-    + sunday;
+<small>
+Salary - Advance + Sunday Payment
+</small>
 
-
-  box.innerHTML=`
-
-    <strong>
-      ${escapeHtml(worker.name)}
-    </strong>
-
-    <hr>
-
-    Monthly Salary:
-    <b>
-      ₹${Number(worker.salary)
-        .toLocaleString("en-IN")}
-    </b>
-
-    <br>
-
-    Advance:
-    <b>
-      - ₹${advance
-        .toLocaleString("en-IN")}
-    </b>
-
-    <br>
-
-    Sunday Payment:
-    <b>
-      + ₹${sunday
-        .toLocaleString("en-IN")}
-    </b>
-
-    <br>
-
-    Leave:
-    <b>
-      ${leaves} day(s)
-    </b>
-
-    <hr>
-
-    <strong>
-      Net Salary:
-      ₹${net.toLocaleString("en-IN")}
-    </strong>
-
-    <br><br>
-
-    <small>
-      Calculation:
-      Salary - Advance + Sunday Payment
-    </small>
-
-  `;
+`;
 
 }
 
 
+/* MASTER REPORT */
 
-/* =====================================================
-   WORKER DROPDOWN
-===================================================== */
+function openReport(){
 
+let m=month();
 
-function populateWorkerSelect(id){
+let records=
+data.attendance[today()]||{};
 
-  const select =
-    document.getElementById(id);
+let present=0;
+let leave=0;
 
+data.workers.forEach(worker=>{
 
-  if(!select) return;
+if(records[worker.id]==="Present")
+present++;
 
+if(records[worker.id]==="Leave")
+leave++;
 
-  select.innerHTML="";
+});
 
+let absent=
+Math.max(
+0,
+data.workers.length-present-leave
+);
 
-  if(data.workers.length===0){
+let advance=
+data.advances
+.filter(x=>x.date.startsWith(m))
+.reduce(
+(a,x)=>a+Number(x.amount),
+0
+);
 
-    const option =
-      document.createElement("option");
+let sunday=
+data.sundays
+.filter(x=>x.date.startsWith(m))
+.reduce(
+(a,x)=>a+Number(x.amount),
+0
+);
 
-    option.value="";
+let leaveCount=
+data.leaves
+.filter(x=>x.date.startsWith(m))
+.length;
 
-    option.textContent=
-      "No workers added";
+let html=`
 
-    select.appendChild(option);
+<h3>📊 Attendance Master Report</h3>
 
-    return;
+<b>Report Month:</b> ${m}
 
-  }
+<hr>
 
+<b>Total Manpower:</b>
+${data.workers.length}
 
-  data.workers.forEach(worker=>{
+<br>
 
-    const option =
-      document.createElement("option");
+<b>Present Today:</b>
+${present}
 
-    option.value=
-      worker.id;
+<br>
 
-    option.textContent=
-      worker.name;
+<b>Absent Today:</b>
+${absent}
 
-    select.appendChild(option);
+<br>
 
-  });
+<b>Leave Today:</b>
+${leave}
+
+<hr>
+
+<b>Monthly Advance:</b>
+${money(advance)}
+
+<br>
+
+<b>Monthly Sunday Payment:</b>
+${money(sunday)}
+
+<br>
+
+<b>Monthly Leave:</b>
+${leaveCount}
+
+<hr>
+
+<h3>Worker Details</h3>
+
+`;
+
+data.workers.forEach(worker=>{
+
+let a=
+data.advances
+.filter(x=>
+x.workerId===worker.id &&
+x.date.startsWith(m)
+)
+.reduce(
+(s,x)=>s+Number(x.amount),
+0
+);
+
+let s=
+data.sundays
+.filter(x=>
+x.workerId===worker.id &&
+x.date.startsWith(m)
+)
+.reduce(
+(t,x)=>t+Number(x.amount),
+0
+);
+
+let l=
+data.leaves
+.filter(x=>
+x.workerId===worker.id &&
+x.date.startsWith(m)
+)
+.length;
+
+let net=
+Number(worker.salary)-a+s;
+
+html+=`
+
+<div class="report-worker">
+
+<b>👷 ${escapeHtml(worker.name)}</b>
+
+<br>
+
+Site:
+${escapeHtml(worker.site||"-")}
+
+<br>
+
+Role:
+${escapeHtml(worker.role||"-")}
+
+<br>
+
+Salary:
+${money(worker.salary)}
+
+<br>
+
+Advance:
+${money(a)}
+
+<br>
+
+Sunday:
+${money(s)}
+
+<br>
+
+Leave:
+${l} day(s)
+
+<br>
+
+<b>Net Salary:
+${money(net)}</b>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"reportContent"
+).innerHTML=html;
+
+openModal("reportModal");
 
 }
 
 
+/* BACKUP */
 
-/* =====================================================
-   SECURITY / HTML ESCAPE
-===================================================== */
+function openBackup(){
 
+document.getElementById(
+"backupFile"
+).value="";
 
-function escapeHtml(text){
-
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+openModal("backupModal");
 
 }
 
 
+function exportBackup(){
 
-/* =====================================================
-   START APP
-===================================================== */
+let backupData={
 
+app:"Attendance Master",
+
+version:"1.0",
+
+exportedAt:
+new Date().toISOString(),
+
+data:data
+
+};
+
+let blob=
+new Blob(
+[
+JSON.stringify(
+backupData,
+null,
+2
+)
+],
+{
+type:"application/json"
+}
+);
+
+let url=
+URL.createObjectURL(blob);
+
+let link=
+document.createElement("a");
+
+link.href=url;
+
+link.download=
+"Attendance-Master-Backup-"+
+today()+
+".json";
+
+document.body.appendChild(link);
+
+link.click();
+
+link.remove();
+
+URL.revokeObjectURL(url);
+
+alert(
+"Backup download ho gaya."
+);
+
+}
+
+
+function importBackup(){
+
+let file=
+document.getElementById(
+"backupFile"
+).files[0];
+
+if(!file){
+
+alert(
+"Backup file select karo."
+);
+
+return;
+
+}
+
+let reader=
+new FileReader();
+
+reader.onload=function(event){
+
+try{
+
+let imported=
+JSON.parse(
+event.target.result
+);
+
+let restored=
+imported.data||
+imported;
+
+if(
+!restored.workers||
+!restored.attendance||
+!restored.advances||
+!restored.leaves||
+!restored.sundays
+){
+
+alert(
+"Invalid backup file."
+);
+
+return;
+
+}
+
+if(!confirm(
+"Current data replace karke backup restore karna hai?"
+))return;
+
+data=restored;
+
+saveData();
+
+alert(
+"Backup restored successfully."
+);
+
+closeAll();
+
+}catch(error){
+
+alert(
+"Backup file read nahi ho payi."
+);
+
+}
+
+};
+
+reader.readAsText(file);
+
+}
+
+
+/* DELETE ALL */
+
+function deleteAllData(){
+
+if(!confirm(
+"Saara app data delete ho jayega. Continue?"
+))return;
+
+if(!confirm(
+"Final confirmation: DELETE ALL DATA?"
+))return;
+
+localStorage.removeItem(
+STORAGE_KEY
+);
+
+data={
+workers:[],
+attendance:{},
+advances:[],
+leaves:[],
+sundays:[]
+};
+
+updateDashboard();
+
+alert(
+"All app data deleted."
+);
+
+closeAll();
+
+}
+
+
+/* SERVICE WORKER */
+
+if(
+"serviceWorker" in navigator
+){
+
+window.addEventListener(
+"load",
+function(){
+
+navigator.serviceWorker
+.register("./sw.js")
+.catch(function(error){
+
+console.log(
+"Service Worker error:",
+error
+);
+
+});
+
+});
+
+}
+
+
+/* START */
 
 loadData();
 
 updateDashboard();
 
-
-/* Keep dashboard updated */
-
-setInterval(
-  updateDashboard,
-  60000
-);
-
 </script>
-
 
 </body>
 </html>
