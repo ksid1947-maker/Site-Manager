@@ -1,2521 +1,2337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
+<meta name="theme-color" content="#111827">
+
+<meta name="description"
+      content="Attendance Master - Manpower, Attendance, Advance, Leave, Sunday Payment and Salary Management">
+
 <title>Attendance Master</title>
-<link rel="manifest" href="manifest.json">
+
+<link rel="manifest" href="./manifest.json">
+
+<link rel="icon"
+      type="image/png"
+      href="./attendance_master_icon.png">
+
 <style>
-*{box-sizing:border-box}
-body{
-margin:0;
-background:#f4f6f8;
-color:#17202a;
-font-family:Arial,sans-serif;
-padding-bottom:40px
-}
-.header{
-background:#111827;
-color:white;
-padding:28px 18px;
-border-radius:0 0 30px 30px;
-text-align:center
-}
-.header h1{
-margin:0;
-font-family:Georgia,serif;
-font-size:34px
-}
-.header p{
-margin:8px 0 0;
-color:#d1d5db;
-font-size:17px
-}
-.container{
-max-width:1100px;
-margin:auto;
-padding:18px
-}
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px
-}
-.card{
-background:white;
-border-radius:22px;
-padding:20px;
-box-shadow:0 5px 18px #00000010
-}
-.stat{
-min-height:115px;
-border-left:7px solid #2563eb
-}
-.stat.green{border-color:#16a34a}
-.stat.red{border-color:#dc2626}
-.stat.yellow{border-color:#eab308}
-.stat b{
-display:block;
-font-size:35px;
-margin-bottom:7px
-}
-.stat span{
-color:#777;
-font-size:16px
-}
-h2{
-font-family:Georgia,serif;
-font-size:28px;
-margin:28px 0 15px
-}
-.actions{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px
-}
-.action{
-border:0;
-background:white;
-color:#111827;
-border-radius:22px;
-padding:24px 10px;
-min-height:130px;
-font-family:Georgia,serif;
-font-size:19px;
-font-weight:bold;
-box-shadow:0 5px 18px #00000010;
-cursor:pointer
-}
-.action:active{
-transform:scale(.98)
-}
-.ico{
-display:block;
-font-size:42px;
-margin-bottom:10px
-}
-.panel{
-background:white;
-border-radius:22px;
-padding:20px;
-margin-top:20px;
-box-shadow:0 5px 18px #00000010
-}
-.hidden{
-display:none
-}
-.formgrid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px
-}
-input,select{
-width:100%;
-padding:13px;
-border:1px solid #d1d5db;
-border-radius:12px;
-background:white;
-font-size:16px
-}
-button{
-border:0;
-border-radius:12px;
-padding:13px 16px;
-background:#111827;
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:10px
-}
-button.green{background:#16a34a}
-button.blue{background:#2563eb}
-button.red{background:#dc2626}
-button.gray{
-background:#e5e7eb;
-color:#111
-}
-button.small{
-padding:7px 10px;
-font-size:13px;
-margin:2px
-}
-.item{
-background:#f3f4f6;
-border-radius:15px;
-padding:14px;
-margin-top:10px
-}
-.item b{
-font-size:18px
-}
-.row{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:center
-}
-.muted{
-color:#777
-}
-.badge{
-display:inline-block;
-padding:5px 9px;
-border-radius:20px;
-font-size:13px
-}
-.present{
-background:#dcfce7;
-color:#166534
-}
-.absent{
-background:#fee2e2;
-color:#991b1b
-}
-.leave{
-background:#fef3c7;
-color:#92400e
-}
-.tablewrap{
-overflow:auto;
-margin-top:15px
-}
-table{
-width:100%;
-border-collapse:collapse;
-min-width:750px
-}
-th,td{
-padding:10px;
-border-bottom:1px solid #e5e7eb;
-text-align:left
-}
-th{
-background:#f3f4f6
-}
-.notice{
-background:#eff6ff;
-color:#1e40af;
-padding:12px;
-border-radius:12px;
-margin-bottom:12px
+
+*{
+  box-sizing:border-box;
 }
 
-@media(max-width:650px){
-.grid,
-.actions,
-.formgrid{
-grid-template-columns:1fr
+body{
+  margin:0;
+  background:#f4f6f8;
+  color:#17202a;
+  font-family:Arial,sans-serif;
 }
-.container{
-padding:12px
+
+button,
+input,
+select{
+  font-family:inherit;
 }
+
+.header{
+  background:#111827;
+  color:white;
+  text-align:center;
+  padding:32px 15px 38px;
+  border-radius:0 0 45px 45px;
+}
+
 .header h1{
-font-size:30px
+  margin:0 0 18px;
+  font-family:Georgia,serif;
+  font-size:40px;
+  line-height:1.1;
 }
+
+.header p{
+  margin:0;
+  color:#d1d5db;
+  font-family:Georgia,serif;
+  font-size:18px;
+  line-height:1.5;
 }
+
+.container{
+  padding:22px 18px 50px;
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:white;
+  border-radius:28px;
+  padding:25px;
+  margin-bottom:20px;
+  box-shadow:0 4px 18px rgba(0,0,0,.07);
+}
+
+.stat-card{
+  min-height:150px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.stat{
+  font-family:Georgia,serif;
+  font-size:50px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.label{
+  color:#777;
+  font-family:Georgia,serif;
+  font-size:20px;
+}
+
+.blue{
+  border-left:9px solid #2563eb;
+}
+
+.green{
+  border-left:9px solid #16a34a;
+}
+
+.red{
+  border-left:9px solid #dc2626;
+}
+
+.yellow{
+  border-left:9px solid #eab308;
+}
+
+.info-card{
+  font-family:Georgia,serif;
+  font-size:19px;
+}
+
+.info-card strong{
+  font-size:25px;
+  margin-right:4px;
+}
+
+.section-title{
+  font-family:Georgia,serif;
+  font-size:36px;
+  margin:30px 0 18px;
+}
+
+.action{
+  width:100%;
+  background:white;
+  border:0;
+  border-radius:28px;
+  padding:25px 15px;
+  margin-bottom:17px;
+  box-shadow:0 4px 18px rgba(0,0,0,.07);
+  font-size:23px;
+  font-family:Georgia,serif;
+  font-weight:bold;
+  color:#17202a;
+  cursor:pointer;
+}
+
+.action:active{
+  transform:scale(.98);
+}
+
+.action span{
+  display:block;
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:999;
+  padding:15px;
+  overflow:auto;
+}
+
+.modal-box{
+  background:white;
+  max-width:520px;
+  margin:35px auto;
+  border-radius:25px;
+  padding:25px;
+}
+
+.modal-box h2{
+  font-family:Georgia,serif;
+  margin-top:0;
+  font-size:29px;
+}
+
+label{
+  display:block;
+  margin-top:12px;
+  margin-bottom:5px;
+  font-weight:bold;
+}
+
+input,
+select{
+  width:100%;
+  padding:14px;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  font-size:17px;
+  margin-bottom:10px;
+  outline:none;
+  background:white;
+}
+
+input:focus,
+select:focus{
+  border-color:#2563eb;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  background:#111827;
+  color:white;
+  padding:15px;
+  border-radius:13px;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.secondary{
+  width:100%;
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:15px;
+  border-radius:13px;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.danger{
+  width:100%;
+  border:0;
+  background:#dc2626;
+  color:white;
+  padding:15px;
+  border-radius:13px;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.close{
+  width:100%;
+  border:0;
+  background:#e5e7eb;
+  color:#17202a;
+  padding:15px;
+  border-radius:13px;
+  font-size:17px;
+  margin-top:10px;
+}
+
+.small-btn{
+  border:0;
+  padding:9px 12px;
+  border-radius:10px;
+  background:#111827;
+  color:white;
+  margin:3px;
+  cursor:pointer;
+}
+
+.red-btn{
+  background:#dc2626;
+}
+
+.blue-btn{
+  background:#2563eb;
+}
+
+.green-btn{
+  background:#16a34a;
+}
+
+.worker{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.worker-name{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.worker-info{
+  color:#666;
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+.row>*{
+  flex:1;
+}
+
+.summary{
+  background:#f3f4f6;
+  border-radius:15px;
+  padding:15px;
+  margin:12px 0;
+  line-height:1.8;
+}
+
+.message{
+  margin-top:12px;
+  padding:13px;
+  background:#f3f4f6;
+  border-radius:12px;
+  font-size:15px;
+  display:none;
+}
+
+.notice{
+  padding:13px;
+  background:#eff6ff;
+  border-left:5px solid #2563eb;
+  border-radius:10px;
+  margin-bottom:15px;
+  font-size:14px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:20px;
+}
+
+.footer{
+  text-align:center;
+  color:#888;
+  font-size:14px;
+  padding:10px 0 30px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #e5e7eb;
+  margin:18px 0;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<header class="header">
-<h1>👷 ATTENDANCE MASTER</h1>
-<p>Manpower • Attendance • Advance • Leave • Sunday Payment • Salary</p>
-</header>
+<div class="header">
 
-<main class="container">
+  <h1>👷 ATTENDANCE<br>MASTER</h1>
 
-<!-- DASHBOARD -->
-
-<section class="grid">
-
-<div class="card stat">
-<b id="totalWorkers">0</b>
-<span>Total Manpower</span>
-</div>
-
-<div class="card stat green">
-<b id="presentToday">0</b>
-<span>Present Today</span>
-</div>
-
-<div class="card stat red">
-<b id="absentToday">0</b>
-<span>Absent Today</span>
-</div>
-
-<div class="card stat yellow">
-<b id="leaveToday">0</b>
-<span>On Leave Today</span>
-</div>
-
-<div class="card">
-<b id="totalAdvance">₹0</b>
-<span>Total Advance</span>
-</div>
-
-<div class="card">
-<b id="monthAdvance">₹0</b>
-<span>This Month Advance</span>
-</div>
-
-<div class="card">
-<b id="monthSunday">₹0</b>
-<span>This Month Sunday Payment</span>
-</div>
-
-<div class="card">
-<b id="monthLeave">0</b>
-<span>This Month Leave</span>
-</div>
-
-</section>
-
-
-<h2>Quick Actions</h2>
-
-<section class="actions">
-
-<button class="action" onclick="showPanel('manpower')">
-<span class="ico">👷</span>
-Manpower
-</button>
-
-<button class="action" onclick="showPanel('attendance')">
-<span class="ico">🟢</span>
-Daily Attendance
-</button>
-
-<button class="action" onclick="showPanel('advance')">
-<span class="ico">💰</span>
-Advance
-</button>
-
-<button class="action" onclick="showPanel('sunday')">
-<span class="ico">📅</span>
-Sunday Payment
-</button>
-
-<button class="action" onclick="showPanel('leave')">
-<span class="ico">🏖️</span>
-Leave
-</button>
-
-<button class="action" onclick="showPanel('salary')">
-<span class="ico">💵</span>
-Salary
-</button>
-
-<button class="action" onclick="showPanel('reports')">
-<span class="ico">📊</span>
-Master Reports
-</button>
-
-<button class="action" onclick="showPanel('backup')">
-<span class="ico">💾</span>
-Backup / Export
-</button>
-
-</section>
-
-
-<!-- MANPOWER -->
-
-<section id="manpower" class="panel hidden">
-
-<h2>👷 Manpower Management</h2>
-
-<div class="formgrid">
-
-<input id="workerName"
-placeholder="Worker Name">
-
-<input id="workerId"
-placeholder="Employee ID">
-
-<input id="workerRole"
-placeholder="Role / Designation">
-
-<input id="workerSite"
-placeholder="Site / Location">
+  <p>
+    Manpower • Attendance • Advance • Leave •<br>
+    Sunday Payment • Salary
+  </p>
 
 </div>
 
-<button onclick="addWorker()">
-+ Add Worker
-</button>
 
-<input
-id="workerSearch"
-placeholder="Search worker..."
-oninput="renderWorkers()"
-style="margin-top:12px">
+<div class="container">
 
-<div id="workerList"></div>
+  <!-- DASHBOARD -->
 
-<button class="gray" onclick="closePanels()">
-Close
-</button>
+  <div class="card stat-card blue">
+    <div class="stat" id="totalManpower">0</div>
+    <div class="label">Total Manpower</div>
+  </div>
 
-</section>
+  <div class="card stat-card green">
+    <div class="stat" id="presentToday">0</div>
+    <div class="label">Present Today</div>
+  </div>
 
+  <div class="card stat-card red">
+    <div class="stat" id="absentToday">0</div>
+    <div class="label">Absent Today</div>
+  </div>
 
-<!-- ATTENDANCE -->
-
-<section id="attendance" class="panel hidden">
-
-<h2>🟢 Daily Attendance</h2>
-
-<div class="formgrid">
-
-<select id="attendanceWorker"></select>
-
-<input
-id="attendanceDate"
-type="date">
-
-<select id="attendanceStatus">
-
-<option value="Present">
-Present
-</option>
-
-<option value="Absent">
-Absent
-</option>
-
-<option value="Leave">
-Leave
-</option>
-
-</select>
-
-</div>
-
-<button class="green" onclick="saveAttendance()">
-Save Attendance
-</button>
-
-<div class="formgrid" style="margin-top:12px">
-
-<input
-id="attendanceFilterDate"
-type="date"
-onchange="renderAttendance()">
-
-<select
-id="attendanceFilterStatus"
-onchange="renderAttendance()">
-
-<option value="all">All Status</option>
-<option value="Present">Present</option>
-<option value="Absent">Absent</option>
-<option value="Leave">Leave</option>
-
-</select>
-
-</div>
-
-<div id="attendanceList"></div>
-
-<button class="gray" onclick="closePanels()">
-Close
-</button>
-
-</section>
+  <div class="card stat-card yellow">
+    <div class="stat" id="leaveToday">0</div>
+    <div class="label">On Leave Today</div>
+  </div>
 
 
-<!-- ADVANCE -->
+  <div class="card info-card">
+    <strong id="monthlyAdvance">₹0</strong>
+    This Month Advance
+  </div>
 
-<section id="advance" class="panel hidden">
+  <div class="card info-card">
+    <strong id="monthlySunday">₹0</strong>
+    This Month Sunday Payment
+  </div>
 
-<h2>💰 Advance Management</h2>
+  <div class="card info-card">
+    <strong id="monthlyLeave">0</strong>
+    This Month Leave
+  </div>
 
-<div class="notice">
-Har baar advance doge to naya transaction add hoga.
-Purana amount overwrite nahi hoga.
-</div>
 
-<div class="formgrid">
+  <!-- ACTIONS -->
 
-<select id="advanceWorker"></select>
+  <h2 class="section-title">Quick Actions</h2>
 
-<input
-id="advanceAmount"
-type="number"
-placeholder="Advance Amount ₹">
 
-<input
-id="advanceDate"
-type="date">
+  <button class="action" onclick="openManpower()">
+    <span>👷</span>
+    Manpower
+  </button>
 
-<input
-id="advanceRemark"
-placeholder="Remark / Purpose">
+
+  <button class="action" onclick="openAttendance()">
+    <span>🟢</span>
+    Daily Attendance
+  </button>
+
+
+  <button class="action" onclick="openAdvance()">
+    <span>💰</span>
+    Advance
+  </button>
+
+
+  <button class="action" onclick="openLeave()">
+    <span>🏖️</span>
+    Leave
+  </button>
+
+
+  <button class="action" onclick="openSunday()">
+    <span>💵</span>
+    Sunday Payment
+  </button>
+
+
+  <button class="action" onclick="openSalary()">
+    <span>💳</span>
+    Salary
+  </button>
+
+
+  <div class="footer">
+    Attendance Master • Data saved on this device
+  </div>
 
 </div>
 
-<button class="blue" onclick="saveAdvance()">
-Save Advance
-</button>
-
-<div class="formgrid" style="margin-top:12px">
-
-<input
-id="advanceMonth"
-type="month"
-onchange="renderAdvance()">
-
-<select
-id="advanceWorkerFilter"
-onchange="renderAdvance()">
-</select>
-
-</div>
-
-<div id="advanceList"></div>
-
-<button class="gray" onclick="closePanels()">
-Close
-</button>
-
-</section>
 
 
-<!-- SUNDAY -->
+<!-- ================= MANPOWER ================= -->
 
-<section id="sunday" class="panel hidden">
+<div class="modal" id="manpowerModal">
 
-<h2>📅 Sunday Payment</h2>
+  <div class="modal-box">
 
-<div class="notice">
-Har Sunday ka payment separately save hoga.
-Jitni baar doge, sab records add hote rahenge.
-</div>
+    <h2>👷 Manpower Management</h2>
 
-<div class="formgrid">
+    <div class="notice">
+      Yahan employee/worker add karo. Har worker ka attendance,
+      advance, leave aur salary alag save hogi.
+    </div>
 
-<select id="sundayWorker"></select>
+    <label>Worker Name</label>
 
-<input
-id="sundayAmount"
-type="number"
-placeholder="Sunday Payment ₹">
+    <input
+      type="text"
+      id="workerNameInput"
+      placeholder="Enter worker name"
+    >
 
-<input
-id="sundayDate"
-type="date">
+    <label>Monthly Salary ₹</label>
 
-<input
-id="sundayRemark"
-placeholder="Remark">
+    <input
+      type="number"
+      id="workerSalaryInput"
+      min="0"
+      placeholder="Example: 18000"
+    >
+
+    <button
+      class="primary"
+      onclick="addWorker()"
+    >
+      + Add Worker
+    </button>
+
+    <hr>
+
+    <div id="workerList"></div>
+
+    <button
+      class="close"
+      onclick="closeModal('manpowerModal')"
+    >
+      Close
+    </button>
+
+  </div>
 
 </div>
 
-<button class="blue" onclick="saveSunday()">
-Save Sunday Payment
-</button>
-
-<div class="formgrid" style="margin-top:12px">
-
-<input
-id="sundayMonth"
-type="month"
-onchange="renderSunday()">
-
-<select
-id="sundayWorkerFilter"
-onchange="renderSunday()">
-</select>
-
-</div>
-
-<div id="sundayList"></div>
-
-<button class="gray" onclick="closePanels()">
-Close
-</button>
-
-</section>
 
 
-<!-- LEAVE -->
+<!-- ================= ATTENDANCE ================= -->
 
-<section id="leave" class="panel hidden">
+<div class="modal" id="attendanceModal">
 
-<h2>🏖️ Leave Management</h2>
+  <div class="modal-box">
 
-<div class="formgrid">
+    <h2>🟢 Daily Attendance</h2>
 
-<select id="leaveWorker"></select>
+    <label>Date</label>
 
-<input
-id="leaveDate"
-type="date">
+    <input
+      type="date"
+      id="attendanceDate"
+    >
 
-<input
-id="leaveRemark"
-placeholder="Leave Reason / Remark">
+    <div id="attendanceWorkers"></div>
+
+    <button
+      class="primary"
+      onclick="saveAttendance()"
+    >
+      Save Attendance
+    </button>
+
+    <button
+      class="close"
+      onclick="closeModal('attendanceModal')"
+    >
+      Close
+    </button>
+
+  </div>
 
 </div>
 
-<button onclick="saveLeave()">
-Save Leave
-</button>
-
-<div class="formgrid" style="margin-top:12px">
-
-<input
-id="leaveMonth"
-type="month"
-onchange="renderLeave()">
-
-<select
-id="leaveWorkerFilter"
-onchange="renderLeave()">
-</select>
-
-</div>
-
-<div id="leaveList"></div>
-
-<button class="gray" onclick="closePanels()">
-Close
-</button>
-
-</section>
 
 
-<!-- SALARY -->
+<!-- ================= ADVANCE ================= -->
 
-<section id="salary" class="panel hidden">
+<div class="modal" id="advanceModal">
 
-<h2>💵 Salary Management</h2>
+  <div class="modal-box">
 
-<div class="formgrid">
+    <h2>💰 Advance</h2>
 
-<select id="salaryWorker"></select>
+    <label>Worker</label>
 
-<input
-id="salaryMonth"
-type="month">
+    <select id="advanceWorker"></select>
 
-<input
-id="salaryAmount"
-type="number"
-placeholder="Salary ₹">
+    <label>Advance Amount ₹</label>
 
-<input
-id="salaryRemark"
-placeholder="Salary Remark">
+    <input
+      type="number"
+      id="advanceInput"
+      min="1"
+      placeholder="Enter amount"
+    >
 
-</div>
+    <label>Note</label>
 
-<button class="green" onclick="saveSalary()">
-Save Salary
-</button>
+    <input
+      type="text"
+      id="advanceNote"
+      placeholder="Optional note"
+    >
 
-<div id="salaryList"></div>
+    <button
+      class="primary"
+      onclick="saveAdvance()"
+    >
+      Save Advance
+    </button>
 
-<button class="gray" onclick="closePanels()">
-Close
-</button>
+    <hr>
 
-</section>
+    <div id="advanceHistory"></div>
 
+    <button
+      class="close"
+      onclick="closeModal('advanceModal')"
+    >
+      Close
+    </button>
 
-<!-- REPORT -->
-
-<section id="reports" class="panel hidden">
-
-<h2>📊 Master Reports</h2>
-
-<div class="formgrid">
-
-<input
-id="reportMonth"
-type="month">
-
-<input
-id="reportSearch"
-placeholder="Search worker...">
+  </div>
 
 </div>
 
-<button onclick="renderReport()">
-Refresh Report
-</button>
-
-<div id="reportBox" class="tablewrap"></div>
-
-<button class="gray" onclick="closePanels()">
-Close
-</button>
-
-</section>
 
 
-<!-- BACKUP -->
+<!-- ================= LEAVE ================= -->
 
-<section id="backup" class="panel hidden">
+<div class="modal" id="leaveModal">
 
-<h2>💾 Backup & Data</h2>
+  <div class="modal-box">
 
-<p class="muted">
-Backup me manpower, attendance, advance, leave,
-Sunday payment aur salary sab save hoga.
-</p>
+    <h2>🏖️ Leave</h2>
 
-<button class="blue" onclick="exportBackup()">
-⬇ Download Backup
-</button>
+    <label>Worker</label>
 
-<input
-id="importFile"
-type="file"
-accept=".json"
-onchange="importBackup(event)"
-style="margin-top:12px">
+    <select id="leaveWorker"></select>
 
-<button class="red" onclick="deleteAllData()">
-⚠️ Delete ALL Data
-</button>
+    <label>Date</label>
 
-<button class="gray" onclick="closePanels()">
-Close
-</button>
+    <input
+      type="date"
+      id="leaveDate"
+    >
 
-</section>
+    <label>Leave Type</label>
 
-</main>
+    <select id="leaveType">
+
+      <option value="Full Day">
+        Full Day
+      </option>
+
+      <option value="Half Day">
+        Half Day
+      </option>
+
+    </select>
+
+    <label>Reason</label>
+
+    <input
+      type="text"
+      id="leaveReason"
+      placeholder="Optional"
+    >
+
+    <button
+      class="primary"
+      onclick="saveLeave()"
+    >
+      Save Leave
+    </button>
+
+    <hr>
+
+    <div id="leaveHistory"></div>
+
+    <button
+      class="close"
+      onclick="closeModal('leaveModal')"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================= SUNDAY ================= -->
+
+<div class="modal" id="sundayModal">
+
+  <div class="modal-box">
+
+    <h2>💵 Sunday Payment</h2>
+
+    <label>Worker</label>
+
+    <select id="sundayWorker"></select>
+
+    <label>Date</label>
+
+    <input
+      type="date"
+      id="sundayDate"
+    >
+
+    <label>Payment Amount ₹</label>
+
+    <input
+      type="number"
+      id="sundayInput"
+      min="1"
+      placeholder="Enter payment"
+    >
+
+    <button
+      class="primary"
+      onclick="saveSunday()"
+    >
+      Save Sunday Payment
+    </button>
+
+    <hr>
+
+    <div id="sundayHistory"></div>
+
+    <button
+      class="close"
+      onclick="closeModal('sundayModal')"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================= SALARY ================= -->
+
+<div class="modal" id="salaryModal">
+
+  <div class="modal-box">
+
+    <h2>💳 Salary</h2>
+
+    <label>Worker</label>
+
+    <select
+      id="salaryWorker"
+      onchange="showSalaryDetails()"
+    ></select>
+
+    <div
+      class="summary"
+      id="salarySummary"
+    ></div>
+
+    <button
+      class="secondary"
+      onclick="showSalaryDetails()"
+    >
+      Calculate Salary
+    </button>
+
+    <button
+      class="close"
+      onclick="closeModal('salaryModal')"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
 
 
 <script>
 
-const DB_KEY="attendance_master_v2";
+/* =====================================================
+   ATTENDANCE MASTER
+   DATA + STORAGE
+===================================================== */
 
-let db=JSON.parse(
-localStorage.getItem(DB_KEY)||"null"
-)||{
 
-workers:[],
-attendance:[],
-advances:[],
-sundays:[],
-leaves:[],
-salaries:[]
+const STORAGE_KEY =
+  "attendanceMasterComplete_v1";
+
+
+const today =
+  new Date().toISOString().split("T")[0];
+
+
+let data;
+
+
+const DEFAULT_DATA = {
+
+  workers: [],
+
+  attendance: {},
+
+  advances: [],
+
+  leaves: [],
+
+  sundays: []
 
 };
 
 
-function saveDB(){
 
-localStorage.setItem(
-DB_KEY,
-JSON.stringify(db)
-);
+/* LOAD DATA */
 
-updateDashboard();
+function loadData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+
+      data = JSON.parse(saved);
+
+    }else{
+
+      data = {...DEFAULT_DATA};
+
+    }
+
+  }catch(error){
+
+    console.log(error);
+
+    data = {...DEFAULT_DATA};
+
+  }
+
+
+  if(!Array.isArray(data.workers))
+    data.workers=[];
+
+  if(!data.attendance)
+    data.attendance={};
+
+  if(!Array.isArray(data.advances))
+    data.advances=[];
+
+  if(!Array.isArray(data.leaves))
+    data.leaves=[];
+
+  if(!Array.isArray(data.sundays))
+    data.sundays=[];
 
 }
 
 
-function uid(){
 
-return Date.now().toString(36)+
-Math.random().toString(36).substring(2,8);
+/* SAVE DATA */
+
+function saveData(){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+
+/* GENERATE ID */
+
+function makeId(){
+
+  return Date.now().toString()
+    + Math.random()
+      .toString(36)
+      .substring(2,8);
 
 }
 
 
-function today(){
 
-return new Date()
-.toISOString()
-.substring(0,10);
-
-}
-
+/* MONTH CHECK */
 
 function currentMonth(){
 
-return today().substring(0,7);
+  return today.substring(0,7);
 
 }
 
 
-function money(value){
 
-return "₹"+
-Number(value||0)
-.toLocaleString("en-IN");
-
-}
-
-
-function escapeHTML(value){
-
-return String(value||"")
-.replace(/[&<>"']/g,function(char){
-
-return {
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[char];
-
-});
-
-}
-
-
-function workerById(id){
-
-return db.workers.find(
-worker=>worker.id===id
-);
-
-}
-
-
-function showPanel(id){
-
-closePanels();
-
-document
-.getElementById(id)
-.classList.remove("hidden");
-
-refreshWorkerSelects();
-
-renderAllLists();
-
-document
-.getElementById(id)
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-function closePanels(){
-
-document
-.querySelectorAll(".panel")
-.forEach(panel=>
-panel.classList.add("hidden")
-);
-
-}
-
-
-function refreshWorkerSelects(){
-
-let selectIds=[
-
-"attendanceWorker",
-"advanceWorker",
-"sundayWorker",
-"leaveWorker",
-"salaryWorker"
-
-];
-
-
-let filterIds=[
-
-"advanceWorkerFilter",
-"sundayWorkerFilter",
-"leaveWorkerFilter"
-
-];
-
-
-let options=
-'<option value="">Select Worker</option>';
-
-db.workers.forEach(worker=>{
-
-options+=`
-
-<option value="${worker.id}">
-${escapeHTML(worker.name)}
-${worker.workerId?
-" — "+escapeHTML(worker.workerId):""}
-</option>
-
-`;
-
-});
-
-
-selectIds.forEach(id=>{
-
-let select=document.getElementById(id);
-
-if(select){
-
-let old=select.value;
-
-select.innerHTML=options;
-
-if(
-db.workers.some(w=>w.id===old)
-){
-
-select.value=old;
-
-}
-
-}
-
-});
-
-
-filterIds.forEach(id=>{
-
-let select=document.getElementById(id);
-
-if(select){
-
-let old=select.value;
-
-select.innerHTML=
-'<option value="">All Workers</option>';
-
-db.workers.forEach(worker=>{
-
-select.innerHTML+=`
-
-<option value="${worker.id}">
-${escapeHTML(worker.name)}
-</option>
-
-`;
-
-});
-
-if(
-db.workers.some(w=>w.id===old)
-){
-
-select.value=old;
-
-}
-
-}
-
-});
-
-}
-
-
-function addWorker(){
-
-let name=
-document.getElementById(
-"workerName"
-).value.trim();
-
-let workerId=
-document.getElementById(
-"workerId"
-).value.trim();
-
-let role=
-document.getElementById(
-"workerRole"
-).value.trim();
-
-let site=
-document.getElementById(
-"workerSite"
-).value.trim();
-
-
-if(!name){
-
-alert("Worker name enter karo.");
-
-return;
-
-}
-
-
-if(
-workerId &&
-db.workers.some(
-worker=>
-worker.workerId.toLowerCase()===
-workerId.toLowerCase()
-)
-){
-
-alert("Employee ID already exists.");
-
-return;
-
-}
-
-
-db.workers.push({
-
-id:uid(),
-
-name:name,
-
-workerId:workerId,
-
-role:role,
-
-site:site,
-
-created:today()
-
-});
-
-
-saveDB();
-
-
-document.getElementById(
-"workerName"
-).value="";
-
-document.getElementById(
-"workerId"
-).value="";
-
-document.getElementById(
-"workerRole"
-).value="";
-
-document.getElementById(
-"workerSite"
-).value="";
-
-
-refreshWorkerSelects();
-
-renderWorkers();
-
-}
-
-
-function deleteWorker(id){
-
-if(!confirm(
-"Worker delete karna hai?"
-))return;
-
-
-db.workers=
-db.workers.filter(
-worker=>worker.id!==id
-);
-
-
-db.attendance=
-db.attendance.filter(
-record=>record.workerId!==id
-);
-
-
-db.advances=
-db.advances.filter(
-record=>record.workerId!==id
-);
-
-
-db.sundays=
-db.sundays.filter(
-record=>record.workerId!==id
-);
-
-
-db.leaves=
-db.leaves.filter(
-record=>record.workerId!==id
-);
-
-
-db.salaries=
-db.salaries.filter(
-record=>record.workerId!==id
-);
-
-
-saveDB();
-
-refreshWorkerSelects();
-
-renderAllLists();
-
-}
-
-
-function renderWorkers(){
-
-let search=
-document.getElementById(
-"workerSearch"
-).value.toLowerCase();
-
-
-let workers=
-db.workers.filter(worker=>
-
-(
-worker.name+" "+
-worker.workerId+" "+
-worker.role+" "+
-worker.site
-)
-.toLowerCase()
-.includes(search)
-
-);
-
-
-let html="";
-
-
-workers.forEach(worker=>{
-
-html+=`
-
-<div class="item">
-
-<div class="row">
-
-<div>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-ID:
-${escapeHTML(worker.workerId||"-")}
-
-<br>
-
-Role:
-${escapeHTML(worker.role||"-")}
-
-<br>
-
-Site:
-${escapeHTML(worker.site||"-")}
-
-</div>
-
-<button
-class="small red"
-onclick="deleteWorker('${worker.id}')">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById(
-"workerList"
-).innerHTML=
-html||
-'<p class="muted">No workers found.</p>';
-
-}
-
-
-function saveAttendance(){
-
-let workerId=
-document.getElementById(
-"attendanceWorker"
-).value;
-
-let date=
-document.getElementById(
-"attendanceDate"
-).value;
-
-let status=
-document.getElementById(
-"attendanceStatus"
-).value;
-
-
-if(!workerId||!date){
-
-alert(
-"Worker aur date select karo."
-);
-
-return;
-
-}
-
-
-let old=
-db.attendance.find(
-record=>
-record.workerId===workerId &&
-record.date===date
-);
-
-
-if(old){
-
-old.status=status;
-
-}else{
-
-db.attendance.push({
-
-id:uid(),
-
-workerId:workerId,
-
-date:date,
-
-status:status
-
-});
-
-}
-
-
-saveDB();
-
-renderAttendance();
-
-}
-
-
-function renderAttendance(){
-
-let filterDate=
-document.getElementById(
-"attendanceFilterDate"
-).value||today();
-
-let filterStatus=
-document.getElementById(
-"attendanceFilterStatus"
-).value;
-
-
-let records=
-db.attendance.filter(record=>
-
-record.date===filterDate &&
-
-(
-filterStatus==="all" ||
-record.status===filterStatus
-)
-
-);
-
-
-let html="";
-
-
-records.forEach(record=>{
-
-let worker=
-workerById(record.workerId);
-
-if(!worker)return;
-
-
-let className=
-record.status.toLowerCase();
-
-
-html+=`
-
-<div class="item">
-
-<div class="row">
-
-<div>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-${record.date}
-
-<br>
-
-<span class="badge ${className}">
-${record.status}
-</span>
-
-</div>
-
-<button
-class="small red"
-onclick="deleteRecord(
-'attendance',
-'${record.id}'
-)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById(
-"attendanceList"
-).innerHTML=
-html||
-'<p class="muted">No attendance for selected date.</p>';
-
-}
-
-
-function saveAdvance(){
-
-let workerId=
-document.getElementById(
-"advanceWorker"
-).value;
-
-let amount=Number(
-document.getElementById(
-"advanceAmount"
-).value
-);
-
-let date=
-document.getElementById(
-"advanceDate"
-).value;
-
-let remark=
-document.getElementById(
-"advanceRemark"
-).value.trim();
-
-
-if(!workerId||!amount||!date){
-
-alert(
-"Worker, amount aur date required."
-);
-
-return;
-
-}
-
-
-db.advances.push({
-
-id:uid(),
-
-workerId:workerId,
-
-amount:amount,
-
-date:date,
-
-remark:remark
-
-});
-
-
-saveDB();
-
-
-document.getElementById(
-"advanceAmount"
-).value="";
-
-document.getElementById(
-"advanceRemark"
-).value="";
-
-
-renderAdvance();
-
-}
-
-
-function renderAdvance(){
-
-let month=
-document.getElementById(
-"advanceMonth"
-).value||currentMonth();
-
-let filterWorker=
-document.getElementById(
-"advanceWorkerFilter"
-).value;
-
-
-let records=
-db.advances.filter(record=>
-
-record.date.startsWith(month) &&
-
-(
-!filterWorker ||
-record.workerId===filterWorker
-)
-
-);
-
-
-let total=records.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-);
-
-
-let html=`
-
-<div class="item">
-
-<b>
-Filtered Total Advance:
-${money(total)}
-</b>
-
-</div>
-
-`;
-
-
-records.forEach(record=>{
-
-let worker=
-workerById(record.workerId);
-
-if(!worker)return;
-
-
-html+=`
-
-<div class="item">
-
-<div class="row">
-
-<div>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-Amount:
-${money(record.amount)}
-
-<br>
-
-Date:
-${record.date}
-
-<br>
-
-Remark:
-${escapeHTML(
-record.remark||"-"
-)}
-
-</div>
-
-<button
-class="small red"
-onclick="deleteRecord(
-'advances',
-'${record.id}'
-)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById(
-"advanceList"
-).innerHTML=html;
-
-}
-
-
-function saveSunday(){
-
-let workerId=
-document.getElementById(
-"sundayWorker"
-).value;
-
-let amount=Number(
-document.getElementById(
-"sundayAmount"
-).value
-);
-
-let date=
-document.getElementById(
-"sundayDate"
-).value;
-
-let remark=
-document.getElementById(
-"sundayRemark"
-).value.trim();
-
-
-if(!workerId||!amount||!date){
-
-alert(
-"Worker, amount aur date required."
-);
-
-return;
-
-}
-
-
-db.sundays.push({
-
-id:uid(),
-
-workerId:workerId,
-
-amount:amount,
-
-date:date,
-
-remark:remark
-
-});
-
-
-saveDB();
-
-
-document.getElementById(
-"sundayAmount"
-).value="";
-
-document.getElementById(
-"sundayRemark"
-).value="";
-
-
-renderSunday();
-
-}
-
-
-function renderSunday(){
-
-let month=
-document.getElementById(
-"sundayMonth"
-).value||currentMonth();
-
-let filterWorker=
-document.getElementById(
-"sundayWorkerFilter"
-).value;
-
-
-let records=
-db.sundays.filter(record=>
-
-record.date.startsWith(month)&&
-
-(
-!filterWorker ||
-record.workerId===filterWorker
-)
-
-);
-
-
-let total=records.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-);
-
-
-let html=`
-
-<div class="item">
-
-<b>
-This Month Sunday Payment:
-${money(total)}
-</b>
-
-</div>
-
-`;
-
-
-records.forEach(record=>{
-
-let worker=
-workerById(record.workerId);
-
-if(!worker)return;
-
-
-html+=`
-
-<div class="item">
-
-<div class="row">
-
-<div>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-Payment:
-${money(record.amount)}
-
-<br>
-
-Date:
-${record.date}
-
-<br>
-
-Remark:
-${escapeHTML(
-record.remark||"-"
-)}
-
-</div>
-
-<button
-class="small red"
-onclick="deleteRecord(
-'sundays',
-'${record.id}'
-)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById(
-"sundayList"
-).innerHTML=html;
-
-}
-
-
-function saveLeave(){
-
-let workerId=
-document.getElementById(
-"leaveWorker"
-).value;
-
-let date=
-document.getElementById(
-"leaveDate"
-).value;
-
-let remark=
-document.getElementById(
-"leaveRemark"
-).value.trim();
-
-
-if(!workerId||!date){
-
-alert(
-"Worker aur date required."
-);
-
-return;
-
-}
-
-
-db.leaves.push({
-
-id:uid(),
-
-workerId:workerId,
-
-date:date,
-
-remark:remark
-
-});
-
-
-let attendance=
-db.attendance.find(
-record=>
-record.workerId===workerId &&
-record.date===date
-);
-
-
-if(attendance){
-
-attendance.status="Leave";
-
-}else{
-
-db.attendance.push({
-
-id:uid(),
-
-workerId:workerId,
-
-date:date,
-
-status:"Leave"
-
-});
-
-}
-
-
-saveDB();
-
-
-document.getElementById(
-"leaveRemark"
-).value="";
-
-
-renderLeave();
-
-}
-
-
-function renderLeave(){
-
-let month=
-document.getElementById(
-"leaveMonth"
-).value||currentMonth();
-
-let filterWorker=
-document.getElementById(
-"leaveWorkerFilter"
-).value;
-
-
-let records=
-db.leaves.filter(record=>
-
-record.date.startsWith(month)&&
-
-(
-!filterWorker ||
-record.workerId===filterWorker
-)
-
-);
-
-
-let html="";
-
-
-records.forEach(record=>{
-
-let worker=
-workerById(record.workerId);
-
-if(!worker)return;
-
-
-html+=`
-
-<div class="item">
-
-<div class="row">
-
-<div>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-Date:
-${record.date}
-
-<br>
-
-Reason:
-${escapeHTML(
-record.remark||"-"
-)}
-
-</div>
-
-<button
-class="small red"
-onclick="deleteRecord(
-'leaves',
-'${record.id}'
-)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById(
-"leaveList"
-).innerHTML=
-html||
-'<p class="muted">No leave records.</p>';
-
-}
-
-
-function saveSalary(){
-
-let workerId=
-document.getElementById(
-"salaryWorker"
-).value;
-
-let month=
-document.getElementById(
-"salaryMonth"
-).value;
-
-let amount=Number(
-document.getElementById(
-"salaryAmount"
-).value
-);
-
-let remark=
-document.getElementById(
-"salaryRemark"
-).value.trim();
-
-
-if(!workerId||!month||!amount){
-
-alert(
-"Worker, month aur salary required."
-);
-
-return;
-
-}
-
-
-let old=
-db.salaries.find(
-record=>
-record.workerId===workerId &&
-record.month===month
-);
-
-
-if(old){
-
-old.amount=amount;
-
-old.remark=remark;
-
-}else{
-
-db.salaries.push({
-
-id:uid(),
-
-workerId:workerId,
-
-month:month,
-
-amount:amount,
-
-remark:remark
-
-});
-
-}
-
-
-saveDB();
-
-
-document.getElementById(
-"salaryAmount"
-).value="";
-
-document.getElementById(
-"salaryRemark"
-).value="";
-
-
-renderSalary();
-
-}
-
-
-function renderSalary(){
-
-let html="";
-
-
-db.salaries
-.slice()
-.sort(
-(a,b)=>
-b.month.localeCompare(a.month)
-)
-.forEach(record=>{
-
-let worker=
-workerById(record.workerId);
-
-if(!worker)return;
-
-
-html+=`
-
-<div class="item">
-
-<div class="row">
-
-<div>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-Month:
-${record.month}
-
-<br>
-
-Salary:
-${money(record.amount)}
-
-<br>
-
-Remark:
-${escapeHTML(
-record.remark||"-"
-)}
-
-</div>
-
-<button
-class="small red"
-onclick="deleteRecord(
-'salaries',
-'${record.id}'
-)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById(
-"salaryList"
-).innerHTML=
-html||
-'<p class="muted">No salary records.</p>';
-
-}
-
-
-function renderReport(){
-
-let month=
-document.getElementById(
-"reportMonth"
-).value||currentMonth();
-
-let search=
-document.getElementById(
-"reportSearch"
-).value.toLowerCase();
-
-
-let workers=
-db.workers.filter(worker=>
-
-(
-worker.name+" "+
-worker.workerId+" "+
-worker.role+" "+
-worker.site
-)
-.toLowerCase()
-.includes(search)
-
-);
-
-
-let html=`
-
-<table>
-
-<tr>
-
-<th>Worker</th>
-
-<th>Present</th>
-
-<th>Absent</th>
-
-<th>Leave</th>
-
-<th>Total Advance</th>
-
-<th>Month Advance</th>
-
-<th>Sunday ₹</th>
-
-<th>Salary</th>
-
-</tr>
-
-`;
-
-
-workers.forEach(worker=>{
-
-let attendance=
-db.attendance.filter(
-record=>
-record.workerId===worker.id
-);
-
-
-let present=
-attendance.filter(
-record=>
-record.status==="Present"
-).length;
-
-
-let absent=
-attendance.filter(
-record=>
-record.status==="Absent"
-).length;
-
-
-let leave=
-db.leaves.filter(
-record=>
-record.workerId===worker.id &&
-record.date.startsWith(month)
-).length;
-
-
-let totalAdvance=
-db.advances
-.filter(
-record=>
-record.workerId===worker.id
-)
-.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-);
-
-
-let monthAdvance=
-db.advances
-.filter(
-record=>
-record.workerId===worker.id &&
-record.date.startsWith(month)
-)
-.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-);
-
-
-let sunday=
-db.sundays
-.filter(
-record=>
-record.workerId===worker.id &&
-record.date.startsWith(month)
-)
-.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-);
-
-
-let salaryRecord=
-db.salaries.find(
-record=>
-record.workerId===worker.id &&
-record.month===month
-);
-
-
-let salary=
-salaryRecord?
-salaryRecord.amount:
-0;
-
-
-html+=`
-
-<tr>
-
-<td>
-
-<b>
-${escapeHTML(worker.name)}
-</b>
-
-<br>
-
-${escapeHTML(
-worker.workerId||"-"
-)}
-
-</td>
-
-<td>${present}</td>
-
-<td>${absent}</td>
-
-<td>${leave}</td>
-
-<td>${money(totalAdvance)}</td>
-
-<td>${money(monthAdvance)}</td>
-
-<td>${money(sunday)}</td>
-
-<td>${money(salary)}</td>
-
-</tr>
-
-`;
-
-});
-
-
-html+=`</table>`;
-
-
-document.getElementById(
-"reportBox"
-).innerHTML=html;
-
-}
-
-
-function deleteRecord(type,id){
-
-if(!confirm(
-"Is record ko delete karna hai?"
-))return;
-
-
-db[type]=db[type].filter(
-record=>record.id!==id
-);
-
-
-saveDB();
-
-renderAllLists();
-
-}
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
 
 function updateDashboard(){
 
-let todayDate=today();
-
-let month=currentMonth();
-
-
-let todayRecords=
-db.attendance.filter(
-record=>
-record.date===todayDate
-);
+  const total =
+    data.workers.length;
 
 
-document.getElementById(
-"totalWorkers"
-).textContent=
-db.workers.length;
+  let present=0;
+  let leave=0;
 
 
-document.getElementById(
-"presentToday"
-).textContent=
-todayRecords.filter(
-record=>
-record.status==="Present"
-).length;
+  const todayAttendance =
+    data.attendance[today] || {};
 
 
-document.getElementById(
-"absentToday"
-).textContent=
-todayRecords.filter(
-record=>
-record.status==="Absent"
-).length;
+  data.workers.forEach(worker=>{
+
+    const status =
+      todayAttendance[worker.id];
+
+    if(status==="Present")
+      present++;
+
+    if(status==="Leave")
+      leave++;
+
+  });
 
 
-document.getElementById(
-"leaveToday"
-).textContent=
-todayRecords.filter(
-record=>
-record.status==="Leave"
-).length;
+  const absent =
+    Math.max(
+      0,
+      total-present-leave
+    );
 
 
-document.getElementById(
-"totalAdvance"
-).textContent=
-money(
-db.advances.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-)
-);
+  const month =
+    currentMonth();
 
 
-document.getElementById(
-"monthAdvance"
-).textContent=
-money(
-db.advances
-.filter(
-record=>
-record.date.startsWith(month)
-)
-.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-)
-);
+  const advanceTotal =
+    data.advances
+      .filter(x=>x.date.startsWith(month))
+      .reduce(
+        (sum,x)=>sum+Number(x.amount),
+        0
+      );
 
 
-document.getElementById(
-"monthSunday"
-).textContent=
-money(
-db.sundays
-.filter(
-record=>
-record.date.startsWith(month)
-)
-.reduce(
-(sum,record)=>
-sum+Number(record.amount),
-0
-)
-);
+  const sundayTotal =
+    data.sundays
+      .filter(x=>x.date.startsWith(month))
+      .reduce(
+        (sum,x)=>sum+Number(x.amount),
+        0
+      );
 
 
-document.getElementById(
-"monthLeave"
-).textContent=
-db.leaves.filter(
-record=>
-record.date.startsWith(month)
-).length;
-
-}
+  const leaveTotal =
+    data.leaves
+      .filter(x=>x.date.startsWith(month))
+      .length;
 
 
-function exportBackup(){
-
-let data=JSON.stringify(
-db,
-null,
-2
-);
+  document.getElementById(
+    "totalManpower"
+  ).innerText=total;
 
 
-let blob=new Blob(
-[data],
-{
-type:"application/json"
-}
-);
+  document.getElementById(
+    "presentToday"
+  ).innerText=present;
 
 
-let url=
-URL.createObjectURL(blob);
+  document.getElementById(
+    "absentToday"
+  ).innerText=absent;
 
 
-let link=
-document.createElement("a");
+  document.getElementById(
+    "leaveToday"
+  ).innerText=leave;
 
 
-link.href=url;
+  document.getElementById(
+    "monthlyAdvance"
+  ).innerText=
+    "₹"+
+    advanceTotal.toLocaleString("en-IN");
 
-link.download=
-"attendance-master-backup-"+today()+".json";
+
+  document.getElementById(
+    "monthlySunday"
+  ).innerText=
+    "₹"+
+    sundayTotal.toLocaleString("en-IN");
 
 
-link.click();
-
-URL.revokeObjectURL(url);
+  document.getElementById(
+    "monthlyLeave"
+  ).innerText=
+    leaveTotal;
 
 }
 
 
-function importBackup(event){
 
-let file=
-event.target.files[0];
-
-if(!file)return;
+/* =====================================================
+   MODAL
+===================================================== */
 
 
-let reader=
-new FileReader();
+function openModal(id){
+
+  document.getElementById(id)
+    .style.display="block";
+
+}
 
 
-reader.onload=function(){
+function closeModal(id){
 
-try{
+  document.getElementById(id)
+    .style.display="none";
 
-let data=
-JSON.parse(
-reader.result
+}
+
+
+
+/* CLICK OUTSIDE MODAL */
+
+window.addEventListener(
+  "click",
+  function(event){
+
+    document
+      .querySelectorAll(".modal")
+      .forEach(modal=>{
+
+        if(event.target===modal){
+
+          modal.style.display="none";
+
+        }
+
+      });
+
+  }
 );
 
 
-if(
-!data.workers||
-!data.attendance||
-!data.advances||
-!data.sundays||
-!data.leaves||
-!data.salaries
-){
 
-throw new Error();
-
-}
+/* =====================================================
+   MANPOWER
+===================================================== */
 
 
-db=data;
+function openManpower(){
 
-saveDB();
+  renderWorkers();
 
-renderAllLists();
+  document.getElementById(
+    "workerNameInput"
+  ).value="";
 
-alert(
-"Backup successfully restored."
-);
+  document.getElementById(
+    "workerSalaryInput"
+  ).value="";
 
-}catch(error){
-
-alert(
-"Invalid backup file."
-);
-
-}
-
-};
-
-
-reader.readAsText(file);
+  openModal("manpowerModal");
 
 }
 
 
-function deleteAllData(){
 
-if(!confirm(
-"WARNING: Saara data delete ho jayega. Continue?"
-))return;
+function addWorker(){
 
-
-if(!confirm(
-"Final confirmation — DELETE ALL DATA?"
-))return;
-
-
-db={
-
-workers:[],
-attendance:[],
-advances:[],
-sundays:[],
-leaves:[],
-salaries:[]
-
-};
+  const name =
+    document
+      .getElementById(
+        "workerNameInput"
+      )
+      .value
+      .trim();
 
 
-saveDB();
+  const salary =
+    Number(
+      document
+        .getElementById(
+          "workerSalaryInput"
+        )
+        .value
+    ) || 0;
 
-renderAllLists();
+
+  if(!name){
+
+    alert("Worker name enter karo.");
+
+    return;
+
+  }
+
+
+  const worker={
+
+    id:makeId(),
+
+    name:name,
+
+    salary:salary,
+
+    created:new Date().toISOString()
+
+  };
+
+
+  data.workers.push(worker);
+
+  saveData();
+
+  document.getElementById(
+    "workerNameInput"
+  ).value="";
+
+  document.getElementById(
+    "workerSalaryInput"
+  ).value="";
+
+  renderWorkers();
+
+  updateDashboard();
 
 }
 
 
-function renderAllLists(){
 
-refreshWorkerSelects();
+function renderWorkers(){
 
-renderWorkers();
+  const box =
+    document.getElementById(
+      "workerList"
+    );
 
-renderAttendance();
 
-renderAdvance();
+  if(data.workers.length===0){
 
-renderSunday();
+    box.innerHTML=
+      '<div class="empty">No workers added yet.</div>';
 
-renderLeave();
+    return;
 
-renderSalary();
+  }
+
+
+  box.innerHTML="";
+
+
+  data.workers.forEach(worker=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className="worker";
+
+
+    div.innerHTML=`
+
+      <div class="worker-name">
+        👷 ${escapeHtml(worker.name)}
+      </div>
+
+      <div class="worker-info">
+        Salary: ₹${Number(worker.salary)
+          .toLocaleString("en-IN")}
+      </div>
+
+      <button
+        class="small-btn blue-btn"
+        onclick="editWorker('${worker.id}')"
+      >
+        Edit
+      </button>
+
+      <button
+        class="small-btn red-btn"
+        onclick="deleteWorker('${worker.id}')"
+      >
+        Delete
+      </button>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+
+function editWorker(id){
+
+  const worker =
+    data.workers.find(
+      x=>x.id===id
+    );
+
+
+  if(!worker) return;
+
+
+  const name =
+    prompt(
+      "Worker name:",
+      worker.name
+    );
+
+
+  if(name===null) return;
+
+
+  const salary =
+    prompt(
+      "Monthly salary:",
+      worker.salary
+    );
+
+
+  if(salary===null) return;
+
+
+  worker.name =
+    name.trim() || worker.name;
+
+
+  worker.salary =
+    Number(salary) || 0;
+
+
+  saveData();
+
+  renderWorkers();
+
+  updateDashboard();
+
+}
+
+
+
+function deleteWorker(id){
+
+  const worker =
+    data.workers.find(
+      x=>x.id===id
+    );
+
+
+  if(!worker) return;
+
+
+  const ok =
+    confirm(
+      "Delete "+worker.name+"?"
+    );
+
+
+  if(!ok) return;
+
+
+  data.workers =
+    data.workers.filter(
+      x=>x.id!==id
+    );
+
+
+  saveData();
+
+  renderWorkers();
+
+  updateDashboard();
+
+}
+
+
+
+/* =====================================================
+   ATTENDANCE
+===================================================== */
+
+
+function openAttendance(){
+
+  document.getElementById(
+    "attendanceDate"
+  ).value=today;
+
+
+  renderAttendanceWorkers();
+
+
+  openModal("attendanceModal");
+
+}
+
+
+
+document
+  .getElementById(
+    "attendanceDate"
+  )
+  .addEventListener(
+    "change",
+    renderAttendanceWorkers
+  );
+
+
+
+function renderAttendanceWorkers(){
+
+  const box =
+    document.getElementById(
+      "attendanceWorkers"
+    );
+
+
+  const date =
+    document.getElementById(
+      "attendanceDate"
+    ).value || today;
+
+
+  if(data.workers.length===0){
+
+    box.innerHTML=
+      '<div class="empty">Pehle Manpower mein workers add karo.</div>';
+
+    return;
+
+  }
+
+
+  const records =
+    data.attendance[date] || {};
+
+
+  box.innerHTML="";
+
+
+  data.workers.forEach(worker=>{
+
+    const current =
+      records[worker.id] || "Absent";
+
+
+    const div =
+      document.createElement("div");
+
+    div.className="worker";
+
+
+    div.innerHTML=`
+
+      <div class="worker-name">
+        ${escapeHtml(worker.name)}
+      </div>
+
+      <select
+        id="att_${worker.id}"
+      >
+
+        <option value="Present"
+          ${current==="Present"?"selected":""}>
+          Present
+        </option>
+
+        <option value="Absent"
+          ${current==="Absent"?"selected":""}>
+          Absent
+        </option>
+
+        <option value="Leave"
+          ${current==="Leave"?"selected":""}>
+          Leave
+        </option>
+
+      </select>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+
+function saveAttendance(){
+
+  const date =
+    document.getElementById(
+      "attendanceDate"
+    ).value;
+
+
+  if(!date){
+
+    alert("Date select karo.");
+
+    return;
+
+  }
+
+
+  if(!data.attendance[date])
+    data.attendance[date]={};
+
+
+  data.workers.forEach(worker=>{
+
+    const select =
+      document.getElementById(
+        "att_"+worker.id
+      );
+
+
+    if(select){
+
+      data.attendance[date][worker.id]
+        =select.value;
+
+    }
+
+  });
+
+
+  saveData();
+
+  updateDashboard();
+
+  alert("Attendance saved successfully.");
+
+  closeModal("attendanceModal");
+
+}
+
+
+
+/* =====================================================
+   ADVANCE
+===================================================== */
+
+
+function openAdvance(){
+
+  populateWorkerSelect(
+    "advanceWorker"
+  );
+
+
+  document.getElementById(
+    "advanceInput"
+  ).value="";
+
+
+  document.getElementById(
+    "advanceNote"
+  ).value="";
+
+
+  renderAdvanceHistory();
+
+
+  openModal("advanceModal");
+
+}
+
+
+
+function saveAdvance(){
+
+  const workerId =
+    document.getElementById(
+      "advanceWorker"
+    ).value;
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "advanceInput"
+      ).value
+    );
+
+
+  const note =
+    document.getElementById(
+      "advanceNote"
+    ).value.trim();
+
+
+  if(!workerId){
+
+    alert("Worker select karo.");
+
+    return;
+
+  }
+
+
+  if(!amount || amount<=0){
+
+    alert("Valid amount enter karo.");
+
+    return;
+
+  }
+
+
+  data.advances.push({
+
+    id:makeId(),
+
+    workerId:workerId,
+
+    amount:amount,
+
+    note:note,
+
+    date:new Date().toISOString()
+      .split("T")[0],
+
+    created:new Date().toISOString()
+
+  });
+
+
+  saveData();
+
+  updateDashboard();
+
+  renderAdvanceHistory();
+
+
+  document.getElementById(
+    "advanceInput"
+  ).value="";
+
+
+  document.getElementById(
+    "advanceNote"
+  ).value="";
+
+
+  alert("Advance saved.");
+
+}
+
+
+
+function renderAdvanceHistory(){
+
+  const box =
+    document.getElementById(
+      "advanceHistory"
+    );
+
+
+  const month =
+    currentMonth();
+
+
+  const records =
+    data.advances
+      .filter(
+        x=>x.date.startsWith(month)
+      )
+      .slice()
+      .reverse();
+
+
+  if(records.length===0){
+
+    box.innerHTML=
+      '<div class="empty">No advance this month.</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML="";
+
+
+  records.forEach(record=>{
+
+    const worker =
+      data.workers.find(
+        x=>x.id===record.workerId
+      );
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className="worker";
+
+
+    div.innerHTML=`
+
+      <b>${escapeHtml(
+        worker ? worker.name : "Deleted Worker"
+      )}</b>
+
+      <br>
+
+      ₹${Number(record.amount)
+        .toLocaleString("en-IN")}
+
+      • ${record.date}
+
+      ${record.note
+        ? "<br>Note: "+
+          escapeHtml(record.note)
+        : ""}
+
+      <br>
+
+      <button
+        class="small-btn red-btn"
+        onclick="deleteAdvance('${record.id}')"
+      >
+        Delete
+      </button>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+
+function deleteAdvance(id){
+
+  if(!confirm("Delete this advance?"))
+    return;
+
+
+  data.advances =
+    data.advances.filter(
+      x=>x.id!==id
+    );
+
+
+  saveData();
+
+  updateDashboard();
+
+  renderAdvanceHistory();
+
+}
+
+
+
+/* =====================================================
+   LEAVE
+===================================================== */
+
+
+function openLeave(){
+
+  populateWorkerSelect(
+    "leaveWorker"
+  );
+
+
+  document.getElementById(
+    "leaveDate"
+  ).value=today;
+
+
+  document.getElementById(
+    "leaveReason"
+  ).value="";
+
+
+  renderLeaveHistory();
+
+
+  openModal("leaveModal");
+
+}
+
+
+
+function saveLeave(){
+
+  const workerId =
+    document.getElementById(
+      "leaveWorker"
+    ).value;
+
+
+  const date =
+    document.getElementById(
+      "leaveDate"
+    ).value;
+
+
+  const type =
+    document.getElementById(
+      "leaveType"
+    ).value;
+
+
+  const reason =
+    document.getElementById(
+      "leaveReason"
+    ).value.trim();
+
+
+  if(!workerId){
+
+    alert("Worker select karo.");
+
+    return;
+
+  }
+
+
+  if(!date){
+
+    alert("Date select karo.");
+
+    return;
+
+  }
+
+
+  data.leaves.push({
+
+    id:makeId(),
+
+    workerId:workerId,
+
+    date:date,
+
+    type:type,
+
+    reason:reason
+
+  });
+
+
+  saveData();
+
+  updateDashboard();
+
+  renderLeaveHistory();
+
+
+  document.getElementById(
+    "leaveReason"
+  ).value="";
+
+
+  alert("Leave saved.");
+
+}
+
+
+
+function renderLeaveHistory(){
+
+  const box =
+    document.getElementById(
+      "leaveHistory"
+    );
+
+
+  const month =
+    currentMonth();
+
+
+  const records =
+    data.leaves
+      .filter(
+        x=>x.date.startsWith(month)
+      )
+      .slice()
+      .reverse();
+
+
+  if(records.length===0){
+
+    box.innerHTML=
+      '<div class="empty">No leave this month.</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML="";
+
+
+  records.forEach(record=>{
+
+    const worker =
+      data.workers.find(
+        x=>x.id===record.workerId
+      );
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className="worker";
+
+
+    div.innerHTML=`
+
+      <b>${escapeHtml(
+        worker ? worker.name : "Deleted Worker"
+      )}</b>
+
+      <br>
+
+      ${record.date}
+      • ${escapeHtml(record.type)}
+
+      ${record.reason
+        ? "<br>Reason: "+
+          escapeHtml(record.reason)
+        : ""}
+
+      <br>
+
+      <button
+        class="small-btn red-btn"
+        onclick="deleteLeave('${record.id}')"
+      >
+        Delete
+      </button>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+
+function deleteLeave(id){
+
+  if(!confirm("Delete this leave?"))
+    return;
+
+
+  data.leaves =
+    data.leaves.filter(
+      x=>x.id!==id
+    );
+
+
+  saveData();
+
+  updateDashboard();
+
+  renderLeaveHistory();
+
+}
+
+
+
+/* =====================================================
+   SUNDAY PAYMENT
+===================================================== */
+
+
+function openSunday(){
+
+  populateWorkerSelect(
+    "sundayWorker"
+  );
+
+
+  document.getElementById(
+    "sundayDate"
+  ).value=today;
+
+
+  document.getElementById(
+    "sundayInput"
+  ).value="";
+
+
+  renderSundayHistory();
+
+
+  openModal("sundayModal");
+
+}
+
+
+
+function saveSunday(){
+
+  const workerId =
+    document.getElementById(
+      "sundayWorker"
+    ).value;
+
+
+  const date =
+    document.getElementById(
+      "sundayDate"
+    ).value;
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "sundayInput"
+      ).value
+    );
+
+
+  if(!workerId){
+
+    alert("Worker select karo.");
+
+    return;
+
+  }
+
+
+  if(!date){
+
+    alert("Date select karo.");
+
+    return;
+
+  }
+
+
+  if(!amount || amount<=0){
+
+    alert("Valid amount enter karo.");
+
+    return;
+
+  }
+
+
+  data.sundays.push({
+
+    id:makeId(),
+
+    workerId:workerId,
+
+    date:date,
+
+    amount:amount
+
+  });
+
+
+  saveData();
+
+  updateDashboard();
+
+  renderSundayHistory();
+
+
+  document.getElementById(
+    "sundayInput"
+  ).value="";
+
+
+  alert("Sunday payment saved.");
+
+}
+
+
+
+function renderSundayHistory(){
+
+  const box =
+    document.getElementById(
+      "sundayHistory"
+    );
+
+
+  const month =
+    currentMonth();
+
+
+  const records =
+    data.sundays
+      .filter(
+        x=>x.date.startsWith(month)
+      )
+      .slice()
+      .reverse();
+
+
+  if(records.length===0){
+
+    box.innerHTML=
+      '<div class="empty">No Sunday payment this month.</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML="";
+
+
+  records.forEach(record=>{
+
+    const worker =
+      data.workers.find(
+        x=>x.id===record.workerId
+      );
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className="worker";
+
+
+    div.innerHTML=`
+
+      <b>${escapeHtml(
+        worker ? worker.name : "Deleted Worker"
+      )}</b>
+
+      <br>
+
+      ₹${Number(record.amount)
+        .toLocaleString("en-IN")}
+
+      • ${record.date}
+
+      <br>
+
+      <button
+        class="small-btn red-btn"
+        onclick="deleteSunday('${record.id}')"
+      >
+        Delete
+      </button>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+
+function deleteSunday(id){
+
+  if(!confirm("Delete this Sunday payment?"))
+    return;
+
+
+  data.sundays =
+    data.sundays.filter(
+      x=>x.id!==id
+    );
+
+
+  saveData();
+
+  updateDashboard();
+
+  renderSundayHistory();
+
+}
+
+
+
+/* =====================================================
+   SALARY
+===================================================== */
+
+
+function openSalary(){
+
+  populateWorkerSelect(
+    "salaryWorker"
+  );
+
+
+  showSalaryDetails();
+
+
+  openModal("salaryModal");
+
+}
+
+
+
+function showSalaryDetails(){
+
+  const workerId =
+    document.getElementById(
+      "salaryWorker"
+    ).value;
+
+
+  const box =
+    document.getElementById(
+      "salarySummary"
+    );
+
+
+  if(!workerId){
+
+    box.innerHTML=
+      "Pehle worker select karo.";
+
+    return;
+
+  }
+
+
+  const worker =
+    data.workers.find(
+      x=>x.id===workerId
+    );
+
+
+  if(!worker){
+
+    box.innerHTML=
+      "Worker nahi mila.";
+
+    return;
+
+  }
+
+
+  const month =
+    currentMonth();
+
+
+  const advance =
+    data.advances
+      .filter(
+        x=>
+          x.workerId===workerId &&
+          x.date.startsWith(month)
+      )
+      .reduce(
+        (sum,x)=>sum+Number(x.amount),
+        0
+      );
+
+
+  const sunday =
+    data.sundays
+      .filter(
+        x=>
+          x.workerId===workerId &&
+          x.date.startsWith(month)
+      )
+      .reduce(
+        (sum,x)=>sum+Number(x.amount),
+        0
+      );
+
+
+  const leaves =
+    data.leaves
+      .filter(
+        x=>
+          x.workerId===workerId &&
+          x.date.startsWith(month)
+      )
+      .length;
+
+
+  const net =
+    Number(worker.salary)
+    - advance
+    + sunday;
+
+
+  box.innerHTML=`
+
+    <strong>
+      ${escapeHtml(worker.name)}
+    </strong>
+
+    <hr>
+
+    Monthly Salary:
+    <b>
+      ₹${Number(worker.salary)
+        .toLocaleString("en-IN")}
+    </b>
+
+    <br>
+
+    Advance:
+    <b>
+      - ₹${advance
+        .toLocaleString("en-IN")}
+    </b>
+
+    <br>
+
+    Sunday Payment:
+    <b>
+      + ₹${sunday
+        .toLocaleString("en-IN")}
+    </b>
+
+    <br>
+
+    Leave:
+    <b>
+      ${leaves} day(s)
+    </b>
+
+    <hr>
+
+    <strong>
+      Net Salary:
+      ₹${net.toLocaleString("en-IN")}
+    </strong>
+
+    <br><br>
+
+    <small>
+      Calculation:
+      Salary - Advance + Sunday Payment
+    </small>
+
+  `;
+
+}
+
+
+
+/* =====================================================
+   WORKER DROPDOWN
+===================================================== */
+
+
+function populateWorkerSelect(id){
+
+  const select =
+    document.getElementById(id);
+
+
+  if(!select) return;
+
+
+  select.innerHTML="";
+
+
+  if(data.workers.length===0){
+
+    const option =
+      document.createElement("option");
+
+    option.value="";
+
+    option.textContent=
+      "No workers added";
+
+    select.appendChild(option);
+
+    return;
+
+  }
+
+
+  data.workers.forEach(worker=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=
+      worker.id;
+
+    option.textContent=
+      worker.name;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+
+/* =====================================================
+   SECURITY / HTML ESCAPE
+===================================================== */
+
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
+
+loadData();
 
 updateDashboard();
 
-}
 
+/* Keep dashboard updated */
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
-
-document.getElementById(
-"attendanceDate"
-).value=today();
-
-document.getElementById(
-"attendanceFilterDate"
-).value=today();
-
-document.getElementById(
-"advanceDate"
-).value=today();
-
-document.getElementById(
-"advanceMonth"
-).value=currentMonth();
-
-document.getElementById(
-"sundayDate"
-).value=today();
-
-document.getElementById(
-"sundayMonth"
-).value=currentMonth();
-
-document.getElementById(
-"leaveDate"
-).value=today();
-
-document.getElementById(
-"leaveMonth"
-).value=currentMonth();
-
-document.getElementById(
-"salaryMonth"
-).value=currentMonth();
-
-document.getElementById(
-"reportMonth"
-).value=currentMonth();
-
-renderAllLists();
-
-});
-
+setInterval(
+  updateDashboard,
+  60000
+);
 
 </script>
 
-<script>if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js");}</script></body>
+
+</body>
 </html>
